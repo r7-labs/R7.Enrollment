@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace R7.Enrollment.Models
 {
     public class Competition
@@ -13,5 +15,7 @@ namespace R7.Enrollment.Models
         public string CompetitionType { get; set; }
         
         public string CompensationType { get; set; }
+
+        public IList<CompetitionEntrant> Entrants { get; set; } = new List<CompetitionEntrant> ();
     }
 }

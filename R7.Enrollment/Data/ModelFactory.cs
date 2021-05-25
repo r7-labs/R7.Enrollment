@@ -1,5 +1,7 @@
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Xml.Linq;
+using System.Xml.Schema;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
@@ -11,8 +13,8 @@ namespace R7.Enrollment.Data
             return new CompetitionEntrant {
                 PersonalNumber = xelem.Descendants ("entrantPersonalNumber").FirstOrDefault ()?.Value,
                 Name = xelem.Attribute ("fio")?.Value,
-                Position = int.Parse (xelem.Attribute ("position").Value),
-                FinalMark = int.Parse (xelem.Attribute ("finalMark").Value)
+                Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,
+                FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0
             };
         }
         
@@ -26,6 +28,11 @@ namespace R7.Enrollment.Data
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value
             };
+        }
+
+        static int? TryParseInt (string value)
+        {
+            return int.TryParse (value, out int result) ? (int?) result : null;
         }
     }
 }
