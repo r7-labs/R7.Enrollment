@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<enrEntrantRatingEnvironmentNode currentDateTime="2021-05-19T08:42:51.343+03:00" enrollmentCampaignTitle="21/22 Бакалавриат/специалитет" educationYearTitle="2021/2022">
+    <targetAdmissionKind>
+        <row priority="1" used="true" shortTitle="Целевой приём" title="Целевой приём" id="0"/>
+    </targetAdmissionKind>
+    <benefitCategory>
+        <row shortTitle="сборные" title="Члены сборных команд" id="001"/>
+        <row shortTitle="победители ВОШ (всеукр. олимп)" title="Победители всероссийской олимпиады школьников (IV этапа всеукраинских ученических олимпиад)" id="002"/>
+        <row shortTitle="призеры ВОШ (всеукр. олимп)" title="Призеры всероссийской олимпиады школьников (IV этапа всеукраинских ученических олимпиад)" id="003"/>
+        <row shortTitle="призеры спорта" title="Чемпионы и призеры в области спорта" id="004"/>
+        <row shortTitle="победители ОШ" title="Победители олимпиад школьников" id="005"/>
+        <row shortTitle="призеры ОШ" title="Призеры олимпиад школьников" id="006"/>
+        <row shortTitle="инвалиды" title="Инвалиды" id="007"/>
+        <row shortTitle="сироты" title="Дети-сироты и оставшиеся без попечения родителей" id="008"/>
+        <row shortTitle="сироты" title="Дети-сироты и оставшиеся без попечения родителей" id="009"/>
+        <row shortTitle="инвалиды" title="Инвалиды" id="010"/>
+        <row shortTitle="родитель-инвалид" title="Родитель-инвалид" id="011"/>
+        <row shortTitle="воздействие ЧАЭС" title="Подвергшиеся воздействию радиации ЧАЭС" id="012"/>
+        <row shortTitle="дети погиб. воен." title="Дети погибших военнослужащих" id="013"/>
+        <row shortTitle="дети погибших Героев" title="Дети погибших Героев СССР, РФ" id="014"/>
+        <row shortTitle="дети погиб. сотр. гос. органов" title="Дети погибших сотрудников гос. органов" id="015"/>
+        <row shortTitle="дети погиб. прокурор. работников" title="Дети погибших прокурорских работников" id="016"/>
+        <row shortTitle="в.с. по контракту" title="Военнослужащие по контракту" id="017"/>
+        <row shortTitle="уволенные с в.с." title="Уволенные с военной службы" id="018"/>
+        <row shortTitle="ветераны б.д." title="Ветераны боевых действий" id="019"/>
+        <row shortTitle="ликвидаторы рад. аварий" title="Ликвидаторы радиационных аварий" id="020"/>
+        <row shortTitle="воен. конфл. в Чечен. республ." title="Участники вооруженного конфликта в Чеченской республике" id="021"/>
+        <row shortTitle="сборные" title="Члены сборных команд" id="022"/>
+        <row shortTitle="победители (призеры) ВОШ (всеукр. олимп)" title="Победители и призеры всероссийской олимпиады школьников (IV этапа всеукраинских ученических олимпиад)" id="023"/>
+        <row shortTitle="призеры спорта" title="Чемпионы и призеры в области спорта" id="024"/>
+        <row shortTitle="победители (призеры) ОШ" title="Победители и призеры олимпиад школьников" id="025"/>
+        <row shortTitle="ветераны б.д." title="Ветераны боевых действий" id="026"/>
+        <row shortTitle="выпускники военной ОО" title="Выпускники с подготовкой к военной или иной государственной службе" id="027"/>
+        <row shortTitle="Минобр" title="Направление Минобрнауки РФ" id="028"/>
+        <row shortTitle="сборные РФ" title="Члены сборных команд РФ" id="029"/>
+        <row shortTitle="Победители ВОШ" title="Победители заключительного этапа всероссийской олимпиады школьников" id="030"/>
+        <row shortTitle="Призеры ВОШ" title="Призеры заключительного этапа всероссийской олимпиады школьников" id="031"/>
+        <row shortTitle="сборные РФ" title="Члены сборных команд РФ" id="032"/>
+        <row shortTitle="Победители (призеры) ВОШ" title="Победители и призеры заключительного этапа всероссийской олимпиады школьников" id="033"/>
+    </benefitCategory>
+    <originalSubmissionAndReturnWay>
+        <row title="Лично" id="1"/>
+        <row title="По доверенности" id="2"/>
+        <row title="По почте" id="3"/>
+        <row title="В электронной форме" id="4"/>
+        <row title="Через портал гос. услуг" id="5"/>
+    </originalSubmissionAndReturnWay>
+    <competition>
+        <row plan="19" firstStepPlan="16" secondStepPlan="3" countApplication="3" countAgreed="0" eduProgramSubject="35.03.04 Агрономия" eduProgramSubjectType="направление бакалавров" eduProgramForm="Очная" eduProgramFormCode="1" eduProgramKind="Программа бакалавриата" eduLevel="Высшее образование - бакалавриат" eduLevelCode="2013.2.2" programSet="35.03.04 Агрономия (А)" programSetPrintTitle="35.03.04 Агрономия (А)" enrOrgUnit="Федеральное государственное бюджетное&#10;образовательное учреждение высшего образования&#10;«Волгоградский государственный аграрный&#10;университет» (ОУ)" enrOrgUnitShortTitle="ФГБОУ ВО Волгоградский ГАУ" enrOrgUnitTerritorialFullTitle="г. Волгоград (Головная орг.)" enrOrgUnitTypeCode="top" enrOrgUnitSettlement="г. Волгоград" enrOrgUnitId="1696453372729708895" enrOrgUnitFisIndependent="false" formativeOrgUnit="Агротехнологический факультет (Факультет)" formativeOrgUnitTitle="Агротехнологический факультет" formativeOrgUnitTypeCode="faculty" formativeOrgUnitNominativeCaseTitle="Агротехнологический факультет" formativeOrgUnitSettlement="" requestType="1" competitionType="Общий конкурс" competitionTypeCode="04" competitionTypePublicTitle="общий конкурс" compensationTypeShortTitle="бюджет" compensationTypeBudget="true" eduLevelRequirementCode="9" eduLevelRequirement="СОО или СПО" eduLevelRequirementGenetiveTitle="Среднего общего или среднего профессионального образования" id="1697273660362020119" noExamCompetitionId="1697273660358874391">
+            <entranceDiscipline>
+                <row id="1696456606919774569" title="Биология" shortTitle="био" priority="1" examType="1">
+                    <passMarkMultipliedBy1000>36000</passMarkMultipliedBy1000>
+                    <passForms title="Олимп." id="6"/>
+                    <passForms title="Экзамен" id="3"/>
+                    <passForms title="ЕГЭ" id="1"/>
+                </row>
+                <row id="1696462415237045910" title="Математика или Химия" shortTitle="МатХим" priority="2" examType="1">
+                    <passMarkMultipliedBy1000>27000</passMarkMultipliedBy1000>
+                    <passForms title="Олимп." id="6"/>
+                    <passForms title="Экзамен" id="3"/>
+                    <passForms title="ЕГЭ" id="1"/>
+                </row>
+                <row id="1696456607031972201" title="Русский язык" shortTitle="р.я" priority="3" examType="1">
+                    <passMarkMultipliedBy1000>36000</passMarkMultipliedBy1000>
+                    <passForms title="Олимп." id="6"/>
+                    <passForms title="Экзамен" id="3"/>
+                    <passForms title="ЕГЭ" id="1"/>
+                </row>
+            </entranceDiscipline>
+            <entrant>
+                <row regNumber="7" fio="Иванов И.И." fullFio="Иванов Иван Иванович" targetAdmissionKindInterestsState="false" originalSubmissionWay="1" priority="1" finalMark="167" finalMarkAsLong="167000" passedExam="true" entranceMark="167" entranceMarkAsLong="167000" achievementMark="0" achievementMarkAsLong="0" priorityPerEntrant="1" position="1" commonRating="2" agreedRating="0" absolutePosition="1" averageEduInstitutionMark="-" originalIn="true" accepted="false" acceptedEntrant="false" refusedToBeEnrolled="false" recommended="false" status="Сданы ВИ" statusCode="4" needDormitory="false" marks="39 50 78" entrantId="1700099833760685687" requestId="1700100681883555864" reqCompId="1700100681934938106">
+                    <firstRating>1</firstRating>
+                    <markRows markTitle="Биология" mark="39000"/>
+                    <markRows markTitle="Математика" mark="50000"/>
+                    <markRows markTitle="Русский язык" mark="78000"/>
+                    <markEntranceExams>1. Биология: 39 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>2. Математика: 50 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>3. Русский язык: 78 (ЕГЭ)</markEntranceExams>
+                    <entrantPersonalNumber>2100009</entrantPersonalNumber>
+                </row>
+                <row regNumber="27" fio="Петров П.П." fullFio="Петров Петр Петрович" targetAdmissionKindInterestsState="false" originalSubmissionWay="1" priority="1" finalMark="156" finalMarkAsLong="156000" passedExam="true" entranceMark="156" entranceMarkAsLong="156000" achievementMark="0" achievementMarkAsLong="0" priorityPerEntrant="1" position="2" commonRating="3" agreedRating="0" absolutePosition="2" averageEduInstitutionMark="-" originalIn="true" accepted="false" acceptedEntrant="false" refusedToBeEnrolled="false" recommended="false" status="Сданы ВИ" statusCode="4" needDormitory="true" marks="57 46 53" entrantId="1700101565488143991" requestId="1700102107964741656" reqCompId="1700102108006686714">
+                    <firstRating>2</firstRating>
+                    <markRows markTitle="Биология" mark="57000"/>
+                    <markRows markTitle="Математика" mark="46000"/>
+                    <markRows markTitle="Русский язык" mark="53000"/>
+                    <markEntranceExams>1. Биология: 57 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>2. Математика: 46 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>3. Русский язык: 53 (ЕГЭ)</markEntranceExams>
+                    <entrantPersonalNumber>2100029</entrantPersonalNumber>
+                </row>
+                <row regNumber="2" fio="Сидорова С.С." fullFio="Сидорова Светлана Сергеевна" targetAdmissionKindInterestsState="false" originalSubmissionWay="1" priority="1" finalMark="155" finalMarkAsLong="155000" passedExam="true" entranceMark="155" entranceMarkAsLong="155000" achievementMark="0" achievementMarkAsLong="0" priorityPerEntrant="1" position="3" commonRating="1" agreedRating="0" absolutePosition="3" averageEduInstitutionMark="-" originalIn="true" accepted="false" acceptedEntrant="false" refusedToBeEnrolled="false" recommended="false" status="Сданы ВИ" statusCode="4" needDormitory="false" marks="50 27 78" entrantId="1700085778728722039" requestId="1700085965008246808" reqCompId="1700085965088989178">
+                    <firstRating>3</firstRating>
+                    <markRows markTitle="Биология" mark="50000"/>
+                    <markRows markTitle="Математика" mark="27000"/>
+                    <markRows markTitle="Русский язык" mark="78000"/>
+                    <markEntranceExams>1. Биология: 50 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>2. Математика: 27 (ЕГЭ)</markEntranceExams>
+                    <markEntranceExams>3. Русский язык: 78 (ЕГЭ)</markEntranceExams>
+                    <entrantPersonalNumber>2100002</entrantPersonalNumber>
+                </row>
+            </entrant>
+            <eduProgram>
+                <row id="1697272635706138049" programSpec="Агрономия" rootSpec="false" eduProgramForm="Очная" secondaryInDepth="" duration="4 года" eduProgramTrait="Обычная" fullTitleWithoutSubjectIndex="35.03.04 Агрономия (Растениеводство, селекция и семеноводство, профиль)" conditionsWithForm="Очная форма, 4 года, на базе соо, АТФ" titleAndConditionsShortWithForm="Агрономия (Ао), очн, 4 года, на базе соо, АТФ"/>
+            </eduProgram>
+            <targetAdmissionPlan/>
+        </row>
+    </competition>
+    <entrant>
+        <row id="1700099833760685687" fio="Иванов И.И." fullFio="Иванов Иван Иванович" firstName="Иван" middleName="Иванович" lastName="Иванов" db="16" mb="6"/>
+        <row id="1700085778728722039" fio="Петров П.П." fullFio="Петров Петр Петрович" firstName="Петр" middleName="Петрович" lastName="Петров" db="1" mb="5"/>
+        <row id="1700101565488143991" fio="Сидорова С.С." fullFio="Сидоров Светлана Сергеевна" firstName="Светлана" middleName="Сергеевна" lastName="Сидорова" db="29" mb="1"/>
+    </entrant>
+    <examGroup>
+        <row id="1697200089693509303" title="Математика (экз)" disciplineTitle="Математика" disciplineCode="2" passFormCode="3" passFormTitle="Экзамен" passFormFullTitle="Экзамен" size="100" closed="false">
+            <events>
+                <row durationBegin="2021-07-21T15:00:00+03:00" durationEnd="2021-07-21T17:00:00+03:00" place="ауд. 213 КФ (Здание главного учебного корпуса, блок: Корпус БВМ (корпус физиологический), 2 этаж)" link=""/>
+            </events>
+        </row>
+        <row id="1697200024507733687" title="Русский язык (экз)" disciplineTitle="Русский язык" disciplineCode="1" passFormCode="3" passFormTitle="Экзамен" passFormFullTitle="Экзамен" size="100" closed="false">
+            <events>
+                <row durationBegin="2021-07-27T13:00:00+03:00" durationEnd="2021-07-27T15:00:00+03:00" place="ауд. 204 КФ (Здание главного учебного корпуса, блок: Корпус БВМ (корпус физиологический), 2 этаж)" link=""/>
+            </events>
+        </row>
+        <row id="1697200073015908023" title="Русский язык 2 (экз)" disciplineTitle="Русский язык" disciplineCode="1" passFormCode="3" passFormTitle="Экзамен" passFormFullTitle="Экзамен" size="100" closed="false">
+            <events>
+                <row durationBegin="2021-07-27T13:00:00+03:00" durationEnd="2021-07-27T15:00:00+03:00" place="ауд. 204 КФ (Здание главного учебного корпуса, блок: Корпус БВМ (корпус физиологический), 2 этаж)" link=""/>
+            </events>
+        </row>
+    </examGroup>
+</enrEntrantRatingEnvironmentNode>
