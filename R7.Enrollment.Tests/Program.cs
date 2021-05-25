@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using R7.Enrollment.Data;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Tests
