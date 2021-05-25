@@ -16,10 +16,10 @@ namespace R7.Enrollment.Tests
             var xml = XDocument.Load ("./data/sample.xml");
             var competitionElem = xml.Root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
-                var competition = Competition.FromXElement (competitionRow);
+                var competition = ModelFactory.CreateCompetition (competitionRow);
                 Console.WriteLine (competition.EduProgramTitle);
                 foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
-                    var entrant = CompetitionEntrant.FromXElement (entrantRow);
+                    var entrant = ModelFactory.CreateCompetitionEntrant (entrantRow);
                     Console.WriteLine ($"{entrant.Position} {entrant.Name} {entrant.FinalMark}");
                 }
             }
