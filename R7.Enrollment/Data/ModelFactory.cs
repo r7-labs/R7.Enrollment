@@ -1,7 +1,6 @@
+using System;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Xml.Linq;
-using System.Xml.Schema;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
@@ -41,7 +40,17 @@ namespace R7.Enrollment.Data
                 ShortTitle = xelem.Attribute ("shortTitle")?.Value
             };
         }
-
+        
+        public static EntrantMark CreateEntrantMark (XElement xelem, Competition competition)
+        {
+            var markTitle = xelem.Attribute ("markTitle")?.Value;
+            return new EntrantMark {
+                Mark = (TryParseInt (xelem.Attribute ("mark")?.Value) ?? 0) / 1000,
+                EntranceDiscipline = competition.EntranceDisciplines
+                    .FirstOrDefault (ed => ed.Title.IndexOf (markTitle, StringComparison.CurrentCultureIgnoreCase) >= 0)
+            };
+        }
+        
         static int? TryParseInt (string value)
         {
             return int.TryParse (value, out int result) ? (int?) result : null;

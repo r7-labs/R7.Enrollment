@@ -30,6 +30,11 @@ namespace R7.Enrollment.Data
                 foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
                     var entrant = ModelFactory.CreateCompetitionEntrant (entrantRow);
                     competition.Entrants.Add (entrant);
+
+                    foreach (var markRow in entrantRow.Descendants ("markRows")) {
+                        var entrantMark = ModelFactory.CreateEntrantMark (markRow, competition);
+                        entrant.Marks.Add (entrantMark);
+                    }
                 }
             }
         }
@@ -37,9 +42,19 @@ namespace R7.Enrollment.Data
         public void Dump ()
         {
             foreach (var competition in Competitions) {
+                Console.WriteLine ("---");
+                Console.WriteLine (competition.CompetitionType);
+                Console.WriteLine (competition.EduProgramSubject);
                 Console.WriteLine (competition.EduProgramTitle);
+                Console.WriteLine (competition.EduLevel);
+                Console.WriteLine (competition.EduProgramForm);
+                Console.WriteLine (competition.OrgUnitTitle);
                 foreach (var entrant in competition.Entrants) {
-                    Console.WriteLine ($"{entrant.Position} {entrant.Name} {entrant.FinalMark}");
+                    Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");
+                    foreach (var mark in entrant.Marks) {
+                        Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
+                    }
+                    Console.WriteLine ();
                 }
             }
         }

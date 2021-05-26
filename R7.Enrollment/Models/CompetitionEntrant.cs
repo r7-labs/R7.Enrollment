@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Net.Mime;
+
 namespace R7.Enrollment.Models
 {
     public class CompetitionEntrant
@@ -15,5 +18,7 @@ namespace R7.Enrollment.Models
         public bool OriginalIn { get; set; }
         
         public bool AcceptedEntrant { get; set; }
+
+        public IList<EntrantMark> Marks { get; set; } = new List<EntrantMark> ();
     }
 }
