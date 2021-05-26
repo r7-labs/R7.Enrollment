@@ -21,6 +21,12 @@ namespace R7.Enrollment.Data
             foreach (var competitionRow in competitionElem.Elements ("row")) {
                 var competition = ModelFactory.CreateCompetition (competitionRow);
                 Competitions.Add (competition);
+
+                foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
+                    var entranceDiscipline = ModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
+                    competition.EntranceDisciplines.Add (entranceDiscipline);
+                }
+                
                 foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
                     var entrant = ModelFactory.CreateCompetitionEntrant (entrantRow);
                     competition.Entrants.Add (entrant);

@@ -33,6 +33,14 @@ namespace R7.Enrollment.Data
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value
             };
         }
+        
+        public static EntranceDiscipline CreateEntranceDiscipline (XElement xelem)
+        {
+            return new EntranceDiscipline {
+                Title = xelem.Attribute ("title")?.Value,
+                ShortTitle = xelem.Attribute ("shortTitle")?.Value
+            };
+        }
 
         static int? TryParseInt (string value)
         {
