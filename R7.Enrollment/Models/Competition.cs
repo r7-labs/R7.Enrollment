@@ -8,6 +8,8 @@ namespace R7.Enrollment.Models
         
         public string EduLevel { get; set; }
         
+        public string EduProgramSubject { get; set; }
+        
         public string EduProgramTitle { get; set; }
         
         public string OrgUnitTitle { get; set; }

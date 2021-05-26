@@ -14,7 +14,10 @@ namespace R7.Enrollment.Data
                 PersonalNumber = xelem.Descendants ("entrantPersonalNumber").FirstOrDefault ()?.Value,
                 Name = xelem.Attribute ("fio")?.Value,
                 Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,
-                FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0
+                FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0,
+                AchievementMark = TryParseInt (xelem.Attribute ("achievementMark")?.Value) ?? 0,
+                OriginalIn = bool.Parse (xelem.Attribute ("originalIn").Value),
+                AcceptedEntrant = bool.Parse (xelem.Attribute ("acceptedEntrant").Value)
             };
         }
         
@@ -23,6 +26,7 @@ namespace R7.Enrollment.Data
             return new Competition {
                 EduProgramForm = xelem.Attribute ("eduProgramForm")?.Value,
                 EduLevel = xelem.Attribute ("eduLevel")?.Value,
+                EduProgramSubject = xelem.Attribute ("eduProgramSubject")?.Value,
                 EduProgramTitle = xelem.Attribute ("programSetPrintTitle")?.Value,
                 OrgUnitTitle = xelem.Attribute ("formativeOrgUnitTitle")?.Value,
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
