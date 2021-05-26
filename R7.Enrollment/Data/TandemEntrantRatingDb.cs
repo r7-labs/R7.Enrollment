@@ -54,6 +54,11 @@ namespace R7.Enrollment.Data
                     foreach (var mark in entrant.Marks) {
                         Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
                     }
+                    Console.Write ($"achievementMark:{entrant.AchievementMark} ");
+                    Console.Write ($"originalIn:{entrant.OriginalIn} ");
+                    Console.Write ($"acceptedEntrant:{entrant.AcceptedEntrant} ");
+                    
+                    
                     Console.WriteLine ();
                 }
             }
