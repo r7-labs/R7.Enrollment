@@ -5,7 +5,7 @@ using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
 {
-    public class ModelFactory
+    public class TandemXmlModelFactory
     {
         public static CompetitionEntrant CreateCompetitionEntrant (XElement xelem)
         {

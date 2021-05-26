@@ -19,20 +19,20 @@ namespace R7.Enrollment.Data
             var xml = XDocument.Load (path);
             var competitionElem = xml.Root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
-                var competition = ModelFactory.CreateCompetition (competitionRow);
+                var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
                 Competitions.Add (competition);
 
                 foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
-                    var entranceDiscipline = ModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
+                    var entranceDiscipline = TandemXmlModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
                     competition.EntranceDisciplines.Add (entranceDiscipline);
                 }
                 
                 foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
-                    var entrant = ModelFactory.CreateCompetitionEntrant (entrantRow);
+                    var entrant = TandemXmlModelFactory.CreateCompetitionEntrant (entrantRow);
                     competition.Entrants.Add (entrant);
 
                     foreach (var markRow in entrantRow.Descendants ("markRows")) {
-                        var entrantMark = ModelFactory.CreateEntrantMark (markRow, competition);
+                        var entrantMark = TandemXmlModelFactory.CreateEntrantMark (markRow, competition);
                         entrant.Marks.Add (entrantMark);
                     }
                 }
