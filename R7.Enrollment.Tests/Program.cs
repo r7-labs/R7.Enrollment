@@ -1,8 +1,8 @@
-using System;
+using System.IO;
 using System.Text;
 using System.Xml;
 using R7.Enrollment.Data;
-using R7.Enrollment.Views;
+using R7.Enrollment.Renderers;
 
 namespace R7.Enrollment.Tests
 {
@@ -13,12 +13,12 @@ namespace R7.Enrollment.Tests
             var db = new TandemEntrantRatingDb ("./data/sample.xml");
             db.Dump ();
             
-            var htmlRenderer = new TandemEntrantRatingHtmlRenderer (db);
+            var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
             var sb = new StringBuilder ();
             var html = XmlWriter.Create (sb);
-            htmlRenderer.Render (html);
+            htmlRenderer.RenderStandalone (db, html);
             html.Close ();
-            Console.WriteLine (sb.ToString ());
+            File.WriteAllText ("output.html", sb.ToString ());
         }
     }
 }
