@@ -28,6 +28,6 @@ namespace R7.Enrollment.Models
 
         public IList<EntranceDiscipline> EntranceDisciplines { get; set; } = new List<EntranceDiscipline> ();
         
-        public IList<CompetitionEntrant> Entrants { get; set; } = new List<CompetitionEntrant> ();
+        public IList<Entrant> Entrants { get; set; } = new List<Entrant> ();
     }
 }

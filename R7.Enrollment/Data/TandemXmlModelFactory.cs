@@ -22,9 +22,9 @@ namespace R7.Enrollment.Data
             };
         }
         
-        public static CompetitionEntrant CreateCompetitionEntrant (XElement xelem)
+        public static Entrant CreateCompetitionEntrant (XElement xelem)
         {
-            return new CompetitionEntrant {
+            return new Entrant {
                 PersonalNumber = xelem.Descendants ("entrantPersonalNumber").FirstOrDefault ()?.Value,
                 Name = xelem.Attribute ("fio")?.Value,
                 Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,

@@ -158,7 +158,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
         
-        public void RenderEntrant (CompetitionEntrant entrant, XmlWriter html)
+        public void RenderEntrant (Entrant entrant, XmlWriter html)
         {
             html.WriteStartElement ("tr");
             html.WriteElementString ("td", entrant.Position.ToString ());

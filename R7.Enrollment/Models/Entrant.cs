@@ -3,7 +3,7 @@ using System.Net.Mime;
 
 namespace R7.Enrollment.Models
 {
-    public class CompetitionEntrant
+    public class Entrant
     {
         public string Name { get; set; }
         
