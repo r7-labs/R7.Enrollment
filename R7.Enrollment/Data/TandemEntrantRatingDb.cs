@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Xml.Linq;
 using R7.Enrollment.Models;
-using R7.Enrollment.Renderers;
 
 namespace R7.Enrollment.Data
 {
@@ -19,25 +18,21 @@ namespace R7.Enrollment.Data
             entrantRatingEnv.EnrollmentCampaignTitle = xml.Root.Attribute ("enrollmentCampaignTitle").Value;
 
             var competitionElem = xml.Root.Element ("competition");
-            foreach (var competitionRow in competitionElem.Elements ("row"))
-            {
+            foreach (var competitionRow in competitionElem.Elements ("row")) {
                 var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
                 competition.CurrentDateTime = entrantRatingEnv.CurrentDateTime;
                 entrantRatingEnv.Competitions.Add (competition);
 
-                foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row"))
-                {
+                foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
                     var entranceDiscipline = TandemXmlModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
                     competition.EntranceDisciplines.Add (entranceDiscipline);
                 }
 
-                foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row"))
-                {
+                foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
                     var entrant = TandemXmlModelFactory.CreateCompetitionEntrant (entrantRow);
                     competition.Entrants.Add (entrant);
 
-                    foreach (var markRow in entrantRow.Descendants ("markRows"))
-                    {
+                    foreach (var markRow in entrantRow.Descendants ("markRows")) {
                         var entrantMark = TandemXmlModelFactory.CreateEntrantMark (markRow, competition);
                         entrant.Marks.Add (entrantMark);
                     }
@@ -49,10 +44,8 @@ namespace R7.Enrollment.Data
 
         public void Dump ()
         {
-            foreach (var entrantRatingEnv in EntrantRatingEnvironments)
-            {
-                foreach (var competition in entrantRatingEnv.Competitions)
-                {
+            foreach (var entrantRatingEnv in EntrantRatingEnvironments) {
+                foreach (var competition in entrantRatingEnv.Competitions) {
                     Console.WriteLine ("---");
                     Console.WriteLine (competition.CompetitionType);
                     Console.WriteLine (competition.EduProgramSubject);
@@ -60,11 +53,9 @@ namespace R7.Enrollment.Data
                     Console.WriteLine (competition.EduLevel);
                     Console.WriteLine (competition.EduProgramForm);
                     Console.WriteLine (competition.OrgUnitTitle);
-                    foreach (var entrant in competition.Entrants)
-                    {
+                    foreach (var entrant in competition.Entrants) {
                         Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");
-                        foreach (var mark in entrant.Marks)
-                        {
+                        foreach (var mark in entrant.Marks) {
                             Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
                         }
 
