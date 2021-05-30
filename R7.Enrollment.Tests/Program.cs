@@ -1,4 +1,5 @@
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Xml;
 using R7.Enrollment.Data;
@@ -10,13 +11,14 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var db = new TandemEntrantRatingDb ("./data/sample.xml");
+            var db = new TandemEntrantRatingDb ();
+            db.LoadEntrantRatingEnvironment ("./data/sample.xml");
             db.Dump ();
             
             var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
             var sb = new StringBuilder ();
             var html = XmlWriter.Create (sb);
-            htmlRenderer.RenderStandalone (db, html);
+            htmlRenderer.RenderStandalone (db.EntrantRatingEnvironments.First (), html);
             html.Close ();
             File.WriteAllText ("output.html", sb.ToString ());
         }

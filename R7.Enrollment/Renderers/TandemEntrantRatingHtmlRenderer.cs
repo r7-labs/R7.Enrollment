@@ -6,7 +6,7 @@ namespace R7.Enrollment.Renderers
 {
     public class TandemEntrantRatingHtmlRenderer
     {
-        public void RenderStandalone (TandemEntrantRatingDb db, XmlWriter html)
+        public void RenderStandalone (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
         {
             html.WriteStartDocument ();
             html.WriteStartElement ("html");
@@ -21,15 +21,15 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
             
             html.WriteStartElement ("body");
-            Render (db, html);
+            Render (entrantRatingEnv, html);
             html.WriteEndElement ();
             html.WriteEndElement ();
             html.WriteEndDocument ();
         }
 
-        public void Render (TandemEntrantRatingDb db, XmlWriter html)
+        public void Render (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
         {
-            foreach (var competition in db.Competitions) {
+            foreach (var competition in entrantRatingEnv.Competitions) {
                 if (competition.Entrants.Count > 0) {
                     RenderCompetition (competition, html);
                 }
