@@ -1,5 +1,4 @@
 using System.Xml;
-using R7.Enrollment.Data;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Renderers
@@ -77,7 +76,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Направление подготовки:");
             html.WriteElementWithAttributeString ("td", competition.EduProgramSubject, "colspan", "2");
             html.WriteElementString ("td", "");
-            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{4 года}}, {{на базе соо}}, {{АТФ}} {competition.EduLevel}");
+            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{4 года}}, на базе {competition.EduLevelRequirement}, {{АТФ}} {competition.EduLevel}");
             html.WriteEndElement ();
             
             // 4th row
@@ -96,7 +95,7 @@ namespace R7.Enrollment.Renderers
             
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "3");
-            html.WriteString ("Число мест на бюджет (КЦП) — {15}, из них:");
+            html.WriteString ($"Число мест на бюджет (КЦП) — {competition.FirstStepPlan}, из них:");
             html.WriteRaw ("<br />");
             html.WriteString ("Принятые сокращения:");
             html.WriteRaw ("<br />");
@@ -116,7 +115,7 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("td");
             html.WriteString ("Число заявлений:");
             html.WriteRaw ("<br />");
-            html.WriteString ($"на бюджет (КЦП) — {{1}}");
+            html.WriteString ("на бюджет (КЦП) — {1}");
             html.WriteEndElement ();
             
             html.WriteEndElement ();
@@ -126,7 +125,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Образовательные программы:");
 
             html.WriteElementWithAttributeString ("td",
-                "{ВЛиИо – Воспроизводство лесов и их использование (ВЛиИо)}, {4 года}, {на базе соо}, {АТФ}", "colspan", "4");
+                $"{{А – Агрономия (А)}}, {{4 года}}, на базе {competition.EduLevelRequirement}, {{АТФ}}", "colspan", "4");
             
             html.WriteEndElement ();
             
@@ -171,8 +170,8 @@ namespace R7.Enrollment.Renderers
             
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
-            html.WriteElementString ("td", "");
-            html.WriteElementString ("td", "");
+            html.WriteElementString ("td", "{}");
+            html.WriteElementString ("td", "{}");
             html.WriteEndElement ();
         }
 

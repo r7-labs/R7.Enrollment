@@ -24,7 +24,11 @@ namespace R7.Enrollment.Models
         
         public string CompensationType { get; set; }
         
+        public string EduLevelRequirement { get; set; }
+        
         public int Plan { get; set; }
+        
+        public int FirstStepPlan { get; set; }
 
         public IList<EntranceDiscipline> EntranceDisciplines { get; set; } = new List<EntranceDiscipline> ();
         

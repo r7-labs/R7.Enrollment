@@ -18,7 +18,9 @@ namespace R7.Enrollment.Data
                 OrgUnitTitle = xelem.Attribute ("formativeOrgUnitTitle")?.Value,
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value,
-                Plan = TryParseInt (xelem.Attribute ("plan")?.Value) ?? 0
+                Plan = TryParseInt (xelem.Attribute ("plan")?.Value) ?? 0,
+                FirstStepPlan = TryParseInt (xelem.Attribute ("firstStepPlan")?.Value) ?? 0,
+                EduLevelRequirement = xelem.Attribute ("eduLevelRequirement")?.Value
             };
         }
         
