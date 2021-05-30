@@ -37,6 +37,10 @@ namespace R7.Enrollment.Renderers
 
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
+            html.WriteRaw ("<hr />");
+            html.WriteElementString ("h2", $"{competition.EduProgramTitle}");
+            html.WriteElementString ("h3", $"{competition.EduProgramForm} форма, {competition.CompensationType}, {competition.CompetitionType}");
+            
             RenderCompetitionHeader (competition, html);
 
             html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
@@ -115,7 +119,7 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("td");
             html.WriteString ("Число заявлений:");
             html.WriteRaw ("<br />");
-            html.WriteString ("на бюджет (КЦП) — {1}");
+            html.WriteString ("на бюджет (КЦП) — {?}");
             html.WriteEndElement ();
             
             html.WriteEndElement ();
@@ -170,8 +174,8 @@ namespace R7.Enrollment.Renderers
             
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
-            html.WriteElementString ("td", "{}");
-            html.WriteElementString ("td", "{}");
+            html.WriteElementString ("td", "{?}");
+            html.WriteElementString ("td", "{?}");
             html.WriteEndElement ();
         }
 
