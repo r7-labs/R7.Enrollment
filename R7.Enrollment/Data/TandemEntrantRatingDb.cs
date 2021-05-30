@@ -9,15 +9,24 @@ namespace R7.Enrollment.Data
     {
         public IList<EntrantRatingEnvironment> EntrantRatingEnvironments { get; set; } = new List<EntrantRatingEnvironment> ();
 
-        public void LoadEntrantRatingEnvironment (string path)
+        public void AddNode (string path)
         {
             var xml = XDocument.Load (path);
+            if (xml.Root.Name == "enrEntrantRatingEnvironmentNode") {
+                ParseEntrantRatingEnvironmentNode (xml.Root);
+                return;
+            }
 
+            throw new ArgumentException ($"Unsupported node type: {xml.Root.Name}");
+        }
+
+        void ParseEntrantRatingEnvironmentNode (XElement root)
+        {
             var entrantRatingEnv = new EntrantRatingEnvironment ();
-            entrantRatingEnv.CurrentDateTime = DateTime.Parse (xml.Root.Attribute ("currentDateTime").Value);
-            entrantRatingEnv.EnrollmentCampaignTitle = xml.Root.Attribute ("enrollmentCampaignTitle").Value;
+            entrantRatingEnv.CurrentDateTime = DateTime.Parse (root.Attribute ("currentDateTime").Value);
+            entrantRatingEnv.EnrollmentCampaignTitle = root.Attribute ("enrollmentCampaignTitle").Value;
 
-            var competitionElem = xml.Root.Element ("competition");
+            var competitionElem = root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
                 var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
                 competition.CurrentDateTime = entrantRatingEnv.CurrentDateTime;
