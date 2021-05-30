@@ -30,7 +30,9 @@ namespace R7.Enrollment.Renderers
         public void Render (TandemEntrantRatingDb db, XmlWriter html)
         {
             foreach (var competition in db.Competitions) {
-                RenderCompetition (competition, html);
+                if (competition.Entrants.Count > 0) {
+                    RenderCompetition (competition, html);
+                }
             }
         }
 
@@ -38,7 +40,7 @@ namespace R7.Enrollment.Renderers
         {
             RenderCompetitionHeader (competition, html);
 
-            html.WriteElementString ("h4", "Общий конкурс (заявлений — 1, число мест — 12)");
+            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
             
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
@@ -59,13 +61,13 @@ namespace R7.Enrollment.Renderers
             // 1st row
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("td", "Рейтинговый (конкурсный) список, список поступающих на", "colspan", "2");
-            html.WriteElementWithAttributeString ("td", "18.05.2021", "colspan", "2");
+            html.WriteElementWithAttributeString ("td", $"{competition.CurrentDateTime.ToShortDateString ()} {competition.CurrentDateTime.ToShortTimeString ()}", "colspan", "2");
             html.WriteElementString ("td", "");
             html.WriteEndElement ();
             
             // 2nd row
             html.WriteStartElement ("tr");
-            html.WriteElementWithAttributeString ("td", "Федеральное государственное бюджетное образовательное учреждение высшего образования «Волгоградский государственный аграрный университет»", "colspan", "3");
+            html.WriteElementWithAttributeString ("td", competition.OrgTitle, "colspan", "3");
             html.WriteElementString ("td", "");
             html.WriteElementString ("td", competition.OrgUnitTitle);
             html.WriteEndElement ();
@@ -75,7 +77,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Направление подготовки:");
             html.WriteElementWithAttributeString ("td", competition.EduProgramSubject, "colspan", "2");
             html.WriteElementString ("td", "");
-            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, 4 года, на базе соо, АТФ бакалавриат");
+            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{4 года}}, {{на базе соо}}, {{АТФ}} {competition.EduLevel}");
             html.WriteEndElement ();
             
             // 4th row
@@ -94,7 +96,7 @@ namespace R7.Enrollment.Renderers
             
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "3");
-            html.WriteString ("Число мест на бюджет (КЦП) — 15, из них:");
+            html.WriteString ("Число мест на бюджет (КЦП) — {15}, из них:");
             html.WriteRaw ("<br />");
             html.WriteString ("Принятые сокращения:");
             html.WriteRaw ("<br />");
@@ -114,7 +116,7 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("td");
             html.WriteString ("Число заявлений:");
             html.WriteRaw ("<br />");
-            html.WriteString ("на бюджет (КЦП) — 1");
+            html.WriteString ($"на бюджет (КЦП) — {{1}}");
             html.WriteEndElement ();
             
             html.WriteEndElement ();
@@ -124,7 +126,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Образовательные программы:");
 
             html.WriteElementWithAttributeString ("td",
-                "ВЛиИо – Воспроизводство лесов и их использование (ВЛиИо), 4 года, на базе соо, АТФ", "colspan", "4");
+                "{ВЛиИо – Воспроизводство лесов и их использование (ВЛиИо)}, {4 года}, {на базе соо}, {АТФ}", "colspan", "4");
             
             html.WriteEndElement ();
             
@@ -167,11 +169,13 @@ namespace R7.Enrollment.Renderers
                 html.WriteElementString ("td", mark.Mark.ToString ());
             }
             
-            html.WriteElementString ("td", entrant.OriginalIn.ToString ());
-            html.WriteElementString ("td", entrant.AcceptedEntrant.ToString ());
+            html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
+            html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
             html.WriteElementString ("td", "");
             html.WriteElementString ("td", "");
             html.WriteEndElement ();
         }
+
+        string YesNoString (bool value) => value ? "да" : "нет";
     }
 }

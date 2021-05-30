@@ -7,6 +7,10 @@ namespace R7.Enrollment.Data
 {
     public class TandemEntrantRatingDb
     {
+        public DateTime CurrentDateTime { get; set; }
+        
+        public string EnrollmentCampaignTitle { get; set; }
+        
         public IList<Competition> Competitions { get; set; } = new List<Competition> ();
 
         public TandemEntrantRatingDb (string path)
@@ -17,9 +21,14 @@ namespace R7.Enrollment.Data
         void Load (string path)
         {
             var xml = XDocument.Load (path);
+            
+            CurrentDateTime = DateTime.Parse (xml.Root.Attribute ("currentDateTime").Value);
+            EnrollmentCampaignTitle = xml.Root.Attribute ("enrollmentCampaignTitle").Value;
+            
             var competitionElem = xml.Root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
                 var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
+                competition.CurrentDateTime = CurrentDateTime;
                 Competitions.Add (competition);
 
                 foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
