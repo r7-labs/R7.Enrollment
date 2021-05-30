@@ -80,7 +80,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Направление подготовки:");
             html.WriteElementWithAttributeString ("td", competition.EduProgramSubject, "colspan", "2");
             html.WriteElementString ("td", "");
-            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{4 года}}, на базе {competition.EduLevelRequirement}, {{АТФ}} {competition.EduLevel}");
+            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{срок обучения?}}, на базе {competition.EduLevelRequirement}, {{сокр. наим. факультета?}} {competition.EduLevel}");
             html.WriteEndElement ();
             
             // 4th row
@@ -129,7 +129,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Образовательные программы:");
 
             html.WriteElementWithAttributeString ("td",
-                $"{{А – Агрономия (А)}}, {{4 года}}, на базе {competition.EduLevelRequirement}, {{АТФ}}", "colspan", "4");
+                $"{{полное наим. профиля?}}, {{срок обучения?}}, на базе {competition.EduLevelRequirement}, {{сокр. наим. факультета?}}", "colspan", "4");
             
             html.WriteEndElement ();
             
