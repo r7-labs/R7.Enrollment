@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <ReleaseVersion>0.1.0</ReleaseVersion>
+        <TargetFramework>netcoreapp2.2</TargetFramework>
+        <RootNamespace>Deploy</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Content Include="GenerateManifest.ps1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\R7.Enrollment.Dnn\R7.Enrollment.Dnn.csproj" />
+      <ProjectReference Include="..\R7.Enrollment.Tests\R7.Enrollment.Tests.csproj" />
+      <ProjectReference Include="..\R7.Enrollment\R7.Enrollment.csproj" />
+    </ItemGroup>
+
+    <Import Project="__Settings.targets" />
+    <Import Project="__Defaults.targets" />
+    <Import Project="Tests.targets" />
+    <Import Project="InstallPackage.targets" />
+    <Import Project="LocalDeploy.targets" />
+
+    <Target Name="CustomAfterBuild" AfterTargets="AfterBuild;AfterRebuild" DependsOnTargets="Tests;LocalDeploy;InstallPackage" Condition=" '$(EnableAfterBuild)' != 'false' " />
+</Project>

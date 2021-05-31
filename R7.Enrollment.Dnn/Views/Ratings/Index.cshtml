@@ -1,0 +1,10 @@
+﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<RatingsViewModel>
+@using DotNetNuke.Framework
+@using DotNetNuke.Framework.JavaScriptLibraries
+@using R7.Enrollment.Dnn.ViewModels
+@{
+    JavaScript.RequestRegistration ("React");
+    JavaScript.RequestRegistration ("ReactDOM");
+    ServicesFramework.Instance.RequestAjaxScriptSupport ();
+}
+<p>Hello, world!</p>
