@@ -19,9 +19,8 @@
 
     <Import Project="__Settings.targets" />
     <Import Project="__Defaults.targets" />
-    <Import Project="Tests.targets" />
     <Import Project="InstallPackage.targets" />
     <Import Project="LocalDeploy.targets" />
 
-    <Target Name="CustomAfterBuild" AfterTargets="AfterBuild;AfterRebuild" DependsOnTargets="Tests;LocalDeploy;InstallPackage" Condition=" '$(EnableAfterBuild)' != 'false' " />
+    <Target Name="CustomAfterBuild" AfterTargets="AfterBuild;AfterRebuild" DependsOnTargets="LocalDeploy;InstallPackage" Condition=" '$(EnableAfterBuild)' != 'false' " />
 </Project>

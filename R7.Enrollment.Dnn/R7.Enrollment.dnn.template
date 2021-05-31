@@ -53,7 +53,7 @@
                 <component type="Module">
                     <desktopModule>
                         <moduleName>R7.Enrollment.Ratings</moduleName>
-                        <foldername>R7.Enrollment/R7.Enrollment.Dnn</foldername>
+                        <foldername>R7.Enrollment</foldername>
                         <businessControllerClass>R7.Enrollment.Dnn.Components.RatingsModuleController</businessControllerClass>
                         <supportedFeatures />
                         <moduleDefinitions>
