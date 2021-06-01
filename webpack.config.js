@@ -4,7 +4,7 @@ var path = require ("path");
 var jsxConfig = {
     mode: "production",
     entry: {
-        test: "./R7.Enrollment.Dnn/Views/Test.jsx"
+        HelloWorld: "./R7.Enrollment.Dnn/Views/HelloWorld.jsx"
     },
     output: {
         path: path.resolve (__dirname, "R7.Enrollment.Dnn/assets/js"),

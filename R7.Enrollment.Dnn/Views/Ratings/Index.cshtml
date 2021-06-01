@@ -1,10 +1,10 @@
 ﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<RatingsViewModel>
-@using DotNetNuke.Framework
+@using DotNetNuke.Web.Client.ClientResourceManagement
 @using DotNetNuke.Framework.JavaScriptLibraries
 @using R7.Enrollment.Dnn.ViewModels
 @{
     JavaScript.RequestRegistration ("React");
     JavaScript.RequestRegistration ("ReactDOM");
-    ServicesFramework.Instance.RequestAjaxScriptSupport ();
+    ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/HelloWorld.min.js");
 }
-<p>Hello, world!</p>
+<div class="enrollment-react-root" data-module-id="@Dnn.ModuleContext.ModuleId"></div>
