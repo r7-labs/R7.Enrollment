@@ -5,6 +5,6 @@
         <BundleImported>true</BundleImported>
     </PropertyGroup>
     <Target Name="Bundle">
-        <Message Text="Bundle things here..." />
+        <Exec Command="npm run build" />
     </Target>
 </Project>

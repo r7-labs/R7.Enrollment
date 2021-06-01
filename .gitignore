@@ -2,6 +2,7 @@ bin/
 obj/
 /.idea/
 /packages/
+/node_modules/
 riderModule.iml
 /_ReSharper.Caches/
 enr_rating_*.xml
