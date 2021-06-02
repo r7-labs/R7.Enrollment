@@ -144,6 +144,7 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="releaseNotes.htm" />
+      <Content Include="Views\HelloWorld.jsx" />
       <Content Include="Views\Ratings\Index.cshtml" />
       <Content Include="Views\Shared\_Layout.cshtml" />
       <Content Include="Views\_ViewStart.cshtml" />
