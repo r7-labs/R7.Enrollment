@@ -85,6 +85,7 @@
           <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="System.Web" />
         <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35">
           <HintPath>..\packages\Microsoft.AspNet.WebPages.3.1.1\lib\net45\System.Web.Helpers.dll</HintPath>
           <Private>True</Private>
@@ -114,6 +115,7 @@
           <Private>True</Private>
         </Reference>
         <Reference Include="System.Xml" />
+        <Reference Include="System.Xml.Linq" />
         <Reference Include="Telerik.Web.UI, Version=2013.2.717.40, Culture=neutral, PublicKeyToken=121fae78165ba3d4">
           <HintPath>..\packages\DotNetNuke.Web.Deprecated.8.0.4.226\lib\net40\Telerik.Web.UI.dll</HintPath>
           <Private>True</Private>
@@ -130,6 +132,8 @@
         <Compile Include="..\R7.Enrollment\Properties\SolutionInfo.cs">
             <Link>Properties\SolutionInfo.cs</Link>
         </Compile>
+        <Compile Include="Services\EnrollmentController.cs" />
+        <Compile Include="Services\EnrollmentRouteMapper.cs" />
         <Compile Include="ViewModels\RatingsViewModel.cs" />
     </ItemGroup>
     <ItemGroup>
@@ -144,7 +148,9 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
       <Content Include="releaseNotes.htm" />
+      <Content Include="Services\EnrollmentService.js" />
       <Content Include="Views\HelloWorld.jsx" />
+      <Content Include="Views\Ratings\RatingSearch.jsx" />
       <Content Include="Views\Ratings\Index.cshtml" />
       <Content Include="Views\Shared\_Layout.cshtml" />
       <Content Include="Views\_ViewStart.cshtml" />

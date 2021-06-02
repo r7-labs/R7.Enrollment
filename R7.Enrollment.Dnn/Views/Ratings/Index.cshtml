@@ -5,6 +5,25 @@
 @{
     JavaScript.RequestRegistration ("React");
     JavaScript.RequestRegistration ("ReactDOM");
-    ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/HelloWorld.min.js");
+    ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/RatingSearch.min.js");
+    ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/EnrollmentService.min.js");
 }
-<div class="enrollment-react-root" data-module-id="@Dnn.ModuleContext.ModuleId"></div>
+<div class="enr-rating-search-react-root" data-module-id="@Dnn.ModuleContext.ModuleId"></div>
+
+@section Scripts {
+    <script type="text/javascript">
+    (function ($, window, document) {
+        $(() => {
+            $(".enr-rating-search-react-root").each ((i, m) => {
+                var moduleId = $(m).data ("module-id");
+                var props = {
+                    moduleId: moduleId,
+                    service: new EnrollmentService (moduleId)
+                };
+                ReactDOM.render (React.createElement (RatingSearch, props, null), m);
+            });
+        });
+    }) (jQuery, window, document);
+    </script>
+ }
+ 

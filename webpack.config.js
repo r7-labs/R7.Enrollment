@@ -4,7 +4,8 @@ var path = require ("path");
 var jsxConfig = {
     mode: "production",
     entry: {
-        HelloWorld: "./R7.Enrollment.Dnn/Views/HelloWorld.jsx"
+        HelloWorld: "./R7.Enrollment.Dnn/Views/HelloWorld.jsx",
+        RatingSearch: "./R7.Enrollment.Dnn/Views/Ratings/RatingSearch.jsx"
     },
     output: {
         path: path.resolve (__dirname, "R7.Enrollment.Dnn/assets/js"),
@@ -26,4 +27,29 @@ var jsxConfig = {
     },
 };
 
-module.exports = [jsxConfig];
+var jsConfig = {
+    mode: "production",
+    entry: {
+        EnrollmentService: "./R7.Enrollment.Dnn/Services/EnrollmentService.js"
+    },
+    output: {
+        path: path.resolve (__dirname, "R7.Enrollment.Dnn/assets/js"),
+        filename: "[name].min.js"
+    },
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /(node_modules|bower_components)/,
+                use: {
+                    loader: "babel-loader",
+                    options: {
+                        presets: ["@babel/preset-env"]
+                    }
+                }
+            }
+        ]
+    },
+};
+
+module.exports = [jsxConfig, jsConfig];
