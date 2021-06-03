@@ -25,7 +25,7 @@ namespace R7.Enrollment.Dnn.Data
         public TandemEntrantRatingDb GetDb (string campaignTitle)
         {
             return Databases.FirstOrDefault (db =>
-                db.EntrantRatingEnvironment.EnrollmentCampaignTitle == campaignTitle);
+                db.EntrantRatingEnvironment.CampaignTitle == campaignTitle);
         }
     }
 }

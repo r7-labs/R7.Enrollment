@@ -23,7 +23,7 @@ namespace R7.Enrollment.Data
         {
             var entrantRatingEnv = new EntrantRatingEnvironment ();
             entrantRatingEnv.CurrentDateTime = DateTime.Parse (root.Attribute ("currentDateTime").Value);
-            entrantRatingEnv.EnrollmentCampaignTitle = root.Attribute ("enrollmentCampaignTitle").Value;
+            entrantRatingEnv.CampaignTitle = root.Attribute ("enrollmentCampaignTitle").Value;
 
             var competitionElem = root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
