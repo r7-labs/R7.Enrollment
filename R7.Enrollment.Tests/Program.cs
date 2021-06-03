@@ -12,12 +12,12 @@ namespace R7.Enrollment.Tests
         static void Main (string[] args)
         {
             var db = new TandemEntrantRatingDb ();
-            db.AddNode ("./data/sample.xml");
+            db.Load ("./data/enr_rating_1696453372720271613_2.xml");
             
             var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
             var sb = new StringBuilder ();
             var html = XmlWriter.Create (sb);
-            htmlRenderer.RenderStandalone (db.EntrantRatingEnvironments.First (), html);
+            htmlRenderer.RenderStandalone (db.EntrantRatingEnvironment, html);
             html.Close ();
             File.WriteAllText ("output.html", sb.ToString ());
         }

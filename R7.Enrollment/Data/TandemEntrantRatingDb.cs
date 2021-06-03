@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Xml.Linq;
 using R7.Enrollment.Models;
 
@@ -7,9 +6,9 @@ namespace R7.Enrollment.Data
 {
     public class TandemEntrantRatingDb
     {
-        public IList<EntrantRatingEnvironment> EntrantRatingEnvironments { get; set; } = new List<EntrantRatingEnvironment> ();
+        public EntrantRatingEnvironment EntrantRatingEnvironment { get; set; }
 
-        public void AddNode (string path)
+        public void Load (string path)
         {
             var xml = XDocument.Load (path);
             if (xml.Root.Name == "enrEntrantRatingEnvironmentNode") {
@@ -48,32 +47,30 @@ namespace R7.Enrollment.Data
                 }
             }
 
-            EntrantRatingEnvironments.Add (entrantRatingEnv);
+            EntrantRatingEnvironment = entrantRatingEnv;
         }
 
         public void Dump ()
         {
-            foreach (var entrantRatingEnv in EntrantRatingEnvironments) {
-                foreach (var competition in entrantRatingEnv.Competitions) {
-                    Console.WriteLine ("---");
-                    Console.WriteLine (competition.CompetitionType);
-                    Console.WriteLine (competition.EduProgramSubject);
-                    Console.WriteLine (competition.EduProgramTitle);
-                    Console.WriteLine (competition.EduLevel);
-                    Console.WriteLine (competition.EduProgramForm);
-                    Console.WriteLine (competition.OrgUnitTitle);
-                    foreach (var entrant in competition.Entrants) {
-                        Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");
-                        foreach (var mark in entrant.Marks) {
-                            Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
-                        }
-
-                        Console.Write ($"achievementMark:{entrant.AchievementMark} ");
-                        Console.Write ($"originalIn:{entrant.OriginalIn} ");
-                        Console.Write ($"acceptedEntrant:{entrant.AcceptedEntrant} ");
-
-                        Console.WriteLine ();
+            foreach (var competition in EntrantRatingEnvironment.Competitions) {
+                Console.WriteLine ("---");
+                Console.WriteLine (competition.CompetitionType);
+                Console.WriteLine (competition.EduProgramSubject);
+                Console.WriteLine (competition.EduProgramTitle);
+                Console.WriteLine (competition.EduLevel);
+                Console.WriteLine (competition.EduProgramForm);
+                Console.WriteLine (competition.OrgUnitTitle);
+                foreach (var entrant in competition.Entrants) {
+                    Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");
+                    foreach (var mark in entrant.Marks) {
+                        Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
                     }
+
+                    Console.Write ($"achievementMark:{entrant.AchievementMark} ");
+                    Console.Write ($"originalIn:{entrant.OriginalIn} ");
+                    Console.Write ($"acceptedEntrant:{entrant.AcceptedEntrant} ");
+
+                    Console.WriteLine ();
                 }
             }
         }

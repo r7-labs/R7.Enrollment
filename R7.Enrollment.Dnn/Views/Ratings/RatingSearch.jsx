@@ -2,6 +2,9 @@ class RatingSearch extends React.Component {
     constructor (props) {
         super (props);
         this.handleSubmit = this.handleSubmit.bind (this);
+        this.state = {
+            listsLoaded: false
+        };
     }
     
     handleSubmit (e) {
@@ -13,7 +16,10 @@ class RatingSearch extends React.Component {
         };
         this.props.service.getRatingLists (data,
             (result) => {
-                console.log (result);
+                this.setState ({
+                    listsLoaded: true,
+                    listsMarkup: result
+                });
             },
             (xhr, status, err) => {
                 console.log (xhr);
@@ -22,6 +28,15 @@ class RatingSearch extends React.Component {
     }
     
     render () {
+        return (
+            <div>
+                {this.renderForm ()}
+                {this.renderLists ()}
+            </div>
+        )
+    }
+    
+    renderForm () {
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
@@ -32,11 +47,20 @@ class RatingSearch extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_EntrantId">Идентификатор абитуриента</label>
-                    <input type="text" name="entrantId" className="form-control" id="enrRatingSearch_EntrantId" />
+                    <input type="text" name="entrantId" className="form-control" id="enrRatingSearch_EntrantId" value="2100021" />
                 </div>
                 <button type="submit" className="btn btn-primary">Показать списки</button>
             </form>
         );
+    }
+    
+    renderLists () {
+        if (this.state.listsLoaded === true) {
+            return (
+                <div dangerouslySetInnerHTML={{__html: this.state.listsMarkup}} />
+            )
+        }
+        return null;
     }
 }
 
