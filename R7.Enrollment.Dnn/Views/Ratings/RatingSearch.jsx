@@ -42,7 +42,7 @@ class RatingSearch extends React.Component {
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_Campaign">Приемная кампания</label>
                     <select className="form-control" name="campaignTitle" id="enrRatingSearch_Campaign">
-                        <option selected="true">Бакалавриат/специалитет</option>
+                        <option selected="true">21/22 Бакалавриат/специалитет</option>
                     </select>
                 </div>
                 <div className="form-group">

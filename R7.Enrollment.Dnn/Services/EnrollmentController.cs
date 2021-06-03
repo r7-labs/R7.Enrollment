@@ -29,7 +29,10 @@ namespace R7.Enrollment.Dnn.Services
         public HttpResponseMessage GetRatingLists (GetRatingListsArgs args)
         {
             try {
-                var db = TandemDbManager.Instance.GetCachedDb ();
+                var db = TandemDbManager.Instance.GetDb (args.CampaignTitle);
+                if (db == null) {
+                    return Request.CreateResponse (HttpStatusCode.NotFound);
+                }
 
                 var competitionQuery = new CompetitionQuery ();
                 var competitions =
