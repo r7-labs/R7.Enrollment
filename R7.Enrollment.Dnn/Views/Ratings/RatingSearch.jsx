@@ -6,7 +6,11 @@ class RatingSearch extends React.Component {
     
     handleSubmit (e) {
         e.preventDefault ();
-        var data = new FormData (e.target);
+        const formData = new FormData (e.target);
+        const data = {
+            campaign: formData.get ("campaign"),
+            entrantId: formData.get ("entrantId")
+        };
         this.props.service.getRatingLists (data,
             (result) => {
                 console.log (result);
