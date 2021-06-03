@@ -6,10 +6,10 @@ namespace R7.Enrollment.Queries
 {
     public class CompetitionQuery
     {
-        public IEnumerable<Competition> ByPersonalNumber (IEnumerable<Competition> competitions, int entrantId)
+        public IEnumerable<Competition> ByPersonalNumber (IEnumerable<Competition> competitions, string personalNumber)
         {
             return from competition in competitions
-                let entrant = competition.Entrants.FirstOrDefault (entr => entr.PersonalNumber == entrantId.ToString ())
+                let entrant = competition.Entrants.FirstOrDefault (entr => entr.PersonalNumber == personalNumber)
                 where entrant != null
                 select competition;
         }

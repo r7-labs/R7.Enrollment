@@ -11,8 +11,8 @@ class RatingSearch extends React.Component {
         e.preventDefault ();
         const formData = new FormData (e.target);
         const data = {
-            campaign: formData.get ("campaign"),
-            entrantId: formData.get ("entrantId")
+            campaignTitle: formData.get ("campaignTitle"),
+            personalNumber: formData.get ("personalNumber")
         };
         this.props.service.getRatingLists (data,
             (result) => {
@@ -41,13 +41,13 @@ class RatingSearch extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_Campaign">Приемная кампания</label>
-                    <select className="form-control" name="campaign" id="enrRatingSearch_Campaign">
+                    <select className="form-control" name="campaignTitle" id="enrRatingSearch_Campaign">
                         <option selected="true">Бакалавриат/специалитет</option>
                     </select>
                 </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_EntrantId">Идентификатор абитуриента</label>
-                    <input type="text" name="entrantId" className="form-control" id="enrRatingSearch_EntrantId" value="2100021" />
+                    <input type="text" name="personalNumber" className="form-control" id="enrRatingSearch_EntrantId" value="2100021" />
                 </div>
                 <button type="submit" className="btn btn-primary">Показать списки</button>
             </form>

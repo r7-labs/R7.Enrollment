@@ -13,33 +13,33 @@ using R7.Enrollment.Renderers;
 
 namespace R7.Enrollment.Dnn.Services
 {
-    public class GetRatingListsDTO
+    public class GetRatingListsArgs
     {
-        public string Campaign { get; set; }
+        public string CampaignTitle { get; set; }
         
-        public int EntrantId { get; set; }
+        public string PersonalNumber { get; set; }
     }
-
+    
     public class EnrollmentController: DnnApiController
     {
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [DnnModuleAuthorize (AccessLevel = SecurityAccessLevel.View)]
-        public HttpResponseMessage GetRatingLists (GetRatingListsDTO dto)
+        public HttpResponseMessage GetRatingLists (GetRatingListsArgs args)
         {
             try {
                 var db = TandemDbManager.Instance.GetCachedDb ();
 
                 var competitionQuery = new CompetitionQuery ();
                 var competitions =
-                    competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, dto.EntrantId);
+                    competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.PersonalNumber);
 
                 var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
                 var sb = new StringBuilder ();
                 var html = XmlWriter.Create (sb, new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Auto});
                 foreach (var competition in competitions) {
-                    htmlRenderer.RenderCompetition (competition, html);    
+                    htmlRenderer.RenderCompetition (competition, html);
                 }
                 html.Close ();
                 
