@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Text;
@@ -19,6 +20,11 @@ namespace R7.Enrollment.Dnn.Services
         
         public string PersonalNumber { get; set; }
     }
+
+    public class GetRatingListsResult
+    {
+        public string Html { get; set; }
+    }
     
     public class EnrollmentController: DnnApiController
     {
@@ -38,15 +44,19 @@ namespace R7.Enrollment.Dnn.Services
                 var competitions =
                     competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.PersonalNumber);
 
+                var results = new List<GetRatingListsResult> ();
                 var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
-                var sb = new StringBuilder ();
-                var html = XmlWriter.Create (sb, new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Auto});
                 foreach (var competition in competitions) {
+                    var sb = new StringBuilder ();
+                    var html = XmlWriter.Create (sb, new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Auto});
                     htmlRenderer.RenderCompetition (competition, html);
+                    html.Close ();
+                    results.Add (new GetRatingListsResult {
+                        Html = sb.ToString ()
+                    });
                 }
-                html.Close ();
                 
-                return Request.CreateResponse (HttpStatusCode.OK, sb.ToString ());
+                return Request.CreateResponse (HttpStatusCode.OK, results);
             }
             catch (Exception ex) {
                 Exceptions.LogException (ex);

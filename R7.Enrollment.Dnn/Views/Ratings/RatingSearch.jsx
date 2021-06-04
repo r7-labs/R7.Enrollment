@@ -3,7 +3,7 @@ class RatingSearch extends React.Component {
         super (props);
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
-            listsLoaded: false
+            lists: []
         };
     }
     
@@ -15,10 +15,9 @@ class RatingSearch extends React.Component {
             personalNumber: formData.get ("personalNumber")
         };
         this.props.service.getRatingLists (data,
-            (result) => {
+            (results) => {
                 this.setState ({
-                    listsLoaded: true,
-                    listsMarkup: result
+                    lists: results
                 });
             },
             (xhr, status, err) => {
@@ -61,10 +60,8 @@ class RatingSearch extends React.Component {
     }
     
     renderLists () {
-        if (this.state.listsLoaded === true) {
-            return (
-                <div dangerouslySetInnerHTML={{__html: this.state.listsMarkup}} />
-            )
+        if (this.state.lists.length > 0) {
+            return this.state.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
         }
         return null;
     }
