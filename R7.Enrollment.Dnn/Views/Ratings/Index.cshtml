@@ -1,5 +1,6 @@
 ﻿@inherits DotNetNuke.Web.Mvc.Framework.DnnWebViewPage<RatingsViewModel>
 @using DotNetNuke.Web.Client.ClientResourceManagement
+@using DotNetNuke.Common.Utilities
 @using DotNetNuke.Framework.JavaScriptLibraries
 @using R7.Enrollment.Dnn.ViewModels
 @{
@@ -8,7 +9,10 @@
     ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/RatingSearch.min.js");
     ClientResourceManager.RegisterScript (Dnn.DnnPage, "~/DesktopModules/MVC/R7.Enrollment/assets/js/EnrollmentService.min.js");
 }
-<div class="enr-rating-search-react-root" data-module-id="@Dnn.ModuleContext.ModuleId"></div>
+<div class="enr-rating-search-react-root"
+     data-module-id="@Dnn.ModuleContext.ModuleId"
+     data-campaign-titles="@Model.CampaignTitles.ToJson()">
+</div>
 
 @section Scripts {
     <script type="text/javascript">
@@ -18,7 +22,8 @@
                 var moduleId = $(m).data ("module-id");
                 var props = {
                     moduleId: moduleId,
-                    service: new EnrollmentService (moduleId)
+                    service: new EnrollmentService (moduleId),
+                    campaignTitles: $(m).data ("campaign-titles")
                 };
                 ReactDOM.render (React.createElement (RatingSearch, props, null), m);
             });

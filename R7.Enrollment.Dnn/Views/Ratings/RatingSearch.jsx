@@ -37,12 +37,16 @@ class RatingSearch extends React.Component {
     }
     
     renderForm () {
+        const options = [];
+        for (let campaignTitle of this.props.campaignTitles) {
+            options.push (<option>{campaignTitle}</option>);
+        }
         return (
             <form onSubmit={this.handleSubmit}>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_Campaign">Приемная кампания</label>
                     <select className="form-control" name="campaignTitle" id="enrRatingSearch_Campaign">
-                        <option selected="true">21/22 Бакалавриат/специалитет</option>
+                        {options}
                     </select>
                 </div>
                 <div className="form-group">

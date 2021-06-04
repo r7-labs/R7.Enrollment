@@ -53,6 +53,15 @@ namespace R7.Enrollment.Dnn.Data
             }
         }
 
+        public IList<string> GetCampaignTitles (int portalId)
+        {
+            if (Databases.Count == 0) {
+                LoadDatabases (portalId, "enrollment");
+            }
+
+            return Databases.Select (dbe => dbe.Db.EntrantRatingEnvironment.CampaignTitle).ToList ();
+        }
+
         public TandemEntrantRatingDb GetDb (string campaignTitle, int portalId)
         {
             if (Databases.Count == 0) {
