@@ -32,8 +32,10 @@ class RatingSearch extends React.Component {
             <div>
                 {this.renderForm ()}
                 {this.renderLists ()}
+                <hr />
+                <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
             </div>
-        )
+        );
     }
     
     renderForm () {
