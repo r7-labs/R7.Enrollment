@@ -65,7 +65,7 @@ class RatingSearch extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_EntrantId">Идентификатор абитуриента</label>
-                    <input type="text" name="personalNumber" className="form-control" id="enrRatingSearch_EntrantId" value="2100021" />
+                    <input type="text" name="personalNumber" className="form-control" id="enrRatingSearch_EntrantId" placeholder="2100021" />
                 </div>
                 <button type="submit" className="btn btn-primary">Показать списки</button>
             </form>
