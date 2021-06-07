@@ -3,6 +3,8 @@ class RatingSearch extends React.Component {
         super (props);
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
+            isError: false,
+            requestWasSent: false,
             lists: []
         };
     }
@@ -17,11 +19,18 @@ class RatingSearch extends React.Component {
         this.props.service.getRatingLists (data,
             (results) => {
                 this.setState ({
+                    isError: false,
+                    requestWasSent: true,
                     lists: results
                 });
             },
             (xhr, status, err) => {
                 console.log (xhr);
+                this.setState ({
+                   isError: true,
+                   requestWasSent: true, 
+                   lists: [] 
+                });
             }
         );
     }
@@ -31,6 +40,7 @@ class RatingSearch extends React.Component {
             <div>
                 {this.renderForm ()}
                 {this.renderLists ()}
+                {this.renderError ()}
                 <hr />
                 <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
             </div>
@@ -41,6 +51,9 @@ class RatingSearch extends React.Component {
         const options = [];
         for (let campaignTitle of this.props.campaignTitles) {
             options.push (<option>{campaignTitle}</option>);
+        }
+        if (this.props.campaignTitles.length === 0) {
+            options.push (<option>-- нет данных --</option>);
         }
         return (
             <form onSubmit={this.handleSubmit} className="mb-3">
@@ -60,12 +73,24 @@ class RatingSearch extends React.Component {
     }
     
     renderLists () {
-        if (this.state.lists.length > 0) {
-            return this.state.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
+        if (this.state.requestWasSent === true) {
+            if (this.state.lists.length > 0) {
+                return this.state.lists.map(list => <div dangerouslySetInnerHTML={{__html: list.Html}}/>);
+            }
+            if (this.state.isError === false) {
+                return (
+                    <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
+                );
+            }
         }
-        return (
-            <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
-        );
+    }
+    
+    renderError () {
+        if (this.state.isError === true) {
+            return (
+                <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
+            )
+        }
     }
 }
 
