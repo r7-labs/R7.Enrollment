@@ -45,7 +45,10 @@ namespace R7.Enrollment.Dnn.Services
                     competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.PersonalNumber);
 
                 var results = new List<GetRatingListsResult> ();
-                var htmlRenderer = new TandemEntrantRatingHtmlRenderer ();
+                var htmlRenderer = new TandemEntrantRatingHtmlRenderer (
+                    new TandemRatingRendererSettings { UseBasicCompetitionHeader = true }
+                );
+                
                 foreach (var competition in competitions) {
                     var sb = new StringBuilder ();
                     var html = XmlWriter.Create (sb, new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Auto});

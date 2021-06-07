@@ -5,6 +5,18 @@ namespace R7.Enrollment.Renderers
 {
     public class TandemEntrantRatingHtmlRenderer
     {
+        private TandemRatingRendererSettings Settings { get; set; }
+        
+        public TandemEntrantRatingHtmlRenderer ()
+        {
+            Settings = new TandemRatingRendererSettings ();
+        }
+        
+        public TandemEntrantRatingHtmlRenderer (TandemRatingRendererSettings settings)
+        {
+            Settings = settings;
+        }
+
         public void RenderStandalone (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
         {
             html.WriteStartDocument ();
@@ -37,11 +49,12 @@ namespace R7.Enrollment.Renderers
 
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
-            html.WriteRaw ("<hr />");
             html.WriteElementString ("h2", $"{competition.EduProgramTitle}");
             html.WriteElementString ("h3", $"{competition.EduProgramForm} форма, {competition.CompensationType}, {competition.CompetitionType}");
-            
-            RenderCompetitionHeader (competition, html);
+
+            if (!Settings.UseBasicCompetitionHeader) {
+                RenderCompetitionHeader (competition, html);
+            }
 
             html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
             
