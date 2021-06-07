@@ -43,7 +43,7 @@ class RatingSearch extends React.Component {
             options.push (<option>{campaignTitle}</option>);
         }
         return (
-            <form onSubmit={this.handleSubmit}>
+            <form onSubmit={this.handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_Campaign">Приемная кампания</label>
                     <select className="form-control" name="campaignTitle" id="enrRatingSearch_Campaign">
@@ -63,7 +63,9 @@ class RatingSearch extends React.Component {
         if (this.state.lists.length > 0) {
             return this.state.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
         }
-        return null;
+        return (
+            <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
+        );
     }
 }
 
