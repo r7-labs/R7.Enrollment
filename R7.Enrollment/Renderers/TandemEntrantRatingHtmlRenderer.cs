@@ -156,6 +156,11 @@ namespace R7.Enrollment.Renderers
             
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
+
+            if (!Settings.Depersonalize) {
+                html.WriteElementWithAttributeString ("th", "Фамилия, имя, отчество", "rowspan", "2");
+            }
+            
             html.WriteElementWithAttributeString ("th", "Сумма баллов", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", competition.EntranceDisciplines.Count.ToString ());
             html.WriteElementWithAttributeString ("th", "Сумма баллов за ИД", "rowspan", "2");
@@ -178,13 +183,18 @@ namespace R7.Enrollment.Renderers
         {
             html.WriteStartElement ("tr");
             html.WriteElementString ("td", entrant.Position.ToString ());
-            html.WriteElementString ("td", entrant.Name);
+
+            if (!Settings.Depersonalize) {
+                html.WriteElementString ("td", entrant.Name);
+            }
+
             html.WriteElementString ("td", entrant.FinalMark.ToString ());
 
             foreach (var mark in entrant.Marks) {
                 html.WriteElementString ("td", mark.Mark.ToString ());
             }
             
+            html.WriteElementString ("td", entrant.AchievementMark.ToString ());
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
             html.WriteElementString ("td", "{?}");

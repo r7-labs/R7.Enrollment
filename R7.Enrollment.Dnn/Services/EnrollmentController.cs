@@ -46,7 +46,10 @@ namespace R7.Enrollment.Dnn.Services
 
                 var results = new List<GetRatingListsResult> ();
                 var htmlRenderer = new TandemEntrantRatingHtmlRenderer (
-                    new TandemRatingRendererSettings { UseBasicCompetitionHeader = true }
+                    new TandemRatingRendererSettings {
+                        Depersonalize = true,
+                        UseBasicCompetitionHeader = true
+                    }
                 );
                 
                 foreach (var competition in competitions) {
