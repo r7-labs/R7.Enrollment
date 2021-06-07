@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Text.RegularExpressions;
 using DotNetNuke.Services.FileSystem;
 using R7.Enrollment.Data;
+using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Dnn.Data
 {
@@ -53,13 +53,13 @@ namespace R7.Enrollment.Dnn.Data
             }
         }
 
-        public IList<string> GetCampaignTitles (int portalId)
+        public IList<EntrantRatingEnvironment> GetCampaigns (int portalId)
         {
             if (Databases.Count == 0) {
                 LoadDatabases (portalId, "enrollment");
             }
 
-            return Databases.Select (dbe => dbe.Db.EntrantRatingEnvironment.CampaignTitle).ToList ();
+            return Databases.Select (dbe => dbe.Db.EntrantRatingEnvironment).ToList ();
         }
 
         public TandemEntrantRatingDb GetDb (string campaignTitle, int portalId)

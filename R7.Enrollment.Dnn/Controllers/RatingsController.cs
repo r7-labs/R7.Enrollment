@@ -1,4 +1,5 @@
-﻿using System.Web.Mvc;
+﻿using System.Linq;
+using System.Web.Mvc;
 using DotNetNuke.Web.Mvc.Framework.ActionFilters;
 using DotNetNuke.Web.Mvc.Framework.Controllers;
 using R7.Enrollment.Dnn.Data;
@@ -12,7 +13,8 @@ namespace R7.Enrollment.Dnn.Controllers
         public ActionResult Index ()
         {
             var result = new RatingsViewModel ();
-            result.CampaignTitles = TandemDbManager.Instance.GetCampaignTitles (PortalSettings.PortalId); 
+            result.Campaigns = TandemDbManager.Instance.GetCampaigns (PortalSettings.PortalId)
+                .Select (c => new CampaignViewModel (c)).ToList (); 
             return View (result);
         }
     }

@@ -135,6 +135,7 @@
         </Compile>
         <Compile Include="Services\EnrollmentController.cs" />
         <Compile Include="Services\EnrollmentRouteMapper.cs" />
+        <Compile Include="ViewModels\CampaignViewModel.cs" />
         <Compile Include="ViewModels\RatingsViewModel.cs" />
     </ItemGroup>
     <ItemGroup>

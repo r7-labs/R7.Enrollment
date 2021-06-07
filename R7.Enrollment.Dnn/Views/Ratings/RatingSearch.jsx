@@ -49,11 +49,11 @@ class RatingSearch extends React.Component {
     
     renderForm () {
         const options = [];
-        for (let campaignTitle of this.props.campaignTitles) {
-            options.push (<option>{campaignTitle}</option>);
+        for (let campaign of this.props.campaigns) {
+            options.push (<option value={campaign.CampaignTitle}>{campaign.CampaignTitle} {campaign.CurrentDateTime}</option>);
         }
-        if (this.props.campaignTitles.length === 0) {
-            options.push (<option>-- нет данных --</option>);
+        if (this.props.campaigns.length === 0) {
+            options.push (<option value="">-- нет данных --</option>);
         }
         return (
             <form onSubmit={this.handleSubmit} className="mb-3">
