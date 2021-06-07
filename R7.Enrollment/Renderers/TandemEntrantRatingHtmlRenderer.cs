@@ -50,7 +50,7 @@ namespace R7.Enrollment.Renderers
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
             html.WriteElementString ("h2", $"{competition.EduProgramTitle}");
-            html.WriteElementString ("h3", $"{competition.EduProgramForm} форма, {competition.CompensationType}, {competition.CompetitionType}");
+            html.WriteElementString ("h3", $"{competition.EduProgramForm} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
 
             if (!Settings.UseBasicCompetitionHeader) {
                 RenderCompetitionHeader (competition, html);
