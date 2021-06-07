@@ -48,6 +48,7 @@ namespace R7.Enrollment.Dnn.Services
                 var htmlRenderer = new TandemEntrantRatingHtmlRenderer (
                     new TandemRatingRendererSettings {
                         Depersonalize = true,
+                        PersonalNumber = args.PersonalNumber,
                         UseBasicCompetitionHeader = true
                     }
                 );

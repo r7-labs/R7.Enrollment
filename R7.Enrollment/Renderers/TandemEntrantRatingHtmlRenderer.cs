@@ -178,10 +178,15 @@ namespace R7.Enrollment.Renderers
             
             html.WriteEndElement ();
         }
-        
+
         public void RenderEntrant (Entrant entrant, XmlWriter html)
         {
             html.WriteStartElement ("tr");
+
+            if (entrant.PersonalNumber == Settings.PersonalNumber) {
+                html.WriteAttributeString ("class", "enr-target-entrant-row");
+            }
+        
             html.WriteElementString ("td", entrant.Position.ToString ());
 
             if (!Settings.Depersonalize) {

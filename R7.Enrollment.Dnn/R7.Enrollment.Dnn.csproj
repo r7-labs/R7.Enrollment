@@ -145,6 +145,7 @@
     </ItemGroup>
     <ItemGroup>
       <Content Include="license.htm" />
+      <Content Include="module.css" />
       <Content Include="R7.Enrollment.dnn.template">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
