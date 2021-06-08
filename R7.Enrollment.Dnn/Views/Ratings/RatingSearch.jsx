@@ -68,10 +68,14 @@ class RatingSearch extends React.Component {
         );
     }
     
+    formatCampaignTitle (campaign) {
+        return campaign.CampaignTitle.replace ("21/22 ", "") + " " + campaign.CurrentDateTime;
+    }
+    
     renderForm () {
         const options = [];
         for (let campaign of this.props.campaigns) {
-            options.push (<option value={campaign.CampaignTitle}>{campaign.CampaignTitle} {campaign.CurrentDateTime}</option>);
+            options.push (<option value={campaign.CampaignTitle}>{this.formatCampaignTitle (campaign)}</option>);
         }
         if (this.props.campaigns.length === 0) {
             options.push (<option value="">-- нет данных --</option>);
