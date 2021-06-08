@@ -49,8 +49,8 @@ namespace R7.Enrollment.Renderers
 
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
-            html.WriteElementString ("h2", $"{competition.EduProgramTitle}");
-            html.WriteElementString ("h3", $"{competition.EduProgramForm} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
+            html.WriteElementString ("h2", $"{competition.EduProgram.FullTitle}");
+            html.WriteElementString ("h3", $"{competition.EduProgram.Form} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
 
             if (!Settings.UseBasicCompetitionHeader) {
                 RenderCompetitionHeader (competition, html);
@@ -74,8 +74,6 @@ namespace R7.Enrollment.Renderers
 
         void RenderCompetitionHeader (Competition competition, XmlWriter html)
         {
-            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
-            
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table");
             
@@ -96,9 +94,9 @@ namespace R7.Enrollment.Renderers
             // 3rd row
             html.WriteStartElement ("tr");
             html.WriteElementString ("td", "Направление подготовки:");
-            html.WriteElementWithAttributeString ("td", competition.EduProgramSubject, "colspan", "2");
+            html.WriteElementWithAttributeString ("td", competition.EduProgram.Subject, "colspan", "2");
             html.WriteElementString ("td", "");
-            html.WriteElementString ("td", $"{competition.EduProgramForm} форма обучения, {{срок обучения?}}, на базе {competition.EduLevelRequirement}, {{сокр. наим. факультета?}} {competition.EduLevel}");
+            html.WriteElementString ("td", $"{competition.EduProgram.ConditionsWithForm}");
             html.WriteEndElement ();
             
             // 4th row
@@ -107,7 +105,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Набор ОП:");
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "4");
-            html.WriteString (competition.EduProgramTitle);
+            html.WriteString (competition.EduProgram.Title);
             html.WriteEndElement ();
             
             html.WriteEndElement();
@@ -147,12 +145,14 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "Образовательные программы:");
 
             html.WriteElementWithAttributeString ("td",
-                $"{{полное наим. профиля?}}, {{срок обучения?}}, на базе {competition.EduLevelRequirement}, {{сокр. наим. факультета?}}", "colspan", "4");
+                $"{competition.EduProgram.TitleAndConditionsShortWithForm}", "colspan", "4");
             
             html.WriteEndElement ();
             
             // end table
             html.WriteEndElement ();
+            
+            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
         }
 
         public void RenderEntrantsTableHeader (Competition competition, XmlWriter html)

@@ -45,6 +45,10 @@ namespace R7.Enrollment.Data
                         entrant.Marks.Add (entrantMark);
                     }
                 }
+
+                foreach (var eduProgramRow in competitionRow.Element ("eduProgram").Elements ("row")) {
+                    TandemXmlModelFactory.FillEduProgram (eduProgramRow, competition.EduProgram);
+                }
             }
 
             EntrantRatingEnvironment = entrantRatingEnv;
@@ -55,10 +59,10 @@ namespace R7.Enrollment.Data
             foreach (var competition in EntrantRatingEnvironment.Competitions) {
                 Console.WriteLine ("---");
                 Console.WriteLine (competition.CompetitionType);
-                Console.WriteLine (competition.EduProgramSubject);
-                Console.WriteLine (competition.EduProgramTitle);
+                Console.WriteLine (competition.EduProgram.Subject);
+                Console.WriteLine (competition.EduProgram.Title);
                 Console.WriteLine (competition.EduLevel);
-                Console.WriteLine (competition.EduProgramForm);
+                Console.WriteLine (competition.EduProgram.Form);
                 Console.WriteLine (competition.OrgUnitTitle);
                 foreach (var entrant in competition.Entrants) {
                     Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");

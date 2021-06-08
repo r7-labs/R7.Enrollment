@@ -9,11 +9,8 @@ namespace R7.Enrollment.Data
     {
         public static Competition CreateCompetition (XElement xelem)
         {
-            return new Competition {
-                EduProgramForm = xelem.Attribute ("eduProgramForm")?.Value,
+            var competition = new Competition {
                 EduLevel = xelem.Attribute ("eduLevel")?.Value,
-                EduProgramSubject = xelem.Attribute ("eduProgramSubject")?.Value,
-                EduProgramTitle = xelem.Attribute ("programSetPrintTitle")?.Value,
                 OrgTitle = xelem.Attribute ("enrOrgUnit")?.Value,
                 OrgUnitTitle = xelem.Attribute ("formativeOrgUnitTitle")?.Value,
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
@@ -22,6 +19,11 @@ namespace R7.Enrollment.Data
                 FirstStepPlan = TryParseInt (xelem.Attribute ("firstStepPlan")?.Value) ?? 0,
                 EduLevelRequirement = xelem.Attribute ("eduLevelRequirement")?.Value
             };
+
+            competition.EduProgram.Subject = xelem.Attribute ("eduProgramSubject")?.Value;
+            competition.EduProgram.Title = xelem.Attribute ("programSetPrintTitle")?.Value;
+
+            return competition;
         }
         
         public static Entrant CreateCompetitionEntrant (XElement xelem)
@@ -53,6 +55,16 @@ namespace R7.Enrollment.Data
                 EntranceDiscipline = competition.EntranceDisciplines
                     .FirstOrDefault (ed => ed.Title.IndexOf (markTitle, StringComparison.CurrentCultureIgnoreCase) >= 0)
             };
+        }
+        
+        public static void FillEduProgram (XElement xelem, EduProgram eduProgram)
+        {
+            eduProgram.Form = xelem.Attribute ("eduProgramForm")?.Value;
+            eduProgram.Duration = xelem.Attribute ("duration")?.Value;
+            eduProgram.FullTitle = xelem.Attribute ("fullTitleWithoutSubjectIndex")?.Value;
+            eduProgram.Specialization = xelem.Attribute ("programSpec")?.Value;
+            eduProgram.ConditionsWithForm = xelem.Attribute ("conditionsWithForm")?.Value;
+            eduProgram.TitleAndConditionsShortWithForm = xelem.Attribute ("titleAndConditionsShortWithForm")?.Value;
         }
         
         static int? TryParseInt (string value)

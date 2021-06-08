@@ -8,13 +8,7 @@ namespace R7.Enrollment.Models
         // mirroring parent prop here
         public DateTime CurrentDateTime { get; set; }
         
-        public string EduProgramForm { get; set; }
-        
         public string EduLevel { get; set; }
-        
-        public string EduProgramSubject { get; set; }
-        
-        public string EduProgramTitle { get; set; }
         
         public string OrgTitle { get; set; }
         
@@ -28,8 +22,11 @@ namespace R7.Enrollment.Models
         
         public int Plan { get; set; }
         
+        [Obsolete]
         public int FirstStepPlan { get; set; }
 
+        public EduProgram EduProgram { get; set; } = new EduProgram ();
+        
         public IList<EntranceDiscipline> EntranceDisciplines { get; set; } = new List<EntranceDiscipline> ();
         
         public IList<Entrant> Entrants { get; set; } = new List<Entrant> ();
