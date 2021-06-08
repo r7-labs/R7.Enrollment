@@ -55,8 +55,6 @@ namespace R7.Enrollment.Renderers
             if (!Settings.UseBasicCompetitionHeader) {
                 RenderCompetitionHeader (competition, html);
             }
-
-            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
             
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
@@ -67,10 +65,17 @@ namespace R7.Enrollment.Renderers
                 RenderEntrant (entrant, html);
             }
             html.WriteEndElement ();
+
+            if (Settings.UseBasicCompetitionHeader) {
+                html.WriteElementString ("p",
+                    $"Заявлений — {competition.Entrants.Count}, число мест — {competition.Plan}");
+            }
         }
 
         void RenderCompetitionHeader (Competition competition, XmlWriter html)
         {
+            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
+            
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table");
             
