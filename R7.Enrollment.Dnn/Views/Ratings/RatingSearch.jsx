@@ -4,6 +4,7 @@ class RatingSearch extends React.Component {
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
             isError: false,
+            invalidPersonalNumber: false,
             requestWasSent: false,
             lists: []
         };
@@ -16,10 +17,16 @@ class RatingSearch extends React.Component {
             campaignTitle: formData.get ("campaignTitle"),
             personalNumber: formData.get ("personalNumber")
         };
+        
+        if (!this.validateFormData (data)) {
+            return;
+        }
+                       
         this.props.service.getRatingLists (data,
             (results) => {
                 this.setState ({
                     isError: false,
+                    invalidPersonalNumber: false,
                     requestWasSent: true,
                     lists: results
                 });
@@ -28,11 +35,25 @@ class RatingSearch extends React.Component {
                 console.log (xhr);
                 this.setState ({
                    isError: true,
+                   invalidPersonalNumber: false,
                    requestWasSent: true, 
                    lists: [] 
                 });
             }
         );
+    }
+    
+    validateFormData (data) {
+        if (typeof (data.personalNumber) === "undefined" || data.personalNumber === null || data.personalNumber.length === 0) {
+            this.setState ({
+                isError: false,
+                invalidPersonalNumber: true,
+                requestWasSent: false,
+                lists: []
+            });
+            return false;
+        }
+        return true;
     }
     
     render () {
@@ -64,14 +85,21 @@ class RatingSearch extends React.Component {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="enrRatingSearch_EntrantId">Идентификатор абитуриента</label>
-                    <input type="text" name="personalNumber" className="form-control" id="enrRatingSearch_EntrantId" placeholder="2100021" />
+                    <label htmlFor="enrRatingSearch_EntrantId">Личный номер абитуриента</label>
+                    <input type="text" name="personalNumber" id="enrRatingSearch_EntrantId"
+                           placeholder="например 2100021"
+                           className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
+                    {(() => {
+                        if (this.state.invalidPersonalNumber === true) {
+                            return (<div className="invalid-feedback">Введите личный номер абитуриента, например 2100021</div>);
+                        }
+                    }) ()}
                 </div>
                 <button type="submit" className="btn btn-primary">Показать списки</button>
             </form>
         );
     }
-    
+        
     renderLists () {
         if (this.state.requestWasSent === true) {
             if (this.state.lists.length > 0) {
