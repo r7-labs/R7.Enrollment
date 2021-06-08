@@ -91,11 +91,11 @@ class RatingSearch extends React.Component {
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
                     {(() => {
                         if (this.state.invalidPersonalNumber === true) {
-                            return (<div className="invalid-feedback">Введите личный номер абитуриента, например 2100021</div>);
+                            return (<div className="invalid-feedback">Введите свой личный номер абитуриента, например 2100021</div>);
                         }
                     }) ()}
                 </div>
-                <button type="submit" className="btn btn-primary">Показать списки</button>
+                <button type="submit" className="btn btn-primary">Найти меня в списках!</button>
             </form>
         );
     }
