@@ -21,9 +21,6 @@ namespace R7.Enrollment.Models
         public string EduLevelRequirement { get; set; }
         
         public int Plan { get; set; }
-        
-        [Obsolete]
-        public int FirstStepPlan { get; set; }
 
         public EduProgram EduProgram { get; set; } = new EduProgram ();
         

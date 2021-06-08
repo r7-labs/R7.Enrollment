@@ -115,7 +115,7 @@ namespace R7.Enrollment.Renderers
             
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "3");
-            html.WriteString ($"Число мест на бюджет (КЦП) — {competition.FirstStepPlan}, из них:");
+            html.WriteString ($"Число мест на бюджет (КЦП) — {competition.Plan}, из них:");
             html.WriteRaw ("<br />");
             html.WriteString ("Принятые сокращения:");
             html.WriteRaw ("<br />");
