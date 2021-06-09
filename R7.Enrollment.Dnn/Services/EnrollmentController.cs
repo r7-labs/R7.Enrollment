@@ -45,8 +45,8 @@ namespace R7.Enrollment.Dnn.Services
                     competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.PersonalNumber);
 
                 var results = new List<GetRatingListsResult> ();
-                var htmlRenderer = new TandemEntrantRatingHtmlRenderer (
-                    new TandemRatingRendererSettings {
+                var htmlRenderer = new TandemRatingsHtmlRenderer (
+                    new TandemRatingsRendererSettings {
                         Depersonalize = true,
                         PersonalNumber = args.PersonalNumber,
                         UseBasicCompetitionHeader = true
