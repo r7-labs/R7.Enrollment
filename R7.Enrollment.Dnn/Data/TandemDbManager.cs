@@ -18,7 +18,7 @@ namespace R7.Enrollment.Dnn.Data
         
         public DateTime LastModified { get; set; }
         
-        public TandemEntrantRatingDb Db { get; set; }
+        public TandemRatingsDb Db { get; set; }
     }
 
 
@@ -41,7 +41,7 @@ namespace R7.Enrollment.Dnn.Data
                 .Where (f => Regex.IsMatch (f.FileName, "^enr_[^.]*\\.xml$"));
 
             foreach (var dbFile in dbFiles) {
-                var db = new TandemEntrantRatingDb ();
+                var db = new TandemRatingsDb ();
                 db.Load (dbFile.PhysicalPath);
                 Databases.Add (new DbEntry {
                     PortalId = 0,
@@ -62,7 +62,7 @@ namespace R7.Enrollment.Dnn.Data
             return Databases.Select (dbe => dbe.Db.EntrantRatingEnvironment).ToList ();
         }
 
-        public TandemEntrantRatingDb GetDb (string campaignTitle, int portalId)
+        public TandemRatingsDb GetDb (string campaignTitle, int portalId)
         {
             if (Databases.Count == 0) {
                 LoadDatabases (portalId, "enrollment");
@@ -86,7 +86,7 @@ namespace R7.Enrollment.Dnn.Data
             }
             
             // file was modified
-            var db = new TandemEntrantRatingDb ();
+            var db = new TandemRatingsDb ();
             db.Load (file.PhysicalPath);
             dbEntry.LastModified = file.LastModificationTime;
             dbEntry.Db = db;

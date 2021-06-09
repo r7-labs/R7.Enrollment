@@ -11,7 +11,7 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var db = new TandemEntrantRatingDb ();
+            var db = new TandemRatingsDb ();
             db.Load ("./data/enr_rating_1696453372720271613.xml");
             
             RenderToFile (db, "output-print.html", new TandemRatingRendererSettings ());
@@ -20,7 +20,7 @@ namespace R7.Enrollment.Tests
             });
         }
 
-        static void RenderToFile (TandemEntrantRatingDb db, string path, TandemRatingRendererSettings settings)
+        static void RenderToFile (TandemRatingsDb db, string path, TandemRatingRendererSettings settings)
         {
             var htmlRenderer = new TandemEntrantRatingHtmlRenderer (settings);
             var sb = new StringBuilder ();

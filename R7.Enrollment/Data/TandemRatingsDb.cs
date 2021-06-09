@@ -4,7 +4,7 @@ using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
 {
-    public class TandemEntrantRatingDb
+    public class TandemRatingsDb
     {
         public EntrantRatingEnvironment EntrantRatingEnvironment { get; set; }
 
