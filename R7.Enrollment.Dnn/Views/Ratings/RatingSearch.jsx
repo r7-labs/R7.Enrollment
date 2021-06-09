@@ -91,11 +91,11 @@ class RatingSearch extends React.Component {
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_EntrantId">Личный номер абитуриента</label>
                     <input type="text" name="personalNumber" id="enrRatingSearch_EntrantId"
-                           placeholder="например 2100021"
+                           placeholder="например 2100000"
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
                     {(() => {
                         if (this.state.invalidPersonalNumber === true) {
-                            return (<div className="invalid-feedback">Введите свой личный номер абитуриента, например 2100021</div>);
+                            return (<div className="invalid-feedback">Введите свой личный номер абитуриента, например 2100000</div>);
                         }
                     }) ()}
                 </div>
