@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,20 +9,13 @@ namespace R7.Enrollment.Data
 {
     public abstract class TandemRatingsDbManagerBase
     {
-        private IList<DbSetEntry> DbSets = new List<DbSetEntry> ();
+        private readonly ConcurrentDictionary<int, DbSetEntry> DbSets = new ConcurrentDictionary<int, DbSetEntry> ();
 
         protected abstract IEnumerable<FileInfo> GetSourceFiles (int portalId);
         
-        DbSetEntry GetDbSet (int portalId) => DbSets.FirstOrDefault (dbs => dbs.PortalId == portalId);
-        
-        bool DbSetIsActual (int portalId)
+        bool DbSetIsActual (DbSetEntry dbSet)
         {
-            var dbSet = DbSets.FirstOrDefault (dbs => dbs.PortalId == portalId);
-            if (dbSet == null) {
-                return false;
-            }
-
-            var srcFiles = GetSourceFiles (portalId).ToList ();
+            var srcFiles = GetSourceFiles (dbSet.PortalId).ToList ();
             if (dbSet.SourceFiles.Count != srcFiles.Count) {
                 return false;
             }
@@ -39,24 +33,14 @@ namespace R7.Enrollment.Data
             return true;
         }
         
-        void EnsureDbSetIsActual (int portalId)
+        DbSetEntry CreateOrUpdateDbSet (int portalId, DbSetEntry dbSet = null)
         {
-            if (!DbSetIsActual (portalId)) {
-                ReloadDbSet (portalId);
+            if (dbSet == null) {
+                dbSet = new DbSetEntry {
+                    PortalId = portalId
+                };
             }
-        }
 
-        void ReloadDbSet (int portalId)
-        {
-            var dbSet = GetDbSet (portalId);    
-            if (dbSet != null) {
-                DbSets.Remove (dbSet);
-            }
-            
-            dbSet = new DbSetEntry {
-                PortalId = portalId
-            };
-            
             var srcFiles = GetSourceFiles (portalId).ToList ();
             dbSet.SourceFiles = srcFiles.Select (sf =>
                 new DbSourceFile {
@@ -65,36 +49,40 @@ namespace R7.Enrollment.Data
                     LastWriteTimeUtc = sf.LastWriteTimeUtc
                 }
             ).ToList ();
-                
+
+            dbSet.Databases = new List<TandemRatingsDb> ();
             foreach (var srcFile in srcFiles) {
                 var db = new TandemRatingsDb ();
                 db.Load (srcFile.FullName);
                 dbSet.Databases.Add (db);
             }
-            
-            DbSets.Add (dbSet);
+
+            return dbSet;
         }
-        
-        public IEnumerable<EntrantRatingEnvironment> GetCampaigns (int portalId)
+
+        DbSetEntry SafeGetActualDbSet (int portalId)
         {
             lock (this) {
-                EnsureDbSetIsActual (portalId);
-                var dbSet = DbSets.FirstOrDefault (dbs => dbs.PortalId == portalId);
-                if (dbSet == null) {
-                    return Enumerable.Empty<EntrantRatingEnvironment> ();
+                var dbSet = DbSets.GetOrAdd (portalId, portalId2 => CreateOrUpdateDbSet (portalId2));
+                if (!DbSetIsActual (dbSet)) {
+                    DbSets.AddOrUpdate (portalId, CreateOrUpdateDbSet (portalId), (portalId2, dbSet2) => CreateOrUpdateDbSet (portalId2, dbSet2));
                 }
+                return dbSet;
+            }
+        }
+
+        public IEnumerable<EntrantRatingEnvironment> GetCampaigns (int portalId)
+        {
+            var dbSet = SafeGetActualDbSet (portalId);
+            lock (dbSet) {
                 return dbSet.Databases.Select (dbs => dbs.EntrantRatingEnvironment);
             }
         }
 
         public TandemRatingsDb GetDb (string campaignTitle, int portalId)
         {
-            lock (this) {
-                EnsureDbSetIsActual (portalId);
-                var dbSet = DbSets.FirstOrDefault (dbs => dbs.PortalId == portalId);
-                if (dbSet == null) {
-                    return null;
-                }
+            var dbSet = SafeGetActualDbSet (portalId);
+            lock (dbSet) {
                 return dbSet.Databases.FirstOrDefault (dbs =>
                     dbs.EntrantRatingEnvironment.CampaignTitle == campaignTitle);
             }
