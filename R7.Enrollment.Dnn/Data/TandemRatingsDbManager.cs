@@ -9,24 +9,6 @@ using SystemFileInfo = System.IO.FileInfo;
 
 namespace R7.Enrollment.Dnn.Data
 {
-    public class DbSourceFile
-    {
-        public string Name { get; set; }
-        
-        public long Length { get; set; }
-        
-        public DateTime LastWriteTimeUtc { get; set; } 
-    }
-    
-    public class DbSetEntry
-    {
-        public int PortalId { get; set; }
-        
-        public IList<DbSourceFile> SourceFiles { get; set; }
-        
-        public IList<TandemRatingsDb> Databases { get; set; } = new List<TandemRatingsDb> ();
-    }
-
     public class TandemRatingsDbManager
     {
         private const string FolderPath = "enrollment";
