@@ -115,7 +115,12 @@ namespace R7.Enrollment.Renderers
             
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "3");
-            html.WriteString ($"Число мест на бюджет (КЦП) — {competition.Plan}, из них:");
+            if (competition.CompensationTypeBudget) {
+                html.WriteString ($"Число мест на бюджет (КЦП) — {competition.Plan}");
+            }
+            else {
+                html.WriteString ($"Число мест с оплатой стоимости обучения — {competition.Plan}");
+            }
             html.WriteRaw ("<br />");
             html.WriteString ("Принятые сокращения:");
             html.WriteRaw ("<br />");
@@ -135,7 +140,12 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("td");
             html.WriteString ("Число заявлений:");
             html.WriteRaw ("<br />");
-            html.WriteString ("на бюджет (КЦП) — {?}");
+            if (competition.CompensationTypeBudget) {
+                html.WriteString ($"на бюджет (КЦП) — {competition.Entrants.Count}");
+            }
+            else {
+                html.WriteString ($"на места с оплатой стоимости обучения — {competition.Entrants.Count}");
+            }
             html.WriteEndElement ();
             
             html.WriteEndElement ();

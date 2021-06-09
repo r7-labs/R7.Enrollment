@@ -18,6 +18,8 @@ namespace R7.Enrollment.Models
         
         public string CompensationType { get; set; }
         
+        public bool CompensationTypeBudget { get; set; }
+        
         public string EduLevelRequirement { get; set; }
         
         public int Plan { get; set; }

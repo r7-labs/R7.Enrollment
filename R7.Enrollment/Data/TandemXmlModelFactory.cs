@@ -15,6 +15,7 @@ namespace R7.Enrollment.Data
                 OrgUnitTitle = xelem.Attribute ("formativeOrgUnitTitle")?.Value,
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value,
+                CompensationTypeBudget = TryParseBool (xelem.Attribute ("compensationTypeBudget")?.Value) ?? false,
                 Plan = TryParseInt (xelem.Attribute ("plan")?.Value) ?? 0,
                 EduLevelRequirement = xelem.Attribute ("eduLevelRequirement")?.Value
             };
@@ -33,8 +34,8 @@ namespace R7.Enrollment.Data
                 Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,
                 FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0,
                 AchievementMark = TryParseInt (xelem.Attribute ("achievementMark")?.Value) ?? 0,
-                OriginalIn = bool.Parse (xelem.Attribute ("originalIn").Value),
-                AcceptedEntrant = bool.Parse (xelem.Attribute ("acceptedEntrant").Value)
+                OriginalIn = TryParseBool (xelem.Attribute ("originalIn")?.Value) ?? false,
+                AcceptedEntrant = TryParseBool (xelem.Attribute ("acceptedEntrant")?.Value) ?? false
             };
         }
         
@@ -67,8 +68,13 @@ namespace R7.Enrollment.Data
         }
         
         static int? TryParseInt (string value)
+         {
+             return int.TryParse (value, out int result) ? (int?) result : null;
+         }
+        
+        static bool? TryParseBool (string value)
         {
-            return int.TryParse (value, out int result) ? (int?) result : null;
+            return bool.TryParse (value, out bool result) ? (bool?) result : null;
         }
     }
 }
