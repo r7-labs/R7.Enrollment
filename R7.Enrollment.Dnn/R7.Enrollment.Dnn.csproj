@@ -136,7 +136,7 @@
         <Compile Include="Services\EnrollmentController.cs" />
         <Compile Include="Services\EnrollmentRouteMapper.cs" />
         <Compile Include="ViewModels\CampaignViewModel.cs" />
-        <Compile Include="ViewModels\RatingsViewModel.cs" />
+        <Compile Include="ViewModels\RatingsModuleViewModel.cs" />
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\R7.Enrollment\R7.Enrollment.csproj">
