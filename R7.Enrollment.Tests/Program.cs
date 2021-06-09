@@ -14,15 +14,15 @@ namespace R7.Enrollment.Tests
             var db = new TandemRatingsDb ();
             db.Load ("./data/enr_rating_1696453372720271613.xml");
             
-            RenderToFile (db, "output-print.html", new TandemRatingRendererSettings ());
-            RenderToFile (db, "output-web.html", new TandemRatingRendererSettings {
+            RenderToFile (db, "output-print.html", new TandemRatingsRendererSettings ());
+            RenderToFile (db, "output-web.html", new TandemRatingsRendererSettings {
                 UseBasicCompetitionHeader = true
             });
         }
 
-        static void RenderToFile (TandemRatingsDb db, string path, TandemRatingRendererSettings settings)
+        static void RenderToFile (TandemRatingsDb db, string path, TandemRatingsRendererSettings settings)
         {
-            var htmlRenderer = new TandemEntrantRatingHtmlRenderer (settings);
+            var htmlRenderer = new TandemRatingsHtmlRenderer (settings);
             var sb = new StringBuilder ();
             var html = XmlWriter.Create (sb);
             htmlRenderer.RenderStandalone (db.EntrantRatingEnvironment, html);

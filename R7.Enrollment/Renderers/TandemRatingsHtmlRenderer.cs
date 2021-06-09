@@ -3,16 +3,16 @@ using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Renderers
 {
-    public class TandemEntrantRatingHtmlRenderer
+    public class TandemRatingsHtmlRenderer
     {
-        private TandemRatingRendererSettings Settings { get; set; }
+        private TandemRatingsRendererSettings Settings { get; set; }
         
-        public TandemEntrantRatingHtmlRenderer ()
+        public TandemRatingsHtmlRenderer ()
         {
-            Settings = new TandemRatingRendererSettings ();
+            Settings = new TandemRatingsRendererSettings ();
         }
         
-        public TandemEntrantRatingHtmlRenderer (TandemRatingRendererSettings settings)
+        public TandemRatingsHtmlRenderer (TandemRatingsRendererSettings settings)
         {
             Settings = settings;
         }
