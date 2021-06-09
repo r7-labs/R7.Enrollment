@@ -13,7 +13,7 @@ namespace R7.Enrollment.Dnn.Controllers
         public ActionResult Index ()
         {
             var result = new RatingsModuleViewModel ();
-            result.Campaigns = TandemDbManager.Instance.GetCampaigns (PortalSettings.PortalId)
+            result.Campaigns = TandemRatingsDbManager.Instance.GetCampaigns (PortalSettings.PortalId)
                 .Select (c => new CampaignViewModel (c)).ToList (); 
             return View (result);
         }

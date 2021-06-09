@@ -35,7 +35,7 @@ namespace R7.Enrollment.Dnn.Services
         public HttpResponseMessage GetRatingLists (GetRatingListsArgs args)
         {
             try {
-                var db = TandemDbManager.Instance.GetDb (args.CampaignTitle, PortalSettings.PortalId);
+                var db = TandemRatingsDbManager.Instance.GetDb (args.CampaignTitle, PortalSettings.PortalId);
                 if (db == null) {
                     return Request.CreateResponse (HttpStatusCode.NotFound);
                 }

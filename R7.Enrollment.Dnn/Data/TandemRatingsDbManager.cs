@@ -22,11 +22,11 @@ namespace R7.Enrollment.Dnn.Data
     }
 
 
-    public class TandemDbManager
+    public class TandemRatingsDbManager
     {
-        private static readonly Lazy<TandemDbManager> _instance = new Lazy<TandemDbManager> ();
+        private static readonly Lazy<TandemRatingsDbManager> _instance = new Lazy<TandemRatingsDbManager> ();
 
-        public static TandemDbManager Instance => _instance.Value;
+        public static TandemRatingsDbManager Instance => _instance.Value;
 
         private IList<DbEntry> Databases = new List<DbEntry> ();
 
