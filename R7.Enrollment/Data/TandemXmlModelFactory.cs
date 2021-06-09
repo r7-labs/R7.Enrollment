@@ -35,7 +35,9 @@ namespace R7.Enrollment.Data
                 FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0,
                 AchievementMark = TryParseInt (xelem.Attribute ("achievementMark")?.Value) ?? 0,
                 OriginalIn = TryParseBool (xelem.Attribute ("originalIn")?.Value) ?? false,
-                AcceptedEntrant = TryParseBool (xelem.Attribute ("acceptedEntrant")?.Value) ?? false
+                AcceptedEntrant = TryParseBool (xelem.Attribute ("acceptedEntrant")?.Value) ?? false,
+                RefusedToBeEnrolled = TryParseBool (xelem.Attribute ("refusedToBeEnrolled")?.Value) ?? false,
+                Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false
             };
         }
         

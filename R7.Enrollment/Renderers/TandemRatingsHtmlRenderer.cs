@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Xml;
 using R7.Enrollment.Models;
 
@@ -217,9 +218,21 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", entrant.AchievementMark.ToString ());
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
-            html.WriteElementString ("td", "{?}");
-            html.WriteElementString ("td", "{?}");
+            html.WriteElementString ("td", "");
+            html.WriteElementString ("td", EnrollmentStateString (entrant));
             html.WriteEndElement ();
+        }
+
+        string EnrollmentStateString (Entrant entrant)
+        {
+            var values = new List<string> ();
+            if (entrant.Recommended) {
+                values.Add ("рекомендован к зачислению");
+            }
+            if (entrant.RefusedToBeEnrolled) {
+                values.Add ("отказ от зачисления");
+            }
+            return string.Join ("; ", values);
         }
 
         string YesNoString (bool value) => value ? "да" : "нет";

@@ -18,6 +18,10 @@ namespace R7.Enrollment.Models
         public bool OriginalIn { get; set; }
         
         public bool AcceptedEntrant { get; set; }
+        
+        public bool Recommended { get; set; }
+        
+        public bool RefusedToBeEnrolled { get; set; }
 
         public IList<EntrantMark> Marks { get; set; } = new List<EntrantMark> ();
     }
