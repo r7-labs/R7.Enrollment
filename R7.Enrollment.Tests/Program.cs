@@ -1,5 +1,4 @@
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml;
 using R7.Enrollment.Data;
@@ -12,7 +11,8 @@ namespace R7.Enrollment.Tests
         static void Main (string[] args)
         {
             var db = new TandemRatingsDb ();
-            db.Load ("./data/enr_rating_1696453372720271613.xml");
+            //db.Load ("./data/enr_rating_1696453372720271613.xml");
+            db.Load ("./data/enr_rating_1697112374642823421.xml");
             
             RenderToFile (db, "output-print.html", new TandemRatingsRendererSettings ());
             RenderToFile (db, "output-web.html", new TandemRatingsRendererSettings {

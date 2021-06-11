@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Xml;
 using R7.Enrollment.Models;
@@ -186,7 +187,10 @@ namespace R7.Enrollment.Renderers
             }
             
             html.WriteElementWithAttributeString ("th", "Сумма баллов", "rowspan", "2");
-            html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", competition.EntranceDisciplines.Count.ToString ());
+
+            var disciplinesCount = Math.Max (competition.EntranceDisciplines.Count, 1);
+            html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", disciplinesCount.ToString ());
+            
             html.WriteElementWithAttributeString ("th", "Сумма баллов за ИД", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Сдан оригинал", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Согласие на зачисление", "rowspan", "2");
@@ -219,10 +223,15 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("td", entrant.FinalMark.ToString ());
 
-            foreach (var mark in entrant.Marks) {
-                html.WriteElementString ("td", mark.Mark.ToString ());
+            if (entrant.Marks.Count >= 1) {
+                foreach (var mark in entrant.Marks) {
+                    html.WriteElementString ("td", mark.Mark.ToString ());
+                }
             }
-            
+            else {
+                html.WriteElementString ("td", "-");
+            }
+
             html.WriteElementString ("td", entrant.AchievementMark.ToString ());
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));

@@ -27,6 +27,9 @@
       <None Update="data\enr_rating_1696453372720271613_2.xml">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="data\enr_rating_1697112374642823421.xml">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
