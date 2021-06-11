@@ -83,15 +83,14 @@ class RatingSearch extends React.Component {
         return (
             <form onSubmit={this.handleSubmit} className="mb-3">
                 <div className="form-group">
-                    <label htmlFor="enrRatingSearch_Campaign">Приемная кампания</label>
-                    <select className="form-control" name="campaignTitle" id="enrRatingSearch_Campaign">
+                    <label htmlFor="enrRatingSearch_campaign">Приемная кампания</label>
+                    <select className="form-control" name="campaignTitle" id="enrRatingSearch_campaign">
                         {options}
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="enrRatingSearch_EntrantId">Личный номер абитуриента</label>
-                    <input type="text" name="personalNumber" id="enrRatingSearch_EntrantId"
-                           placeholder="например 2100000"
+                    <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
+                    <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
                     {(() => {
                         if (this.state.invalidPersonalNumber === true) {
