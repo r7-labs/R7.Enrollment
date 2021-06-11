@@ -23,7 +23,7 @@ namespace R7.Enrollment.Dnn.Data
             }
 
             return FolderManager.Instance.GetFiles (dbFolder)
-                .Where (f => Regex.IsMatch (f.FileName, "^enr_[^.]*\\.xml$"))
+                .Where (f => Regex.IsMatch (f.FileName, "^enr_rating_[^.]*\\.xml$"))
                 .Select (f => new System.IO.FileInfo (f.PhysicalPath));
         }
     }
