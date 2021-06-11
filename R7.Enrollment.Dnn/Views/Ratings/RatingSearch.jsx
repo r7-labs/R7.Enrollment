@@ -1,6 +1,7 @@
 class RatingSearch extends React.Component {
     constructor (props) {
         super (props);
+        this.refs.personalNumber = React.createRef ();        
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
             isError: false,
@@ -91,16 +92,21 @@ class RatingSearch extends React.Component {
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
                     <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
+                           ref={this.refs.personalNumber}
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
                     {(() => {
                         if (this.state.invalidPersonalNumber === true) {
-                            return (<div className="invalid-feedback">Введите свой личный номер абитуриента, например 2100000</div>);
+                            return (<div className="invalid-feedback">Введите личный номер абитуриента в формате 21XXXXX</div>);
                         }
                     }) ()}
                 </div>
                 <button type="submit" className="btn btn-primary">Найти меня в списках!</button>
             </form>
         );
+    }
+    
+    componentDidMount () {
+        this.refs.personalNumber.current.value = "2100000";
     }
         
     renderLists () {
