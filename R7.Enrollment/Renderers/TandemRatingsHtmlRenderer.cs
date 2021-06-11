@@ -8,12 +8,12 @@ namespace R7.Enrollment.Renderers
     public class TandemRatingsHtmlRenderer
     {
         private TandemRatingsRendererSettings Settings { get; set; }
-        
+
         public TandemRatingsHtmlRenderer ()
         {
             Settings = new TandemRatingsRendererSettings ();
         }
-        
+
         public TandemRatingsHtmlRenderer (TandemRatingsRendererSettings settings)
         {
             Settings = settings;
@@ -24,7 +24,7 @@ namespace R7.Enrollment.Renderers
             html.WriteStartDocument ();
             html.WriteStartElement ("html");
             html.WriteStartElement ("head");
-            
+
             html.WriteStartElement ("link");
             html.WriteAttributeString ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css");
             html.WriteAttributeString ("rel", "stylesheet");
@@ -32,7 +32,7 @@ namespace R7.Enrollment.Renderers
             html.WriteAttributeString ("crossorigin", "anonymous");
 
             html.WriteEndElement ();
-            
+
             html.WriteStartElement ("body");
             Render (entrantRatingEnv, html);
             html.WriteEndElement ();
@@ -65,15 +65,21 @@ namespace R7.Enrollment.Renderers
             if (!Settings.UseBasicCompetitionHeader) {
                 RenderCompetitionHeader (competition, html);
             }
-            
+
+            // start table
+            html.WriteStartElement ("div");
+            html.WriteAttributeString ("class", "table-responsive");
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
-            
+
             RenderEntrantsTableHeader (competition, html);
-                
+
             foreach (var entrant in competition.Entrants) {
                 RenderEntrant (entrant, html);
             }
+
+            // end table
+            html.WriteEndElement ();
             html.WriteEndElement ();
 
             if (Settings.UseBasicCompetitionHeader) {
@@ -84,23 +90,26 @@ namespace R7.Enrollment.Renderers
 
         void RenderCompetitionHeader (Competition competition, XmlWriter html)
         {
+            // start table
+            html.WriteStartElement ("div");
+            html.WriteAttributeString ("class", "table-responsive");
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table");
-            
+
             // 1st row
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("td", "Рейтинговый (конкурсный) список, список поступающих на", "colspan", "2");
             html.WriteElementWithAttributeString ("td", $"{competition.CurrentDateTime.ToShortDateString ()} {competition.CurrentDateTime.ToShortTimeString ()}", "colspan", "2");
             html.WriteElementString ("td", "");
             html.WriteEndElement ();
-            
+
             // 2nd row
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("td", competition.OrgTitle, "colspan", "3");
             html.WriteElementString ("td", "");
             html.WriteElementString ("td", competition.OrgUnitTitle);
             html.WriteEndElement ();
-            
+
             // 3rd row
             html.WriteStartElement ("tr");
             html.WriteElementString ("td", "Направление подготовки:");
@@ -108,21 +117,21 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", "");
             html.WriteElementString ("td", $"{competition.EduProgram.ConditionsWithForm}");
             html.WriteEndElement ();
-            
+
             // 4th row
             html.WriteStartElement ("tr");
-            
+
             html.WriteElementString ("td", "Набор ОП:");
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "4");
             html.WriteString (competition.EduProgram.Title);
             html.WriteEndElement ();
-            
+
             html.WriteEndElement();
-            
+
             // 5th row
             html.WriteStartElement ("tr");
-            
+
             html.WriteStartElement ("td");
             html.WriteAttributeString ("colspan", "3");
             if (competition.CompensationTypeBudget) {
@@ -144,7 +153,7 @@ namespace R7.Enrollment.Renderers
                 html.WriteString($"{discipline.ShortTitle} - {discipline.Title}; ");
             }
             html.WriteEndElement();
-            
+
             html.WriteElementString ("td", "");
 
             html.WriteStartElement ("td");
@@ -157,53 +166,54 @@ namespace R7.Enrollment.Renderers
                 html.WriteString ($"на места с оплатой стоимости обучения — {competition.Entrants.Count}");
             }
             html.WriteEndElement ();
-            
+
             html.WriteEndElement ();
-            
+
             // 6th row
             html.WriteStartElement ("tr");
             html.WriteElementString ("td", "Образовательные программы:");
 
             html.WriteElementWithAttributeString ("td",
                 $"{competition.EduProgram.TitleAndConditionsShortWithForm}", "colspan", "4");
-            
+
             html.WriteEndElement ();
-            
+
             // end table
             html.WriteEndElement ();
-            
+            html.WriteEndElement ();
+
             html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
         }
 
         public void RenderEntrantsTableHeader (Competition competition, XmlWriter html)
         {
             html.WriteStartElement ("thead");
-            
+
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
 
             if (!Settings.Depersonalize) {
                 html.WriteElementWithAttributeString ("th", "Фамилия, имя, отчество", "rowspan", "2");
             }
-            
+
             html.WriteElementWithAttributeString ("th", "Сумма баллов", "rowspan", "2");
 
             var disciplinesCount = Math.Max (competition.EntranceDisciplines.Count, 1);
             html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", disciplinesCount.ToString ());
-            
+
             html.WriteElementWithAttributeString ("th", "Сумма баллов за ИД", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Сдан оригинал", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Согласие на зачисление", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Примечание", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Информация о зачислении", "rowspan", "2");
             html.WriteEndElement ();
-            
+
             html.WriteStartElement ("tr");
             foreach (var discipline in competition.EntranceDisciplines) {
                 html.WriteElementString ("th", discipline.ShortTitle);
             }
             html.WriteEndElement ();
-            
+
             html.WriteEndElement ();
         }
 
@@ -214,7 +224,7 @@ namespace R7.Enrollment.Renderers
             if (entrant.PersonalNumber == Settings.PersonalNumber) {
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
-        
+
             html.WriteElementString ("td", entrant.Position.ToString ());
 
             if (!Settings.Depersonalize) {
