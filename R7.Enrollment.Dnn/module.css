@@ -1,5 +1,7 @@
-.enr-target-entrant-row td {
-    background-color: gold;
-    border: 2px solid black;
+.enr-target-entrant-row > td {
+    background-color: #d4edda; /* alert-success bg color */
 }
 
+.enr-target-entrant-row td:first-child {
+    border-left: 6px solid #28a745; /* border-success color */
+}
