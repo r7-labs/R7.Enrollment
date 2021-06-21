@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Net.Mime;
 
 namespace R7.Enrollment.Models
 {

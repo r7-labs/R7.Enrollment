@@ -9,6 +9,8 @@ namespace R7.Enrollment.Renderers
     {
         private TandemRatingsRendererSettings Settings { get; set; }
 
+        private readonly SnilsComparer _snilsComparer = new SnilsComparer ();
+
         public TandemRatingsHtmlRenderer ()
         {
             Settings = new TandemRatingsRendererSettings ();
@@ -221,7 +223,8 @@ namespace R7.Enrollment.Renderers
         {
             html.WriteStartElement ("tr");
 
-            if (entrant.Snils == Settings.Snils || entrant.PersonalNumber == Settings.PersonalNumber) {
+            if (_snilsComparer.SnilsNotNullAndEquals (entrant.Snils, Settings.Snils)
+                    || entrant.PersonalNumber == Settings.PersonalNumber) {
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 
