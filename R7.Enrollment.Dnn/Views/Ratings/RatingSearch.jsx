@@ -4,7 +4,11 @@ class RatingSearch extends React.Component {
         this.refs.personalNumber = React.createRef ();
         this.refs.snils = React.createRef ();
         this.handleSubmit = this.handleSubmit.bind (this);
-        this.state = {
+        this.state = this.createDefaultState ();
+    }
+
+    createDefaultState () {
+        return {
             isError: false,
             invalidPersonalNumber: false,
             requestWasSent: false,
@@ -27,33 +31,26 @@ class RatingSearch extends React.Component {
 
         this.props.service.getRatingLists (data,
             (results) => {
-                this.setState ({
-                    isError: false,
-                    invalidPersonalNumber: false,
-                    requestWasSent: true,
-                    lists: results
-                });
+                var newState = this.createDefaultState ();
+                newState.requestWasSent = true;
+                newState.lists = results;
+                this.setState (newState);
             },
             (xhr, status, err) => {
                 console.log (xhr);
-                this.setState ({
-                   isError: true,
-                   invalidPersonalNumber: false,
-                   requestWasSent: true,
-                   lists: []
-                });
+                var newState = this.createDefaultState ();
+                newState.requestWasSent = true;
+                newState.isError = true;
+                this.setState (newState);
             }
         );
     }
 
     validateFormData (data) {
         if (typeof (data.personalNumber) === "undefined" || data.personalNumber === null || data.personalNumber.length === 0) {
-            this.setState ({
-                isError: false,
-                invalidPersonalNumber: true,
-                requestWasSent: false,
-                lists: []
-            });
+            var newState = this.createDefaultState ();
+            newState.invalidPersonalNumber = true;
+            this.setState (newState);
             return false;
         }
         return true;
