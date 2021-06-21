@@ -25,12 +25,13 @@ namespace R7.Enrollment.Data
 
             return competition;
         }
-        
+
         public static Entrant CreateCompetitionEntrant (XElement xelem)
         {
             return new Entrant {
                 PersonalNumber = xelem.Descendants ("entrantPersonalNumber").FirstOrDefault ()?.Value,
                 Name = xelem.Attribute ("fio")?.Value,
+                Snils = xelem.Attribute ("snils")?.Value,
                 Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,
                 FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0,
                 AchievementMark = TryParseInt (xelem.Attribute ("achievementMark")?.Value) ?? 0,
@@ -40,7 +41,7 @@ namespace R7.Enrollment.Data
                 Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false
             };
         }
-        
+
         public static EntranceDiscipline CreateEntranceDiscipline (XElement xelem)
         {
             return new EntranceDiscipline {
@@ -48,7 +49,7 @@ namespace R7.Enrollment.Data
                 ShortTitle = xelem.Attribute ("shortTitle")?.Value
             };
         }
-        
+
         public static EntrantMark CreateEntrantMark (XElement xelem, Competition competition)
         {
             var markTitle = xelem.Attribute ("markTitle")?.Value;
@@ -58,7 +59,7 @@ namespace R7.Enrollment.Data
                     .FirstOrDefault (ed => ed.Title.IndexOf (markTitle, StringComparison.CurrentCultureIgnoreCase) >= 0)
             };
         }
-        
+
         public static void FillEduProgram (XElement xelem, EduProgram eduProgram)
         {
             eduProgram.Form = xelem.Attribute ("eduProgramForm")?.Value;
@@ -68,12 +69,12 @@ namespace R7.Enrollment.Data
             eduProgram.ConditionsWithForm = xelem.Attribute ("conditionsWithForm")?.Value;
             eduProgram.TitleAndConditionsShortWithForm = xelem.Attribute ("titleAndConditionsShortWithForm")?.Value;
         }
-        
+
         static int? TryParseInt (string value)
          {
              return int.TryParse (value, out int result) ? (int?) result : null;
          }
-        
+
         static bool? TryParseBool (string value)
         {
             return bool.TryParse (value, out bool result) ? (bool?) result : null;
