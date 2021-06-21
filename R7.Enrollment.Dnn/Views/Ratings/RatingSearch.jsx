@@ -1,9 +1,37 @@
 class RatingSearch extends React.Component {
     constructor (props) {
         super (props);
+        this.handleNoSnilsChange = this.handleNoSnilsChange.bind (this);
+        this.state = {
+            noSnils: false
+        };
+    }
+
+    handleNoSnilsChange (noSnils) {
+        this.setState ({
+            noSnils: noSnils
+        });
+    }
+
+    render () {
+        return (
+            <RatingSearchForm
+                moduleId={this.props.moduleId}
+                service={this.props.service}
+                campaigns={this.props.campaigns}
+                noSnils={this.state.noSnils}
+                onNoSnilsChange={this.handleNoSnilsChange} />
+        );
+    }
+}
+
+class RatingSearchForm extends React.Component {
+    constructor (props) {
+        super (props);
         this.refs.personalNumber = React.createRef ();
         this.refs.snils = React.createRef ();
         this.handleSubmit = this.handleSubmit.bind (this);
+        this.handleNoSnilsChange = this.handleNoSnilsChange.bind (this);
         this.state = this.createDefaultState ();
     }
 
@@ -26,7 +54,8 @@ class RatingSearch extends React.Component {
             personalNumber: formData.get ("personalNumber")
         };
 
-        const invalidSnils = !this.validateSnils (data.snils);
+        // validate form
+        const invalidSnils = !this.validateSnils (data.snils, this.props.noSnils);
         const invalidPersonalNumber = !this.validatePersonalNumber (data.personalNumber);
         if (invalidSnils || invalidPersonalNumber) {
             const newState = this.createDefaultState ();
@@ -34,6 +63,14 @@ class RatingSearch extends React.Component {
             newState.invalidPersonalNumber = invalidPersonalNumber;
             this.setState (newState);
             return;
+        }
+
+        // remove potentially invalid data before send
+        if (this.props.noSnils === true) {
+            data.snils = "";
+        }
+        else {
+            data.personalNumber = "";
         }
 
         this.props.service.getRatingLists (data,
@@ -53,7 +90,10 @@ class RatingSearch extends React.Component {
         );
     }
 
-    validateSnils (snils) {
+    validateSnils (snils, noSnils) {
+        if (noSnils === true) {
+            return true;
+        }
         if (typeof (snils) === "undefined" || snils === null || snils.length === 0) {
             return false;
         }
@@ -69,6 +109,11 @@ class RatingSearch extends React.Component {
             return false;
         }
         return true;
+    }
+
+    handleNoSnilsChange (e) {
+        console.log (e.target.checked);
+        this.props.onNoSnilsChange (e.target.checked);
     }
 
     render () {
@@ -105,7 +150,8 @@ class RatingSearch extends React.Component {
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
                     <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
-                           className={"form-control " + ((this.state.invalidSnils === true)? "is-invalid" : "")} />
+                           className={"form-control " + ((this.state.invalidSnils === true)? "is-invalid" : "")}
+                           disabled={this.props.noSnils} />
                     {(() => {
                         if (this.state.invalidSnils === true) {
                             return (<div className="invalid-feedback">Введите СНИЛС в формате XXX-XXX-XXX-XX (11 цифр)</div>);
@@ -113,7 +159,13 @@ class RatingSearch extends React.Component {
                     }) ()}
                 </div>
                 <div className="form-group">
-                    <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента (при отсутствии СНИЛС)</label>
+                    <div className="form-check">
+                        <input className="form-check-input" type="checkbox" id="enrRatingSearch_noSnils" onClick={this.handleNoSnilsChange} checked={this.props.noSnils} />
+                        <label className="form-check-label" htmlFor="enrRatingSearch_noSnils">У меня нет СНИЛС!</label>
+                    </div>
+                </div>
+                <div className={"form-group " + ((this.props.noSnils === false)? "d-none" : "")}>
+                    <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
                     <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
                            ref={this.refs.personalNumber}
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
