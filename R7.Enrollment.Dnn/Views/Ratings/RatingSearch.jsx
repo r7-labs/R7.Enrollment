@@ -10,6 +10,7 @@ class RatingSearch extends React.Component {
     createDefaultState () {
         return {
             isError: false,
+            invalidSnils: false,
             invalidPersonalNumber: false,
             requestWasSent: false,
             lists: []
@@ -25,20 +26,26 @@ class RatingSearch extends React.Component {
             personalNumber: formData.get ("personalNumber")
         };
 
-        if (!this.validateFormData (data)) {
+        const invalidSnils = !this.validateSnils (data.snils);
+        const invalidPersonalNumber = !this.validatePersonalNumber (data.personalNumber);
+        if (invalidSnils || invalidPersonalNumber) {
+            const newState = this.createDefaultState ();
+            newState.invalidSnils = invalidSnils;
+            newState.invalidPersonalNumber = invalidPersonalNumber;
+            this.setState (newState);
             return;
         }
 
         this.props.service.getRatingLists (data,
             (results) => {
-                var newState = this.createDefaultState ();
+                const newState = this.createDefaultState ();
                 newState.requestWasSent = true;
                 newState.lists = results;
                 this.setState (newState);
             },
             (xhr, status, err) => {
                 console.log (xhr);
-                var newState = this.createDefaultState ();
+                const newState = this.createDefaultState ();
                 newState.requestWasSent = true;
                 newState.isError = true;
                 this.setState (newState);
@@ -46,11 +53,19 @@ class RatingSearch extends React.Component {
         );
     }
 
-    validateFormData (data) {
-        if (typeof (data.personalNumber) === "undefined" || data.personalNumber === null || data.personalNumber.length === 0) {
-            var newState = this.createDefaultState ();
-            newState.invalidPersonalNumber = true;
-            this.setState (newState);
+    validateSnils (snils) {
+        if (typeof (snils) === "undefined" || snils === null || snils.length === 0) {
+            return false;
+        }
+        const snilsStripped = snils.replace (/[^\d]/g, "");
+        if (snilsStripped.length !== 11) {
+            return false;
+        }
+        return true;
+    }
+
+    validatePersonalNumber (personalNumber) {
+        if (typeof (personalNumber) === "undefined" || personalNumber === null || personalNumber.length === 0) {
             return false;
         }
         return true;
@@ -89,7 +104,13 @@ class RatingSearch extends React.Component {
                 </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
-                    <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} className="form-control" />
+                    <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
+                           className={"form-control " + ((this.state.invalidSnils === true)? "is-invalid" : "")} />
+                    {(() => {
+                        if (this.state.invalidSnils === true) {
+                            return (<div className="invalid-feedback">Введите СНИЛС в формате XXX-XXX-XXX-XX (11 цифр)</div>);
+                        }
+                    }) ()}
                 </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента (при отсутствии СНИЛС)</label>
