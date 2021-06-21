@@ -221,7 +221,7 @@ namespace R7.Enrollment.Renderers
         {
             html.WriteStartElement ("tr");
 
-            if (entrant.PersonalNumber == Settings.PersonalNumber) {
+            if (entrant.Snils == Settings.Snils || entrant.PersonalNumber == Settings.PersonalNumber) {
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 

@@ -2,6 +2,7 @@ class RatingSearch extends React.Component {
     constructor (props) {
         super (props);
         this.refs.personalNumber = React.createRef ();
+        this.refs.snils = React.createRef ();
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
             isError: false,
@@ -16,6 +17,7 @@ class RatingSearch extends React.Component {
         const formData = new FormData (e.target);
         const data = {
             campaignTitle: formData.get ("campaignTitle"),
+            snils: formData.get ("snils"),
             personalNumber: formData.get ("personalNumber")
         };
 
@@ -62,7 +64,6 @@ class RatingSearch extends React.Component {
             <div>
                 {this.renderForm ()}
                 <RatingSearchResults requestWasSent={this.state.requestWasSent} lists={this.state.lists} isError={this.state.isError} />
-                {this.renderError ()}
                 <hr />
                 <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
             </div>
@@ -90,7 +91,11 @@ class RatingSearch extends React.Component {
                     </select>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
+                    <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
+                    <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} className="form-control" />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента (при отсутствии СНИЛС)</label>
                     <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
                            ref={this.refs.personalNumber}
                            className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
@@ -106,15 +111,8 @@ class RatingSearch extends React.Component {
     }
 
     componentDidMount () {
+        this.refs.snils.current.value = "000-000-000-00";
         this.refs.personalNumber.current.value = "2100000";
-    }
-
-    renderError () {
-        if (this.state.isError === true) {
-            return (
-                <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
-            )
-        }
     }
 }
 
@@ -139,6 +137,7 @@ class RatingSearchResults extends React.Component {
                 )
             }
         }
+        return null;
     }
 }
 

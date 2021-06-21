@@ -17,7 +17,9 @@ namespace R7.Enrollment.Dnn.Services
     public class GetRatingListsArgs
     {
         public string CampaignTitle { get; set; }
-        
+
+        public string Snils { get; set; }
+
         public string PersonalNumber { get; set; }
     }
 
@@ -25,7 +27,7 @@ namespace R7.Enrollment.Dnn.Services
     {
         public string Html { get; set; }
     }
-    
+
     public class EnrollmentController: DnnApiController
     {
         [HttpPost]
@@ -42,17 +44,18 @@ namespace R7.Enrollment.Dnn.Services
 
                 var competitionQuery = new CompetitionQuery ();
                 var competitions =
-                    competitionQuery.ByPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.PersonalNumber);
+                    competitionQuery.BySnilsOrPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.Snils, args.PersonalNumber);
 
                 var results = new List<GetRatingListsResult> ();
                 var htmlRenderer = new TandemRatingsHtmlRenderer (
                     new TandemRatingsRendererSettings {
                         Depersonalize = true,
+                        Snils = args.Snils,
                         PersonalNumber = args.PersonalNumber,
                         UseBasicCompetitionHeader = true
                     }
                 );
-                
+
                 foreach (var competition in competitions) {
                     var sb = new StringBuilder ();
                     var html = XmlWriter.Create (sb, new XmlWriterSettings {ConformanceLevel = ConformanceLevel.Auto});
@@ -62,7 +65,7 @@ namespace R7.Enrollment.Dnn.Services
                         Html = sb.ToString ()
                     });
                 }
-                
+
                 return Request.CreateResponse (HttpStatusCode.OK, results);
             }
             catch (Exception ex) {
