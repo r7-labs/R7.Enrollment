@@ -1,7 +1,7 @@
 class RatingSearch extends React.Component {
     constructor (props) {
         super (props);
-        this.refs.personalNumber = React.createRef ();        
+        this.refs.personalNumber = React.createRef ();
         this.handleSubmit = this.handleSubmit.bind (this);
         this.state = {
             isError: false,
@@ -10,7 +10,7 @@ class RatingSearch extends React.Component {
             lists: []
         };
     }
-    
+
     handleSubmit (e) {
         e.preventDefault ();
         const formData = new FormData (e.target);
@@ -18,11 +18,11 @@ class RatingSearch extends React.Component {
             campaignTitle: formData.get ("campaignTitle"),
             personalNumber: formData.get ("personalNumber")
         };
-        
+
         if (!this.validateFormData (data)) {
             return;
         }
-                       
+
         this.props.service.getRatingLists (data,
             (results) => {
                 this.setState ({
@@ -37,13 +37,13 @@ class RatingSearch extends React.Component {
                 this.setState ({
                    isError: true,
                    invalidPersonalNumber: false,
-                   requestWasSent: true, 
-                   lists: [] 
+                   requestWasSent: true,
+                   lists: []
                 });
             }
         );
     }
-    
+
     validateFormData (data) {
         if (typeof (data.personalNumber) === "undefined" || data.personalNumber === null || data.personalNumber.length === 0) {
             this.setState ({
@@ -56,23 +56,23 @@ class RatingSearch extends React.Component {
         }
         return true;
     }
-    
+
     render () {
         return (
             <div>
                 {this.renderForm ()}
-                {this.renderLists ()}
+                <RatingSearchResults requestWasSent={this.state.requestWasSent} lists={this.state.lists} isError={this.state.isError} />
                 {this.renderError ()}
                 <hr />
                 <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
             </div>
         );
     }
-    
+
     formatCampaignTitle (campaign) {
         return campaign.CampaignTitle.replace ("21/22 ", "") + " " + campaign.CurrentDateTime;
     }
-    
+
     renderForm () {
         const options = [];
         for (let campaign of this.props.campaigns) {
@@ -104,29 +104,40 @@ class RatingSearch extends React.Component {
             </form>
         );
     }
-    
+
     componentDidMount () {
         this.refs.personalNumber.current.value = "2100000";
     }
-        
-    renderLists () {
-        if (this.state.requestWasSent === true) {
-            if (this.state.lists.length > 0) {
-                return this.state.lists.map(list => <div dangerouslySetInnerHTML={{__html: list.Html}}/>);
-            }
-            if (this.state.isError === false) {
-                return (
-                    <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
-                );
-            }
-        }
-    }
-    
+
     renderError () {
         if (this.state.isError === true) {
             return (
                 <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
             )
+        }
+    }
+}
+
+class RatingSearchResults extends React.Component {
+    constructor (props) {
+        super (props);
+    }
+
+    render () {
+        if (this.props.requestWasSent === true) {
+            if (this.props.lists.length > 0) {
+                return this.props.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
+            }
+            if (this.props.isError === false) {
+                return (
+                    <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
+                );
+            }
+            else {
+                return (
+                    <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
+                )
+            }
         }
     }
 }
