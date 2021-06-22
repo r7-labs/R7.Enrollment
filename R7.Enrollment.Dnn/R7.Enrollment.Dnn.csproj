@@ -155,6 +155,7 @@
       <Content Include="Views\HelloWorld.jsx" />
       <Content Include="Views\Ratings\RatingSearch.jsx" />
       <Content Include="Views\Ratings\Index.cshtml" />
+      <Content Include="Views\Ratings\RatingSearchForm.jsx" />
       <Content Include="Views\Shared\_Layout.cshtml" />
       <Content Include="Views\_ViewStart.cshtml" />
     </ItemGroup>
