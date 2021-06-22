@@ -53,6 +53,10 @@ namespace R7.Enrollment.Renderers
 
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
+            if (Settings.UseBasicCompetitionHeader) {
+                html.WriteElementString ("h4", $"{competition.EduLevel}");
+            }
+
             html.WriteElementString ("h2", $"{competition.EduProgram.FullTitle}");
 
             if (!competition.CompensationTypeBudget) {
