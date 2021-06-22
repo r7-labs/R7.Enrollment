@@ -40,7 +40,7 @@ export default class RatingSearchForm extends React.Component {
         }
 
         // remove potentially invalid data before send
-        if (this.props.noSnils === true) {
+        if (this.props.noSnils) {
             data.snils = "";
         }
         else {
@@ -75,7 +75,7 @@ export default class RatingSearchForm extends React.Component {
     }
 
     validateSnils (snils, noSnils) {
-        if (noSnils === true) {
+        if (noSnils) {
             return true;
         }
         if (typeof (snils) === "undefined" || snils === null || snils.length === 0) {
@@ -116,13 +116,9 @@ export default class RatingSearchForm extends React.Component {
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
                     <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
-                           className={"form-control " + ((this.state.invalidSnils === true)? "is-invalid" : "")}
+                           className={"form-control " + (this.state.invalidSnils ? "is-invalid" : "")}
                            disabled={this.props.noSnils} />
-                    {(() => {
-                        if (this.state.invalidSnils === true) {
-                            return (<div className="invalid-feedback">Введите СНИЛС в формате XXX-XXX-XXX-XX (11 цифр)</div>);
-                        }
-                    }) ()}
+                    {this.state.invalidSnils ? <div className="invalid-feedback">Введите СНИЛС (11 цифр)</div> : null}
                 </div>
                 <div className="form-group">
                     <div className="form-check">
@@ -130,22 +126,17 @@ export default class RatingSearchForm extends React.Component {
                         <label className="form-check-label" htmlFor="enrRatingSearch_noSnils">У меня нет СНИЛС!</label>
                     </div>
                 </div>
-                <div className={"form-group " + ((this.props.noSnils === false)? "d-none" : "")}>
+                <div className={"form-group " + (!this.props.noSnils ? "d-none" : "")}>
                     <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
                     <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
                            ref={this.refs.personalNumber}
-                           className={"form-control " + ((this.state.invalidPersonalNumber === true)? "is-invalid" : "")} />
-                    {(() => {
-                        if (this.state.invalidPersonalNumber === true) {
-                            return (<div className="invalid-feedback">Введите личный номер абитуриента в формате 21XXXXX</div>);
-                        }
-                    }) ()}
+                           className={"form-control " + (this.state.invalidPersonalNumber? "is-invalid" : "")} />
+                    {this.state.invalidPersonalNumber ? <div className="invalid-feedback">Введите личный номер абитуриента в формате 21XXXXX (7 цифр)</div> : null}
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={this.state.requestInProgress}>
-                    {this.state.requestInProgress? <i className="fas fa-circle-notch fa-spin mr-2"></i> : null}
+                    {this.state.requestInProgress ? <i className="fas fa-circle-notch fa-spin mr-2"></i> : null}
                     Найти меня в списках!
                 </button>
-
             </form>
         );
     }
@@ -162,22 +153,25 @@ class RatingSearchResults extends React.Component {
     }
 
     render () {
-        if (this.props.requestDone === true) {
-            if (this.props.lists.length > 0) {
-                return this.props.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
-            }
-            if (this.props.isError === false) {
-                return (
-                    <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
-                );
-            }
-            else {
-                return (
-                    <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
-                )
-            }
+        if (!this.props.requestDone) {
+            return null;
         }
-        return null;
+        if (this.props.lists.length > 0) {
+            return this.props.lists.map (list => (
+                <div>
+                    <hr />
+                    <div dangerouslySetInnerHTML={{__html: list.Html}} />
+                </div>
+            ));
+        }
+        if (!this.props.isError) {
+            return (
+                <p className="alert alert-warning">По вашему запросу ничего не найдено!</p>
+            );
+        }
+        return (
+            <p className="alert alert-danger">Ой, что-то пошло не так! Перезагрузите страницу и попробуйте снова.</p>
+        )
     }
 }
 
