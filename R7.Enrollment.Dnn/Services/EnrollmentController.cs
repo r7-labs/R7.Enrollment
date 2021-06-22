@@ -9,6 +9,7 @@ using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Web.Api;
 using R7.Enrollment.Dnn.Data;
+using R7.Enrollment.Models;
 using R7.Enrollment.Queries;
 using R7.Enrollment.Renderers;
 
@@ -16,8 +17,6 @@ namespace R7.Enrollment.Dnn.Services
 {
     public class GetRatingListsArgs
     {
-        public string CampaignTitle { get; set; }
-
         public string Snils { get; set; }
 
         public string PersonalNumber { get; set; }
@@ -37,14 +36,11 @@ namespace R7.Enrollment.Dnn.Services
         public HttpResponseMessage GetRatingLists (GetRatingListsArgs args)
         {
             try {
-                var db = TandemRatingsDbManager.Instance.GetDb (args.CampaignTitle, PortalSettings.PortalId);
-                if (db == null) {
-                    return Request.CreateResponse (HttpStatusCode.NotFound);
-                }
-
                 var competitionQuery = new CompetitionQuery ();
-                var competitions =
-                    competitionQuery.BySnilsOrPersonalNumber (db.EntrantRatingEnvironment.Competitions, args.Snils, args.PersonalNumber);
+                var competitions = new List<Competition> ();
+                foreach (var db in TandemRatingsDbManager.Instance.GetDbs (PortalSettings.PortalId)) {
+                    competitions.AddRange (competitionQuery.BySnilsOrPersonalNumber (db, args.Snils, args.PersonalNumber));
+                }
 
                 var results = new List<GetRatingListsResult> ();
                 var htmlRenderer = new TandemRatingsHtmlRenderer (

@@ -12,7 +12,7 @@ namespace R7.Enrollment.Data
         private readonly ConcurrentDictionary<int, DbSetEntry> DbSets = new ConcurrentDictionary<int, DbSetEntry> ();
 
         protected abstract IEnumerable<FileInfo> GetSourceFiles (int portalId);
-        
+
         bool DbSetIsActual (DbSetEntry dbSet)
         {
             var srcFiles = GetSourceFiles (dbSet.PortalId).ToList ();
@@ -32,7 +32,7 @@ namespace R7.Enrollment.Data
 
             return true;
         }
-        
+
         DbSetEntry CreateOrUpdateDbSet (int portalId, DbSetEntry dbSet = null)
         {
             if (dbSet == null) {
@@ -85,6 +85,14 @@ namespace R7.Enrollment.Data
             lock (dbSet) {
                 return dbSet.Databases.FirstOrDefault (dbs =>
                     dbs.EntrantRatingEnvironment.CampaignTitle == campaignTitle);
+            }
+        }
+
+        public IEnumerable<TandemRatingsDb> GetDbs (int portalId)
+        {
+            var dbSet = SafeGetActualDbSet (portalId);
+            lock (dbSet) {
+                return dbSet.Databases;
             }
         }
     }

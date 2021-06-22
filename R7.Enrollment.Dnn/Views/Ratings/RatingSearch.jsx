@@ -14,13 +14,36 @@ class RatingSearch extends React.Component {
     }
 
     render () {
+        if (this.props.campaigns.length > 0) {
+            return (
+                <div>
+                    {this.renderDbInfo ()}
+                    <RatingSearchForm
+                        moduleId={this.props.moduleId}
+                        service={this.props.service}
+                        noSnils={this.state.noSnils}
+                        onNoSnilsChange={this.handleNoSnilsChange} />
+                </div>
+            );
+        }
         return (
-            <RatingSearchForm
-                moduleId={this.props.moduleId}
-                service={this.props.service}
-                campaigns={this.props.campaigns}
-                noSnils={this.state.noSnils}
-                onNoSnilsChange={this.handleNoSnilsChange} />
+            <p class="alert alert-danger">Нет данных! Перезагрузите страницу и попробуйте снова.</p>
+        );
+    }
+
+    formatCampaignTitle (campaign) {
+        return campaign.CampaignTitle.replace ("21/22 ", "") + " - по состоянию на " + campaign.CurrentDateTime;
+    }
+
+    renderDbInfo () {
+        const items = [];
+        for (let campaign of this.props.campaigns) {
+            items.push (<li>{this.formatCampaignTitle (campaign)}</li>);
+        }
+        return (
+            <div className="card card-body bg-light">
+                <ul className="list-unstyled mb-0">{items}</ul>
+            </div>
         );
     }
 }
@@ -49,7 +72,6 @@ class RatingSearchForm extends React.Component {
         e.preventDefault ();
         const formData = new FormData (e.target);
         const data = {
-            campaignTitle: formData.get ("campaignTitle"),
             snils: formData.get ("snils"),
             personalNumber: formData.get ("personalNumber")
         };
@@ -127,26 +149,9 @@ class RatingSearchForm extends React.Component {
         );
     }
 
-    formatCampaignTitle (campaign) {
-        return campaign.CampaignTitle.replace ("21/22 ", "") + " " + campaign.CurrentDateTime;
-    }
-
     renderForm () {
-        const options = [];
-        for (let campaign of this.props.campaigns) {
-            options.push (<option value={campaign.CampaignTitle}>{this.formatCampaignTitle (campaign)}</option>);
-        }
-        if (this.props.campaigns.length === 0) {
-            options.push (<option value="">-- нет данных --</option>);
-        }
         return (
             <form onSubmit={this.handleSubmit} className="mb-3">
-                <div className="form-group">
-                    <label htmlFor="enrRatingSearch_campaign">Приемная кампания</label>
-                    <select className="form-control" name="campaignTitle" id="enrRatingSearch_campaign">
-                        {options}
-                    </select>
-                </div>
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
                     <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
