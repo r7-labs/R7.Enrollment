@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DotNetNuke.Entities.Portals;
+using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.FileSystem;
 using R7.Enrollment.Data;
 
@@ -25,6 +26,11 @@ namespace R7.Enrollment.Dnn.Data
             return FolderManager.Instance.GetFiles (dbFolder)
                 .Where (f => Regex.IsMatch (f.FileName, "^enr_rating_[^.]*\\.xml$"))
                 .Select (f => new System.IO.FileInfo (f.PhysicalPath));
+        }
+
+        protected override void LogException (Exception ex)
+        {
+            Exceptions.LogException (ex);
         }
 
         string GetDataFolderSetting (int portalId)

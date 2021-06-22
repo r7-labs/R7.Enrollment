@@ -13,6 +13,8 @@ namespace R7.Enrollment.Data
 
         protected abstract IEnumerable<FileInfo> GetSourceFiles (int portalId);
 
+        protected abstract void LogException (Exception ex);
+
         bool DbSetIsActual (DbSetEntry dbSet)
         {
             var srcFiles = GetSourceFiles (dbSet.PortalId).ToList ();
@@ -52,9 +54,14 @@ namespace R7.Enrollment.Data
 
             dbSet.Databases = new List<TandemRatingsDb> ();
             foreach (var srcFile in srcFiles) {
-                var db = new TandemRatingsDb ();
-                db.Load (srcFile.FullName);
-                dbSet.Databases.Add (db);
+                try {
+                    var db = new TandemRatingsDb ();
+                    db.Load (srcFile.FullName);
+                    dbSet.Databases.Add (db);
+                }
+                catch (Exception ex) {
+                    LogException (ex);
+                }
             }
 
             return dbSet;
