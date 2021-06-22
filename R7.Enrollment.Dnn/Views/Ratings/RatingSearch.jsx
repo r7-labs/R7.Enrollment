@@ -16,21 +16,27 @@ class RatingSearch extends React.Component {
     }
 
     render () {
+        return (
+            <div>
+                <RatingSearchDbInfo campaigns={this.props.campaigns} />
+                {this.renderForm ()}
+                <hr />
+                <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.2</a></p>
+            </div>
+        );
+    }
+
+    renderForm () {
         if (this.props.campaigns.length > 0) {
             return (
-                <div>
-                    <RatingSearchDbInfo campaigns={this.props.campaigns} />
-                    <RatingSearchForm
-                        moduleId={this.props.moduleId}
-                        service={this.props.service}
-                        noSnils={this.state.noSnils}
-                        onNoSnilsChange={this.handleNoSnilsChange} />
-                </div>
+                <RatingSearchForm
+                    moduleId={this.props.moduleId}
+                    service={this.props.service}
+                    noSnils={this.state.noSnils}
+                    onNoSnilsChange={this.handleNoSnilsChange} />
             );
         }
-        return (
-            <RatingSearchDbInfo campaigns={this.props.campaigns} />
-        );
+        return null;
     }
 }
 

@@ -104,8 +104,7 @@ export default class RatingSearchForm extends React.Component {
             <div>
                 {this.renderForm ()}
                 <RatingSearchResults requestDone={this.state.requestDone} lists={this.state.lists} isError={this.state.isError} />
-                <hr />
-                <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
+
             </div>
         );
     }
