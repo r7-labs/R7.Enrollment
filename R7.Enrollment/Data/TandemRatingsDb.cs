@@ -12,14 +12,13 @@ namespace R7.Enrollment.Data
         {
             var xml = XDocument.Load (path);
             if (xml.Root.Name == "enrEntrantRatingEnvironmentNode") {
-                ParseEntrantRatingEnvironmentNode (xml.Root);
+                EntrantRatingEnvironment = ParseEntrantRatingEnvironmentNode (xml.Root);
                 return;
             }
-
             throw new ArgumentException ($"Unsupported node type: {xml.Root.Name}");
         }
 
-        void ParseEntrantRatingEnvironmentNode (XElement root)
+        EntrantRatingEnvironment ParseEntrantRatingEnvironmentNode (XElement root)
         {
             var entrantRatingEnv = new EntrantRatingEnvironment ();
             entrantRatingEnv.CurrentDateTime = DateTime.Parse (root.Attribute ("currentDateTime").Value);
@@ -51,7 +50,7 @@ namespace R7.Enrollment.Data
                 }
             }
 
-            EntrantRatingEnvironment = entrantRatingEnv;
+            return entrantRatingEnv;
         }
 
         public void Dump ()
