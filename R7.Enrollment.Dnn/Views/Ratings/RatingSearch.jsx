@@ -44,10 +44,18 @@ class RatingSearchDbInfo extends React.Component {
     }
 
     render () {
+        if (this.props.campaigns.length > 0) {
+            return (
+                <div className="alert alert-info mb-3">
+                    <h5 className="alert-heading">База данных списков абитуриентов</h5>
+                    <ul className="list-unstyled mb-0">{this.getCampaignItems ()}</ul>
+                </div>
+            );
+        }
         return (
-            <div className="card card-body bg-light mb-3">
-                <h5 className="card-title">База данных списков абитуриентов</h5>
-                {this.renderDbInfo ()}
+            <div className="alert alert-danger mb-3">
+                <h5 className="alert-heading">База данных списков абитуриентов</h5>
+                <p className="mb-0">Не удалось получить данные! Перезагрузите страницу и попробуйте снова.</p>
             </div>
         );
     }
@@ -58,17 +66,6 @@ class RatingSearchDbInfo extends React.Component {
             items.push (<li>{this.formatCampaignTitle (campaign)}</li>);
         }
         return items;
-    }
-
-    renderDbInfo () {
-        if (this.props.campaigns.length > 0) {
-            return (
-                <ul className="list-unstyled mb-0">{this.getCampaignItems ()}</ul>
-            );
-        }
-        return (
-            <p class="alert alert-danger mb-0">Не удалось получить данные! Перезагрузите страницу и попробуйте снова.</p>
-        );
     }
 }
 
