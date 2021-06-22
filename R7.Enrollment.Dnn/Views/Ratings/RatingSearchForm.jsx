@@ -4,6 +4,7 @@ export default class RatingSearchForm extends React.Component {
         this.refs.personalNumber = React.createRef ();
         this.refs.snils = React.createRef ();
         this.handleSubmit = this.handleSubmit.bind (this);
+        this.doSubmit = this.doSubmit.bind (this);
         this.handleNoSnilsChange = this.handleNoSnilsChange.bind (this);
         this.state = this.createDefaultState ();
     }
@@ -13,7 +14,8 @@ export default class RatingSearchForm extends React.Component {
             isError: false,
             invalidSnils: false,
             invalidPersonalNumber: false,
-            requestWasSent: false,
+            requestDone: false,
+            requestInProgress: false,
             lists: []
         };
     }
@@ -45,17 +47,27 @@ export default class RatingSearchForm extends React.Component {
             data.personalNumber = "";
         }
 
+        setTimeout (this.doSubmit, 750, data);
+
+        const newState = this.createDefaultState ();
+        newState.requestInProgress = true;
+        this.setState (newState);
+    }
+
+    doSubmit (data) {
         this.props.service.getRatingLists (data,
             (results) => {
                 const newState = this.createDefaultState ();
-                newState.requestWasSent = true;
+                newState.requestInProgress = false;
+                newState.requestDone = true;
                 newState.lists = results;
                 this.setState (newState);
             },
             (xhr, status, err) => {
                 console.log (xhr);
                 const newState = this.createDefaultState ();
-                newState.requestWasSent = true;
+                newState.requestInProgress = false;
+                newState.requestDone = true;
                 newState.isError = true;
                 this.setState (newState);
             }
@@ -84,7 +96,6 @@ export default class RatingSearchForm extends React.Component {
     }
 
     handleNoSnilsChange (e) {
-        console.log (e.target.checked);
         this.props.onNoSnilsChange (e.target.checked);
     }
 
@@ -92,7 +103,7 @@ export default class RatingSearchForm extends React.Component {
         return (
             <div>
                 {this.renderForm ()}
-                <RatingSearchResults requestWasSent={this.state.requestWasSent} lists={this.state.lists} isError={this.state.isError} />
+                <RatingSearchResults requestDone={this.state.requestDone} lists={this.state.lists} isError={this.state.isError} />
                 <hr />
                 <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.1</a></p>
             </div>
@@ -130,7 +141,11 @@ export default class RatingSearchForm extends React.Component {
                         }
                     }) ()}
                 </div>
-                <button type="submit" className="btn btn-primary">Найти меня в списках!</button>
+                <button type="submit" className="btn btn-primary" disabled={this.state.requestInProgress}>
+                    {this.state.requestInProgress? <i className="fas fa-circle-notch fa-spin mr-2"></i> : null}
+                    Найти меня в списках!
+                </button>
+
             </form>
         );
     }
@@ -147,7 +162,7 @@ class RatingSearchResults extends React.Component {
     }
 
     render () {
-        if (this.props.requestWasSent === true) {
+        if (this.props.requestDone === true) {
             if (this.props.lists.length > 0) {
                 return this.props.lists.map (list => <div dangerouslySetInnerHTML={{__html: list.Html}} />);
             }
