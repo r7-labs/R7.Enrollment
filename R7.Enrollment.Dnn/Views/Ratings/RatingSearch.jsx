@@ -17,7 +17,7 @@ class RatingSearch extends React.Component {
         if (this.props.campaigns.length > 0) {
             return (
                 <div>
-                    {this.renderDbInfo ()}
+                    <RatingSearchDbInfo campaigns={this.props.campaigns} />
                     <RatingSearchForm
                         moduleId={this.props.moduleId}
                         service={this.props.service}
@@ -27,23 +27,35 @@ class RatingSearch extends React.Component {
             );
         }
         return (
-            <p class="alert alert-danger">Нет данных! Перезагрузите страницу и попробуйте снова.</p>
+            <RatingSearchDbInfo campaigns={this.props.campaigns} />
         );
+    }
+}
+
+class RatingSearchDbInfo extends React.Component {
+    constructor (props) {
+        super (props);
     }
 
     formatCampaignTitle (campaign) {
         return campaign.CampaignTitle.replace ("21/22 ", "") + " - по состоянию на " + campaign.CurrentDateTime;
     }
 
-    renderDbInfo () {
+    render () {
         const items = [];
         for (let campaign of this.props.campaigns) {
             items.push (<li>{this.formatCampaignTitle (campaign)}</li>);
         }
+        if (this.props.campaigns.length > 0) {
+            return (
+                <div className="card card-body bg-light mb-3">
+                    <h5 className="card-title">База данных списков абитуриентов</h5>
+                    <ul className="list-unstyled mb-0">{items}</ul>
+                </div>
+            );
+        }
         return (
-            <div className="card card-body bg-light">
-                <ul className="list-unstyled mb-0">{items}</ul>
-            </div>
+            <p class="alert alert-danger">Не удалось получить данные! Перезагрузите страницу и попробуйте снова.</p>
         );
     }
 }
