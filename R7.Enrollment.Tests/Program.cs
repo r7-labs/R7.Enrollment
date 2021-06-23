@@ -10,14 +10,25 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var db = new TandemRatingsDb ();
-            db.Load ("./data/enr_rating_1696453372720271613.xml");
-            //db.Load ("./data/enr_rating_1697112374642823421.xml");
-
-            RenderToFile (db, "output-print.html", new TandemRatingsRendererSettings ());
-            RenderToFile (db, "output-web.html", new TandemRatingsRendererSettings {
+            var printSettings = new TandemRatingsRendererSettings ();
+            var webSettings = new TandemRatingsRendererSettings {
                 UseBasicCompetitionHeader = true
-            });
+            };
+
+            Directory.CreateDirectory ("output");
+
+            var dataFiles = Directory.GetFiles ("./data", "enr_rating_*.xml");
+            foreach (var dataFile in dataFiles) {
+                var db = new TandemRatingsDb ();
+                db.Load (dataFile);
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-print.html", printSettings);
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-web.html", webSettings);
+            }
+        }
+
+        static string FilenameFromCampaignTitle (string campaignTitle)
+        {
+            return campaignTitle.Replace ("21/22", "").Replace ("/", "_").Trim ().ToLower ();
         }
 
         static void RenderToFile (TandemRatingsDb db, string path, TandemRatingsRendererSettings settings)
