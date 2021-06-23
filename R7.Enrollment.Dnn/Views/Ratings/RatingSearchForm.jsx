@@ -114,7 +114,7 @@ export default class RatingSearchForm extends React.Component {
             <form onSubmit={this.handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
-                    <input type="text" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
+                    <input type="search" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
                            className={"form-control " + (this.state.invalidSnils ? "is-invalid" : "")}
                            disabled={this.props.noSnils} />
                     {this.state.invalidSnils ? <div className="invalid-feedback">Введите СНИЛС (11 цифр)</div> : null}
