@@ -152,7 +152,6 @@
       </Content>
       <Content Include="releaseNotes.htm" />
       <Content Include="Services\EnrollmentService.js" />
-      <Content Include="Views\HelloWorld.jsx" />
       <Content Include="Views\Ratings\RatingSearch.jsx" />
       <Content Include="Views\Ratings\Index.cshtml" />
       <Content Include="Views\Ratings\RatingSearchForm.jsx" />

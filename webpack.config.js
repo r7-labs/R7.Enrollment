@@ -4,7 +4,6 @@ var path = require ("path");
 var jsxConfig = {
     mode: "production",
     entry: {
-        HelloWorld: "./R7.Enrollment.Dnn/Views/HelloWorld.jsx",
         RatingSearch: "./R7.Enrollment.Dnn/Views/Ratings/RatingSearch.jsx"
     },
     output: {
