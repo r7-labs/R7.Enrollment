@@ -15,7 +15,7 @@ using R7.Enrollment.Renderers;
 
 namespace R7.Enrollment.Dnn.Services
 {
-    public class GetRatingListsArgs
+    public class SearchRatingListsArgs
     {
         public string Snils { get; set; }
 
@@ -33,7 +33,7 @@ namespace R7.Enrollment.Dnn.Services
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [DnnModuleAuthorize (AccessLevel = SecurityAccessLevel.View)]
-        public HttpResponseMessage GetRatingLists (GetRatingListsArgs args)
+        public HttpResponseMessage SearchRatingLists (SearchRatingListsArgs args)
         {
             try {
                 var competitionQuery = new CompetitionQuery ();
@@ -63,6 +63,39 @@ namespace R7.Enrollment.Dnn.Services
                 }
 
                 return Request.CreateResponse (HttpStatusCode.OK, results);
+            }
+            catch (Exception ex) {
+                Exceptions.LogException (ex);
+                return Request.CreateErrorResponse (HttpStatusCode.InternalServerError, ex);
+            }
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public HttpResponseMessage GetRatingListsByCampaign (string campaignToken)
+        {
+            try {
+                var db = TandemRatingsDbManager.Instance.GetDb (campaignToken, PortalSettings.PortalId);
+                if (db == null) {
+                    return Request.CreateResponse (HttpStatusCode.NotFound);
+                }
+
+                var htmlRenderer = new TandemRatingsHtmlRenderer (
+                    new TandemRatingsRendererSettings {
+                        Depersonalize = true,
+                        UseBasicCompetitionHeader = true
+                    }
+                );
+
+                var sb = new StringBuilder ();
+                var html = XmlWriter.Create (sb, new XmlWriterSettings ());
+                htmlRenderer.RenderStandalone (db.EntrantRatingEnvironment, html);
+                html.Close ();
+
+                return new HttpResponseMessage {
+                    StatusCode = HttpStatusCode.OK,
+                    Content = new StringContent (sb.ToString (), Encoding.Unicode, "text/html")
+                };
             }
             catch (Exception ex) {
                 Exceptions.LogException (ex);

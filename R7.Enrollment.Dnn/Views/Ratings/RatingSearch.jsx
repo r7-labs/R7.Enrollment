@@ -18,7 +18,9 @@ class RatingSearch extends React.Component {
     render () {
         return (
             <div>
-                <RatingSearchDbInfo campaigns={this.props.campaigns} />
+                <RatingSearchDbInfo
+                    campaigns={this.props.campaigns}
+                    service={this.props.service} />
                 {this.renderForm ()}
                 <hr className="mb-2" />
                 <ul className="list-inline text-muted small">
@@ -48,16 +50,14 @@ class RatingSearchDbInfo extends React.Component {
         super (props);
     }
 
-    formatCampaignTitle (campaign) {
-        return campaign.CampaignTitle.replace ("21/22 ", "") + " - по состоянию на " + campaign.CurrentDateTime;
-    }
-
     render () {
         if (this.props.campaigns.length > 0) {
             return (
                 <div className="alert alert-info mb-3">
                     <h5 className="alert-heading">База данных списков абитуриентов</h5>
-                    <ul className="list-unstyled mb-0">{this.getCampaignItems ()}</ul>
+                    <ul className="list-unstyled mb-0">
+                        {this.props.campaigns.map (c => this.renderCampaign (c))}
+                    </ul>
                 </div>
             );
         }
@@ -69,12 +69,14 @@ class RatingSearchDbInfo extends React.Component {
         );
     }
 
-    getCampaignItems () {
-        const items = [];
-        for (let campaign of this.props.campaigns) {
-            items.push (<li>{this.formatCampaignTitle (campaign)}</li>);
-        }
-        return items;
+    renderCampaign (campaign) {
+        return (
+            <li>
+                <a href={this.props.service.getUrl ("Enrollment", "GetRatingListsByCampaign", null) + "?campaignToken=" + campaign.CampaignToken}
+                   className="alert-link" target="_blank">{campaign.CampaignTitle.replace ("21/22 ", "")}</a>&nbsp;&ndash;
+                по состоянию на {campaign.CurrentDateTime}
+            </li>
+        );
     }
 }
 

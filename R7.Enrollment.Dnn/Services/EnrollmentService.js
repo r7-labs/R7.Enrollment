@@ -1,5 +1,5 @@
 class EnrollmentService {
-    
+
     constructor (moduleId) {
         this.moduleId = moduleId;
         this.baseServicepath = $.dnnSF (moduleId).getServiceRoot ("R7.Enrollment");
@@ -27,9 +27,9 @@ class EnrollmentService {
             }
         });
     }
-    
+
     getRatingLists (data, success, fail) {
-        this.ajaxJsonCall ("POST", this.getUrl ("Enrollment", "GetRatingLists", null), data, success, fail);
+        this.ajaxJsonCall ("POST", this.getUrl ("Enrollment", "SearchRatingLists", null), data, success, fail);
     }
 }
 

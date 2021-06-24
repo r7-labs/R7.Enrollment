@@ -86,12 +86,12 @@ namespace R7.Enrollment.Data
             }
         }
 
-        public TandemRatingsDb GetDb (string campaignTitle, int portalId)
+        public TandemRatingsDb GetDb (string campaignToken, int portalId)
         {
             var dbSet = SafeGetActualDbSet (portalId);
             lock (dbSet) {
                 return dbSet.Databases.FirstOrDefault (dbs =>
-                    dbs.EntrantRatingEnvironment.CampaignTitle == campaignTitle);
+                    dbs.EntrantRatingEnvironment.CampaignToken == campaignToken);
             }
         }
 
