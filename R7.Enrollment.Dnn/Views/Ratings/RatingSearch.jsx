@@ -20,8 +20,11 @@ class RatingSearch extends React.Component {
             <div>
                 <RatingSearchDbInfo campaigns={this.props.campaigns} />
                 {this.renderForm ()}
-                <hr />
-                <p className="text-muted small"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.2</a></p>
+                <hr className="mb-2" />
+                <ul className="list-inline text-muted small">
+                    <li className="list-inline-item"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.2</a></li>
+                    <li className="list-inline-item"><a href="https://github.com/volgau/R7.Enrollment/issues/new" target="_blank">Предложить исправление</a></li>
+                </ul>
             </div>
         );
     }
