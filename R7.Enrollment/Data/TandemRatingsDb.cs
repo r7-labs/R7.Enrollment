@@ -20,15 +20,15 @@ namespace R7.Enrollment.Data
 
         EntrantRatingEnvironment ParseEntrantRatingEnvironmentNode (XElement root)
         {
-            var entrantRatingEnv = new EntrantRatingEnvironment ();
-            entrantRatingEnv.CurrentDateTime = DateTime.Parse (root.Attribute ("currentDateTime").Value);
-            entrantRatingEnv.CampaignTitle = root.Attribute ("enrollmentCampaignTitle").Value;
+            var env = new EntrantRatingEnvironment ();
+            env.CurrentDateTime = DateTime.Parse (root.Attribute ("currentDateTime").Value);
+            env.CampaignTitle = root.Attribute ("enrollmentCampaignTitle").Value;
 
             var competitionElem = root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
                 var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
-                competition.CurrentDateTime = entrantRatingEnv.CurrentDateTime;
-                entrantRatingEnv.Competitions.Add (competition);
+                competition.CurrentDateTime = env.CurrentDateTime;
+                env.Competitions.Add (competition);
 
                 foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
                     var entranceDiscipline = TandemXmlModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
@@ -50,7 +50,7 @@ namespace R7.Enrollment.Data
                 }
             }
 
-            return entrantRatingEnv;
+            return env;
         }
     }
 }
