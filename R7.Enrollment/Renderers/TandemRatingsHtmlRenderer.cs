@@ -21,7 +21,7 @@ namespace R7.Enrollment.Renderers
             Settings = settings;
         }
 
-        public void RenderStandalone (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
+        public void RenderStandalone (EntrantRatingEnvironment env, XmlWriter html)
         {
             html.WriteStartDocument ();
             html.WriteDocType ("html", null,  null, null);
@@ -43,22 +43,28 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElementWithAttributeString ("div", "class", "row");
             html.WriteStartElementWithAttributeString ("div", "class", "col");
 
-            Render (entrantRatingEnv, html);
+            html.WriteStartElement ("h1");
+            html.WriteString ($"{env.CampaignTitle}");
+            html.WriteElementWithAttributeString ("small",
+                $" по состоянию на {env.CurrentDateTime.ToShortDateString ()} {env.CurrentDateTime.ToShortTimeString ()}",
+                "class", "text-muted");
+            html.WriteEndElement ();
+
+            Render (env, html);
 
             html.WriteEndElement ();
             html.WriteEndElement ();
             html.WriteEndElement ();
 
             html.WriteEndElement ();
-            //html.WriteEndElement ();
-            //html.WriteEndElement ();
             html.WriteEndDocument ();
         }
 
-        public void Render (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
+        public void Render (EntrantRatingEnvironment env, XmlWriter html)
         {
-            foreach (var competition in entrantRatingEnv.Competitions) {
+            foreach (var competition in env.Competitions) {
                 if (competition.Entrants.Count > 0) {
+                    html.WriteElementString ("hr", null);
                     RenderCompetition (competition, html);
                 }
             }
