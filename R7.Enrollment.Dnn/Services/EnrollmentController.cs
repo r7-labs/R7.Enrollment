@@ -15,7 +15,7 @@ using R7.Enrollment.Renderers;
 
 namespace R7.Enrollment.Dnn.Services
 {
-    public class SearchRatingListsArgs
+    public class GetRatingListsByEntrantArgs
     {
         public string Snils { get; set; }
 
@@ -33,7 +33,7 @@ namespace R7.Enrollment.Dnn.Services
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         [DnnModuleAuthorize (AccessLevel = SecurityAccessLevel.View)]
-        public HttpResponseMessage SearchRatingLists (SearchRatingListsArgs args)
+        public HttpResponseMessage GetRatingListsByEntrant (GetRatingListsByEntrantArgs args)
         {
             try {
                 var competitionQuery = new CompetitionQuery ();

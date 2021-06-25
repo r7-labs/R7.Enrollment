@@ -55,7 +55,7 @@ export default class RatingSearchForm extends React.Component {
     }
 
     doSubmit (data) {
-        this.props.service.getRatingLists (data,
+        this.props.service.getRatingListsByEntrant (data,
             (results) => {
                 const newState = this.createDefaultState ();
                 newState.requestInProgress = false;

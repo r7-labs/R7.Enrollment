@@ -28,8 +28,8 @@ class EnrollmentService {
         });
     }
 
-    getRatingLists (data, success, fail) {
-        this.ajaxJsonCall ("POST", this.getUrl ("Enrollment", "SearchRatingLists", null), data, success, fail);
+    getRatingListsByEntrant (data, success, fail) {
+        this.ajaxJsonCall ("POST", this.getUrl ("Enrollment", "GetRatingListsByEntrant", null), data, success, fail);
     }
 }
 
