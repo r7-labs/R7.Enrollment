@@ -66,6 +66,8 @@ namespace R7.Enrollment.Renderers
 
         public void RenderCompetition (Competition competition, XmlWriter html)
         {
+            html.WriteElementString ("h5", $"{competition.OrgUnitTitle}");
+
             if (Settings.UseBasicCompetitionHeader) {
                 html.WriteElementString ("h4", $"{competition.EduLevel}");
             }
