@@ -10,10 +10,11 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var printSettings = new TandemRatingsRendererSettings ();
-            var webSettings = new TandemRatingsRendererSettings {
-                UseBasicCompetitionHeader = true
+            var printTestSettings = new TandemRatingsRendererSettings () {
+                UseBasicCompetitionHeader = false,
+                Depersonalize = false
             };
+            var webSettings = new TandemRatingsRendererSettings ();
 
             Directory.CreateDirectory ("output");
 
@@ -21,7 +22,7 @@ namespace R7.Enrollment.Tests
             foreach (var dataFile in dataFiles) {
                 var db = new TandemRatingsDb ();
                 db.Load (dataFile);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-print.html", printSettings);
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-print.html", printTestSettings);
                 RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-web.html", webSettings);
             }
         }
