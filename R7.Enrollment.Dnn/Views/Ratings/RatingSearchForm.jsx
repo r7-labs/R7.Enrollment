@@ -116,6 +116,7 @@ export default class RatingSearchForm extends React.Component {
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
                     <input type="search" name="snils" id="enrRatingSearch_snils" ref={this.refs.snils} maxLength="64"
                            className={"form-control " + (this.state.invalidSnils ? "is-invalid" : "")}
+                           placeholder="Введите СНИЛС (11 цифр)"
                            disabled={this.props.noSnils} />
                     {this.state.invalidSnils ? <div className="invalid-feedback">Введите СНИЛС (11 цифр)</div> : null}
                 </div>
@@ -141,7 +142,7 @@ export default class RatingSearchForm extends React.Component {
     }
 
     componentDidMount () {
-        this.refs.snils.current.value = "000-000-000-00";
+        // this.refs.snils.current.value = "000-000-000-00";
         this.refs.personalNumber.current.value = "2100000";
     }
 }
