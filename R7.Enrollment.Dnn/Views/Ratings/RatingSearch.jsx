@@ -54,7 +54,6 @@ class RatingSearchDbInfo extends React.Component {
         if (this.props.campaigns.length > 0) {
             return (
                 <div className="alert alert-info mb-3">
-                    <h5 className="alert-heading">База данных списков абитуриентов</h5>
                     <ul className="list-unstyled mb-0">
                         {this.props.campaigns.map (c => this.renderCampaign (c))}
                     </ul>
@@ -63,7 +62,6 @@ class RatingSearchDbInfo extends React.Component {
         }
         return (
             <div className="alert alert-danger mb-3">
-                <h5 className="alert-heading">База данных списков абитуриентов</h5>
                 <p className="mb-0">Не удалось получить данные! Перезагрузите страницу и попробуйте снова.</p>
             </div>
         );

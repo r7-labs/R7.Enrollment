@@ -104,13 +104,14 @@ export default class RatingSearchForm extends React.Component {
             <div>
                 {this.renderForm ()}
                 <RatingSearchResults requestDone={this.state.requestDone} lists={this.state.lists} isError={this.state.isError} />
-
             </div>
         );
     }
 
     renderForm () {
         return (
+            <>
+            <h3>Поиск по спискам</h3>
             <form onSubmit={this.handleSubmit} className="mb-3">
                 <div className="form-group">
                     <label htmlFor="enrRatingSearch_snils">СНИЛС</label>
@@ -139,6 +140,7 @@ export default class RatingSearchForm extends React.Component {
                     Найти меня в списках!
                 </button>
             </form>
+            </>
         );
     }
 
