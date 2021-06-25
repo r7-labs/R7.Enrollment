@@ -130,8 +130,9 @@ export default class RatingSearchForm extends React.Component {
                     <label htmlFor="enrRatingSearch_personalNumber">Личный номер абитуриента</label>
                     <input type="number" min="2100000" max="2199999" name="personalNumber" id="enrRatingSearch_personalNumber"
                            ref={this.refs.personalNumber}
-                           className={"form-control " + (this.state.invalidPersonalNumber? "is-invalid" : "")} />
-                    {this.state.invalidPersonalNumber ? <div className="invalid-feedback">Введите личный номер абитуриента в формате 21XXXXX (7 цифр)</div> : null}
+                           className={"form-control " + (this.state.invalidPersonalNumber? "is-invalid" : "")}
+                           placeholder="Введите личный номер в формате 21XXXXX (7 цифр)" />
+                    {this.state.invalidPersonalNumber ? <div className="invalid-feedback">Введите личный номер в формате 21XXXXX (7 цифр)</div> : null}
                 </div>
                 <button type="submit" className="btn btn-primary" disabled={this.state.requestInProgress}>
                     {this.state.requestInProgress ? <i className="fas fa-circle-notch fa-spin mr-2"></i> : null}
@@ -143,7 +144,7 @@ export default class RatingSearchForm extends React.Component {
 
     componentDidMount () {
         // this.refs.snils.current.value = "000-000-000-00";
-        this.refs.personalNumber.current.value = "2100000";
+        // this.refs.personalNumber.current.value = "2100000";
     }
 }
 
