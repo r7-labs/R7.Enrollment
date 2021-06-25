@@ -24,6 +24,7 @@ namespace R7.Enrollment.Renderers
         public void RenderStandalone (EntrantRatingEnvironment entrantRatingEnv, XmlWriter html)
         {
             html.WriteStartDocument ();
+            html.WriteDocType ("html", null,  null, null);
             html.WriteStartElement ("html");
             html.WriteStartElement ("head");
 
@@ -34,11 +35,23 @@ namespace R7.Enrollment.Renderers
             html.WriteAttributeString ("crossorigin", "anonymous");
 
             html.WriteEndElement ();
+            html.WriteEndElement ();
 
             html.WriteStartElement ("body");
+
+            html.WriteStartElementWithAttributeString ("div", "class", "container-fluid");
+            html.WriteStartElementWithAttributeString ("div", "class", "row");
+            html.WriteStartElementWithAttributeString ("div", "class", "col");
+
             Render (entrantRatingEnv, html);
+
             html.WriteEndElement ();
             html.WriteEndElement ();
+            html.WriteEndElement ();
+
+            html.WriteEndElement ();
+            //html.WriteEndElement ();
+            //html.WriteEndElement ();
             html.WriteEndDocument ();
         }
 

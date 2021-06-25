@@ -11,5 +11,11 @@ namespace R7.Enrollment.Renderers
             writer.WriteString (value);
             writer.WriteEndElement ();
         }
+
+        public static void WriteStartElementWithAttributeString (this XmlWriter writer, string localName, string attrLocalName, string attrValue)
+        {
+            writer.WriteStartElement (localName);
+            writer.WriteAttributeString (attrLocalName, attrValue);
+        }
     }
 }
