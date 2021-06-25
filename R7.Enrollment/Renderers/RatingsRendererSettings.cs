@@ -1,6 +1,6 @@
 namespace R7.Enrollment.Renderers
 {
-    public class TandemRatingsRendererSettings
+    public class RatingsRendererSettings
     {
         public bool UseBasicCompetitionHeader { get; set; } = true;
 

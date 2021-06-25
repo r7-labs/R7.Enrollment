@@ -43,8 +43,8 @@ namespace R7.Enrollment.Dnn.Services
                 }
 
                 var results = new List<GetRatingListsResult> ();
-                var htmlRenderer = new TandemRatingsHtmlRenderer (
-                    new TandemRatingsRendererSettings {
+                var htmlRenderer = new RatingsHtmlRenderer (
+                    new RatingsRendererSettings {
                         Snils = args.Snils,
                         PersonalNumber = args.PersonalNumber
                     }
@@ -78,7 +78,7 @@ namespace R7.Enrollment.Dnn.Services
                     return Request.CreateResponse (HttpStatusCode.NotFound);
                 }
 
-                var htmlRenderer = new TandemRatingsHtmlRenderer (new TandemRatingsRendererSettings ());
+                var htmlRenderer = new RatingsHtmlRenderer ();
 
                 var sb = new StringBuilder ();
                 var html = XmlWriter.Create (sb, new XmlWriterSettings ());

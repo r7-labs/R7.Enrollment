@@ -5,18 +5,18 @@ using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Renderers
 {
-    public class TandemRatingsHtmlRenderer
+    public class RatingsHtmlRenderer
     {
-        private TandemRatingsRendererSettings Settings { get; set; }
+        private RatingsRendererSettings Settings { get; set; }
 
         private readonly SnilsComparer _snilsComparer = new SnilsComparer ();
 
-        public TandemRatingsHtmlRenderer ()
+        public RatingsHtmlRenderer ()
         {
-            Settings = new TandemRatingsRendererSettings ();
+            Settings = new RatingsRendererSettings ();
         }
 
-        public TandemRatingsHtmlRenderer (TandemRatingsRendererSettings settings)
+        public RatingsHtmlRenderer (RatingsRendererSettings settings)
         {
             Settings = settings;
         }

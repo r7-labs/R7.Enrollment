@@ -10,11 +10,11 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var printTestSettings = new TandemRatingsRendererSettings () {
+            var printTestSettings = new RatingsRendererSettings () {
                 UseBasicCompetitionHeader = false,
                 Depersonalize = false
             };
-            var webSettings = new TandemRatingsRendererSettings ();
+            var webSettings = new RatingsRendererSettings ();
 
             Directory.CreateDirectory ("output");
 
@@ -32,9 +32,9 @@ namespace R7.Enrollment.Tests
             return campaignTitle.Replace ("21/22", "").Replace ("/", "_").Trim ().ToLower ();
         }
 
-        static void RenderToFile (TandemRatingsDb db, string path, TandemRatingsRendererSettings settings)
+        static void RenderToFile (TandemRatingsDb db, string path, RatingsRendererSettings settings)
         {
-            var htmlRenderer = new TandemRatingsHtmlRenderer (settings);
+            var htmlRenderer = new RatingsHtmlRenderer (settings);
             var sb = new StringBuilder ();
             var html = XmlWriter.Create (sb);
             htmlRenderer.RenderStandalone (db.EntrantRatingEnvironment, html);
