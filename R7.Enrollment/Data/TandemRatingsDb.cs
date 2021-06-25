@@ -52,30 +52,5 @@ namespace R7.Enrollment.Data
 
             return entrantRatingEnv;
         }
-
-        public void Dump ()
-        {
-            foreach (var competition in EntrantRatingEnvironment.Competitions) {
-                Console.WriteLine ("---");
-                Console.WriteLine (competition.CompetitionType);
-                Console.WriteLine (competition.EduProgram.Subject);
-                Console.WriteLine (competition.EduProgram.Title);
-                Console.WriteLine (competition.EduLevel);
-                Console.WriteLine (competition.EduProgram.Form);
-                Console.WriteLine (competition.OrgUnitTitle);
-                foreach (var entrant in competition.Entrants) {
-                    Console.Write ($"{entrant.Position}. {entrant.Name} finalMark:{entrant.FinalMark} ");
-                    foreach (var mark in entrant.Marks) {
-                        Console.Write ($"{mark.EntranceDiscipline.ShortTitle}:{mark.Mark} ");
-                    }
-
-                    Console.Write ($"achievementMark:{entrant.AchievementMark} ");
-                    Console.Write ($"originalIn:{entrant.OriginalIn} ");
-                    Console.Write ($"acceptedEntrant:{entrant.AcceptedEntrant} ");
-
-                    Console.WriteLine ();
-                }
-            }
-        }
     }
 }
