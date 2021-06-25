@@ -75,7 +75,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("h5", $"{competition.OrgUnitTitle}");
 
             if (Settings.UseBasicCompetitionHeader) {
-                html.WriteElementString ("h4", $"{competition.EduLevel}");
+                html.WriteElementString ("h4", $"{competition.EduLevel}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
             }
 
             html.WriteElementString ("h2", $"{competition.EduProgram.FullTitle}");
@@ -86,7 +86,7 @@ namespace R7.Enrollment.Renderers
             }
             else {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
+                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}");
             }
 
             if (!Settings.UseBasicCompetitionHeader) {

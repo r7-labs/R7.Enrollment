@@ -17,7 +17,8 @@ namespace R7.Enrollment.Data
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value,
                 CompensationTypeBudget = TryParseBool (xelem.Attribute ("compensationTypeBudget")?.Value) ?? false,
                 Plan = TryParseInt (xelem.Attribute ("plan")?.Value) ?? 0,
-                EduLevelRequirement = xelem.Attribute ("eduLevelRequirement")?.Value
+                EduLevelRequirement = xelem.Attribute ("eduLevelRequirement")?.Value,
+                EduLevelRequirementGenetiveTitle = xelem.Attribute ("eduLevelRequirementGenetiveTitle")?.Value
             };
 
             competition.EduProgram.Subject = xelem.Attribute ("eduProgramSubject")?.Value;
