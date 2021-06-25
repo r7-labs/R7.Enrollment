@@ -219,7 +219,10 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
 
-            if (!Settings.Depersonalize) {
+            if (Settings.Depersonalize) {
+                html.WriteElementWithAttributeString ("th", "Личный номер", "rowspan", "2");
+            }
+            else {
                 html.WriteElementWithAttributeString ("th", "Фамилия, имя, отчество", "rowspan", "2");
             }
 
@@ -231,6 +234,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementWithAttributeString ("th", "Сумма баллов за ИД", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Сдан оригинал", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Согласие на зачисление", "rowspan", "2");
+            html.WriteElementWithAttributeString ("th", "Статус", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Примечание", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Информация о зачислении", "rowspan", "2");
             html.WriteEndElement ();
@@ -255,7 +259,10 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("td", entrant.Position.ToString ());
 
-            if (!Settings.Depersonalize) {
+            if (Settings.Depersonalize) {
+                html.WriteElementString ("td", entrant.PersonalNumber);
+            }
+            else {
                 html.WriteElementString ("td", entrant.Name);
             }
 
@@ -273,6 +280,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", entrant.AchievementMark.ToString ());
             html.WriteElementString ("td", YesNoString (entrant.OriginalIn));
             html.WriteElementString ("td", YesNoString (entrant.AcceptedEntrant));
+            html.WriteElementString ("td", entrant.Status);
             html.WriteElementString ("td", "");
             html.WriteElementString ("td", EnrollmentStateString (entrant));
             html.WriteEndElement ();

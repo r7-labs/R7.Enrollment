@@ -38,7 +38,8 @@ namespace R7.Enrollment.Data
                 OriginalIn = TryParseBool (xelem.Attribute ("originalIn")?.Value) ?? false,
                 AcceptedEntrant = TryParseBool (xelem.Attribute ("acceptedEntrant")?.Value) ?? false,
                 RefusedToBeEnrolled = TryParseBool (xelem.Attribute ("refusedToBeEnrolled")?.Value) ?? false,
-                Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false
+                Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false,
+                Status = xelem.Attribute ("status")?.Value
             };
         }
 

@@ -24,6 +24,8 @@ namespace R7.Enrollment.Models
 
         public bool RefusedToBeEnrolled { get; set; }
 
+        public string Status { get; set; }
+
         public IList<EntrantMark> Marks { get; set; } = new List<EntrantMark> ();
     }
 }
