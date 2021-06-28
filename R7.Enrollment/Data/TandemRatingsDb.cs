@@ -40,7 +40,7 @@ namespace R7.Enrollment.Data
                     competition.Entrants.Add (entrant);
 
                     foreach (var markRow in entrantRow.Descendants ("markRows")) {
-                        var entrantMark = TandemXmlModelFactory.CreateEntrantMark (markRow, competition);
+                        var entrantMark = TandemXmlModelFactory.CreateEntrantMark (markRow, competition, entrant);
                         entrant.Marks.Add (entrantMark);
                     }
                 }

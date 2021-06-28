@@ -268,13 +268,8 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("td", entrant.FinalMark.ToString ());
 
-            if (entrant.Marks.Count >= 1) {
-                foreach (var mark in entrant.Marks) {
-                    html.WriteElementString ("td", mark.Mark.ToString ());
-                }
-            }
-            else {
-                html.WriteElementString ("td", "-");
+            foreach (var mark in entrant.MarkStrings) {
+                html.WriteElementString ("td", mark);
             }
 
             html.WriteElementString ("td", entrant.AchievementMark.ToString ());

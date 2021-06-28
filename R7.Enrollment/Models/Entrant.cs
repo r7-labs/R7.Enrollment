@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 
 namespace R7.Enrollment.Models
@@ -26,6 +27,9 @@ namespace R7.Enrollment.Models
 
         public string Status { get; set; }
 
+        public IList<string> MarkStrings { get; set; }
+
+        [Obsolete]
         public IList<EntrantMark> Marks { get; set; } = new List<EntrantMark> ();
     }
 }

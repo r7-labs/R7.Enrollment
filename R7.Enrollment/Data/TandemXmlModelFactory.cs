@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
 using R7.Enrollment.Models;
@@ -40,8 +41,17 @@ namespace R7.Enrollment.Data
                 AcceptedEntrant = TryParseBool (xelem.Attribute ("acceptedEntrant")?.Value) ?? false,
                 RefusedToBeEnrolled = TryParseBool (xelem.Attribute ("refusedToBeEnrolled")?.Value) ?? false,
                 Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false,
-                Status = xelem.Attribute ("status")?.Value
+                Status = xelem.Attribute ("status")?.Value,
+                MarkStrings = ParseMarks (xelem.Attribute ("marks")?.Value)
             };
+        }
+
+        static IList<string> ParseMarks (string marks)
+        {
+            if (string.IsNullOrEmpty (marks)) {
+                return new List<string> ();
+            }
+            return new List<string> (marks.Split (new [] {' '}, StringSplitOptions.RemoveEmptyEntries));
         }
 
         public static EntranceDiscipline CreateEntranceDiscipline (XElement xelem)
@@ -52,7 +62,7 @@ namespace R7.Enrollment.Data
             };
         }
 
-        public static EntrantMark CreateEntrantMark (XElement xelem, Competition competition)
+        public static EntrantMark CreateEntrantMark (XElement xelem, Competition competition, Entrant entrant)
         {
             var markTitle = xelem.Attribute ("markTitle")?.Value;
             return new EntrantMark {
