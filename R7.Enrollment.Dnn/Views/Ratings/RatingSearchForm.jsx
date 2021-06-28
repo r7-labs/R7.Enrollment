@@ -30,7 +30,7 @@ export default class RatingSearchForm extends React.Component {
 
         // validate form
         const invalidSnils = !this.validateSnils (data.snils, this.props.noSnils);
-        const invalidPersonalNumber = !this.validatePersonalNumber (data.personalNumber);
+        const invalidPersonalNumber = !this.validatePersonalNumber (data.personalNumber, this.props.noSnils);
         if (invalidSnils || invalidPersonalNumber) {
             const newState = this.createDefaultState ();
             newState.invalidSnils = invalidSnils;
@@ -88,7 +88,10 @@ export default class RatingSearchForm extends React.Component {
         return true;
     }
 
-    validatePersonalNumber (personalNumber) {
+    validatePersonalNumber (personalNumber, noSnils) {
+        if (!noSnils) {
+            return true;
+        }
         if (typeof (personalNumber) === "undefined" || personalNumber === null || personalNumber.length === 0) {
             return false;
         }
