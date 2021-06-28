@@ -24,7 +24,7 @@ class RatingSearch extends React.Component {
                 {this.renderForm ()}
                 <hr className="mb-2" />
                 <ul className="list-inline text-muted small">
-                    <li className="list-inline-item"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v0.3</a></li>
+                    <li className="list-inline-item"><a href="https://github.com/volgau/R7.Enrollment" target="_blank">R7.Enrollment v{this.props.version}</a></li>
                     <li className="list-inline-item"><a href="https://github.com/volgau/R7.Enrollment/issues/new" target="_blank">Предложить исправление</a></li>
                 </ul>
             </div>

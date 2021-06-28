@@ -11,6 +11,7 @@
 }
 <div class="enr-rating-search-react-root"
      data-module-id="@Dnn.ModuleContext.ModuleId"
+     data-version="@Model.Version"
      data-campaigns="@Model.Campaigns.ToJson()">
 </div>
 
@@ -23,6 +24,7 @@
                 var props = {
                     moduleId: moduleId,
                     service: new EnrollmentService (moduleId),
+                    version: $(m).data ("version"),
                     campaigns: $(m).data ("campaigns")
                 };
                 ReactDOM.render (React.createElement (RatingSearch, props, null), m);
@@ -31,4 +33,3 @@
     }) (jQuery, window, document);
     </script>
  }
- 

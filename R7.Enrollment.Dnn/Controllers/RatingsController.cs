@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Reflection;
 using System.Web.Mvc;
 using DotNetNuke.Web.Mvc.Framework.ActionFilters;
 using DotNetNuke.Web.Mvc.Framework.Controllers;
@@ -14,8 +15,19 @@ namespace R7.Enrollment.Dnn.Controllers
         {
             var result = new RatingsModuleViewModel ();
             result.Campaigns = TandemRatingsDbManager.Instance.GetCampaigns (PortalSettings.PortalId)
-                .Select (c => new CampaignViewModel (c)).ToList (); 
+                .Select (c => new CampaignViewModel (c)).ToList ();
+            result.Version = GetVersion ();
+
             return View (result);
+        }
+
+        string GetVersion ()
+        {
+            var assembly = Assembly.GetExecutingAssembly ();
+            var informationalVersionAttr = assembly.GetCustomAttributes<AssemblyInformationalVersionAttribute> ()
+                .FirstOrDefault ();
+
+            return informationalVersionAttr?.InformationalVersion ?? assembly.GetName ().Version.ToString (3);
         }
     }
 }
