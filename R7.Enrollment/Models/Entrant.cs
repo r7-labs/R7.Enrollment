@@ -29,7 +29,7 @@ namespace R7.Enrollment.Models
 
         public IList<string> MarkStrings { get; set; }
 
-        [Obsolete]
+        [Obsolete ("Could be used later on over/with MarkStrings", false)]
         public IList<EntrantMark> Marks { get; set; } = new List<EntrantMark> ();
     }
 }
