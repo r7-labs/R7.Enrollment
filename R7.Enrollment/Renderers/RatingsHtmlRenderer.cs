@@ -80,9 +80,9 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("h2", $"{competition.EduProgram.Subject} ({competition.EduProgram.Specialization})");
 
-            if (!competition.CompensationTypeBudget) {
+            if (competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}");
+                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
             }
             else {
                 html.WriteElementString ("h3",
