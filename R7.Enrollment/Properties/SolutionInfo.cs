@@ -4,5 +4,5 @@ using System.Reflection;
 [assembly: AssemblyProduct ("R7.Enrollment")]
 [assembly: AssemblyCopyright ("Roman M. Yagodin")]
 [assembly: AssemblyTrademark ("")]
-[assembly: AssemblyVersion ("0.3.2")]
-[assembly: AssemblyInformationalVersion ("0.3.2")]
+[assembly: AssemblyVersion ("0.3.3")]
+[assembly: AssemblyInformationalVersion ("0.3.3")]
