@@ -78,7 +78,7 @@ namespace R7.Enrollment.Renderers
                 html.WriteElementString ("h4", $"{competition.EduLevel}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
             }
 
-            html.WriteElementString ("h2", $"{competition.EduProgram.FullTitle}");
+            html.WriteElementString ("h2", $"{competition.EduProgram.Subject} ({competition.EduProgram.Specialization})");
 
             if (!competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
