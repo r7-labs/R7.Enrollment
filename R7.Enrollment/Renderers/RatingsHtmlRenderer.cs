@@ -78,7 +78,7 @@ namespace R7.Enrollment.Renderers
                 html.WriteElementString ("h4", $"{competition.EduLevel}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
             }
 
-            html.WriteElementString ("h2", $"{competition.EduProgram.Subject} ({competition.EduProgram.Specialization})");
+            html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
 
             if (competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
@@ -296,6 +296,15 @@ namespace R7.Enrollment.Renderers
                 values.Add ("отказ от зачисления");
             }
             return string.Join ("; ", values);
+        }
+
+        string EduProgramTitle (EduProgram eduProgram)
+        {
+            if (!string.IsNullOrEmpty (eduProgram.Specialization)) {
+                return $"{eduProgram.Subject} ({eduProgram.Specialization})";
+            }
+
+            return eduProgram.Subject;
         }
 
         string YesNoString (bool value) => value ? "да" : "нет";
