@@ -6,6 +6,9 @@ namespace R7.Enrollment.Dnn
     {
         [ModuleSetting]
         public string DataFolderPath { get; set; }
+
+        [ModuleSetting]
+        public bool IncludeEmptyCompetitions { get; set; } = true;
     }
 
     public class RatingsModuleSettingsRepository : SettingsRepository<RatingsModuleSettings>

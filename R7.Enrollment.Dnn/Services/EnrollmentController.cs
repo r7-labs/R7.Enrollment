@@ -5,6 +5,7 @@ using System.Net.Http;
 using System.Text;
 using System.Web.Http;
 using System.Xml;
+using DotNetNuke.Entities.Modules;
 using DotNetNuke.Security;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Web.Api;
@@ -78,7 +79,11 @@ namespace R7.Enrollment.Dnn.Services
                     return Request.CreateResponse (HttpStatusCode.NotFound);
                 }
 
-                var htmlRenderer = new RatingsHtmlRenderer ();
+                var moduleContext = ModuleController.Instance.GetModule (moduleId, -1, false);
+                var moduleSettings = new RatingsModuleSettingsRepository ().GetSettings (moduleContext);
+                var htmlRenderer = new RatingsHtmlRenderer (new RatingsRendererSettings {
+                    IncludeEmptyCompetitions = moduleSettings.IncludeEmptyCompetitions
+                });
 
                 var sb = new StringBuilder ();
                 var html = XmlWriter.Create (sb, new XmlWriterSettings ());

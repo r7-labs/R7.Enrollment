@@ -63,7 +63,7 @@ namespace R7.Enrollment.Renderers
         public void Render (EntrantRatingEnvironment env, XmlWriter html)
         {
             foreach (var competition in env.Competitions) {
-                if (competition.Entrants.Count > 0) {
+                if (Settings.IncludeEmptyCompetitions || competition.Entrants.Count > 0) {
                     html.WriteElementString ("hr", null);
                     RenderCompetition (competition, html);
                 }
@@ -99,7 +99,9 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("table");
             html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
 
-            RenderEntrantsTableHeader (competition, html);
+            if (competition.Entrants.Count > 0) {
+                RenderEntrantsTableHeader (competition, html);
+            }
 
             foreach (var entrant in competition.Entrants) {
                 RenderEntrant (entrant, html);

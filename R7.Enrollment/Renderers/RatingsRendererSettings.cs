@@ -9,5 +9,7 @@ namespace R7.Enrollment.Renderers
         public string Snils { get; set; }
 
         public string PersonalNumber { get; set; }
+
+        public bool IncludeEmptyCompetitions { get; set; } = true;
     }
 }
