@@ -10,8 +10,8 @@ namespace R7.Enrollment.Models
 
         public string CampaignTitle { get; set; }
 
-        public string CampaignToken => Convert.ToBase64String (Encoding.UTF8.GetBytes (CampaignTitle.GetHashCode ().ToString ()));
-
         public IList<Competition> Competitions { get; set; } = new List<Competition> ();
+
+        public string GetCampaignToken () => Convert.ToBase64String (Encoding.UTF8.GetBytes (CampaignTitle.GetHashCode ().ToString ()));
     }
 }

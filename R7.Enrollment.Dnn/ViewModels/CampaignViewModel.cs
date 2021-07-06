@@ -13,7 +13,7 @@ namespace R7.Enrollment.Dnn.ViewModels
         public CampaignViewModel (EntrantRatingEnvironment env)
         {
             CampaignTitle = env.CampaignTitle;
-            CampaignToken = env.CampaignToken;
+            CampaignToken = env.GetCampaignToken ();
             CurrentDateTime = $"{env.CurrentDateTime.ToShortDateString ()} {env.CurrentDateTime.ToShortTimeString ()}";
         }
     }

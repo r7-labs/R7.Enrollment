@@ -80,7 +80,7 @@ namespace R7.Enrollment.Data
         public TandemRatingsDb GetDb (string campaignToken)
         {
             return DbSet.Databases.FirstOrDefault (dbs =>
-                dbs.EntrantRatingEnvironment.CampaignToken == campaignToken);
+                dbs.EntrantRatingEnvironment.GetCampaignToken () == campaignToken);
         }
 
         public IEnumerable<TandemRatingsDb> GetDbs ()
