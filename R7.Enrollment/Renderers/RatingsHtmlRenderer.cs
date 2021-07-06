@@ -75,7 +75,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("h5", $"{competition.OrgUnitTitle}");
 
             if (Settings.UseBasicCompetitionHeader) {
-                html.WriteElementString ("h4", $"{competition.EduLevel}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
+                html.WriteElementString ("h4", $"{PatchedEduLevelString (competition)}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
             }
 
             html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
@@ -310,5 +310,19 @@ namespace R7.Enrollment.Renderers
         }
 
         string YesNoString (bool value) => value ? "да" : "нет";
+
+        [Obsolete ("Temporary patch, need to correct edu. level strings in the datasource", false)]
+        string PatchedEduLevelString (Competition competition)
+        {
+            var eduProgram = competition.EduProgram;
+            if (eduProgram.Subject.Contains (".04.")) {
+                return competition.EduLevel.Replace ("специалитет, ", "");
+            }
+            if (eduProgram.Subject.Contains (".05.")) {
+                return competition.EduLevel.Replace (", магистратура", "");
+            }
+
+            return competition.EduLevel;
+        }
     }
 }
