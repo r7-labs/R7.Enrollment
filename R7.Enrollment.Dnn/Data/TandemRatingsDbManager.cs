@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using DotNetNuke.Entities.Portals;
+using DotNetNuke.Entities.Modules;
 using DotNetNuke.Services.Exceptions;
 using DotNetNuke.Services.FileSystem;
 using R7.Enrollment.Data;
@@ -11,14 +12,24 @@ namespace R7.Enrollment.Dnn.Data
 {
     public class TandemRatingsDbManager: TandemRatingsDbManagerBase
     {
-        private static readonly Lazy<TandemRatingsDbManager> _instance = new Lazy<TandemRatingsDbManager> ();
+        private static readonly Lazy<ConcurrentDictionary<int, TandemRatingsDbManager>> _instances =
+            new Lazy<ConcurrentDictionary<int, TandemRatingsDbManager>> ();
 
-        public static TandemRatingsDbManager Instance => _instance.Value;
+        public static TandemRatingsDbManager GetInstance (int moduleId) =>
+            _instances.Value.GetOrAdd (moduleId,
+                mid => new TandemRatingsDbManager (mid)
+        );
 
-        protected override IEnumerable<System.IO.FileInfo> GetSourceFiles (int portalId)
+        private TandemRatingsDbManager (int moduleId)
         {
-            var folderPath = GetDataFolderSetting (portalId);
-            var dbFolder = FolderManager.Instance.GetFolder (portalId, folderPath);
+            ModuleId = moduleId;
+        }
+
+        protected override IEnumerable<System.IO.FileInfo> GetModuleSourceFiles (int moduleId)
+        {
+            var moduleContext = ModuleController.Instance.GetModule (moduleId, -1, false);
+            var folderPath = GetDataFolderModuleSetting (moduleContext);
+            var dbFolder = FolderManager.Instance.GetFolder (moduleContext.PortalID, folderPath);
             if (dbFolder == null) {
                 return Enumerable.Empty<System.IO.FileInfo> ();
             }
@@ -33,14 +44,13 @@ namespace R7.Enrollment.Dnn.Data
             Exceptions.LogException (ex);
         }
 
-        string GetDataFolderSetting (int portalId)
+        string GetDataFolderModuleSetting (ModuleInfo moduleContext)
         {
-            var portalSettings = PortalController.Instance.GetPortalSettings (portalId);
-            portalSettings.TryGetValue ("R7_Enrollment_Ratings__DataFolder", out string dataFolderPath);
-            if (string.IsNullOrEmpty (dataFolderPath)) {
+            var moduleSettings = new RatingsModuleSettingsRepository ().GetSettings (moduleContext);
+            if (string.IsNullOrEmpty (moduleSettings.DataFolderPath)) {
                 return "enrollment";
             }
-            return dataFolderPath;
+            return moduleSettings.DataFolderPath;
         }
     }
 }

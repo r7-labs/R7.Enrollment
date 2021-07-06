@@ -14,8 +14,8 @@ namespace R7.Enrollment.Dnn.Controllers
         public ActionResult Index ()
         {
             var result = new RatingsModuleViewModel ();
-            result.Campaigns = TandemRatingsDbManager.Instance.GetCampaigns (PortalSettings.PortalId)
-                .Select (c => new CampaignViewModel (c)).ToList ();
+            result.Campaigns = TandemRatingsDbManager.GetInstance (ActiveModule.ModuleID).GetDbs ()
+                .Select (db => new CampaignViewModel (db.EntrantRatingEnvironment)).ToList ();
             result.Version = GetVersion ();
 
             return View (result);

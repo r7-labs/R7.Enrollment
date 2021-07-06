@@ -129,6 +129,7 @@
         <Compile Include="Components\RatingsModuleController.cs" />
         <Compile Include="Controllers\RatingsController.cs" />
         <Compile Include="Data\TandemRatingsDbManager.cs" />
+        <Compile Include="Models\RatingsModuleSettings.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <Compile Include="..\R7.Enrollment\Properties\SolutionInfo.cs">
             <Link>Properties\SolutionInfo.cs</Link>

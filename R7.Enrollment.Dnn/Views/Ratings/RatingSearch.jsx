@@ -19,6 +19,7 @@ class RatingSearch extends React.Component {
         return (
             <div>
                 <RatingSearchDbInfo
+                    moduleId={this.props.moduleId}
                     campaigns={this.props.campaigns}
                     service={this.props.service} />
                 {this.renderForm ()}
@@ -70,7 +71,8 @@ class RatingSearchDbInfo extends React.Component {
     renderCampaign (campaign) {
         return (
             <li>
-                <a href={this.props.service.getUrl ("Enrollment", "GetRatingListsByCampaign", null) + "?campaignToken=" + encodeURIComponent (campaign.CampaignToken)}
+                <a href={this.props.service.getUrl ("Enrollment", "GetRatingListsByCampaign", null)
+                    + "?campaignToken=" + encodeURIComponent (campaign.CampaignToken) + "&moduleId=" + this.props.moduleId}
                    className="alert-link" target="_blank">{campaign.CampaignTitle.replace ("21/22 ", "")}</a>&nbsp;&ndash;
                 по состоянию на {campaign.CurrentDateTime}
             </li>

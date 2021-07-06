@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,15 +8,31 @@ namespace R7.Enrollment.Data
 {
     public abstract class TandemRatingsDbManagerBase
     {
-        private readonly ConcurrentDictionary<int, DbSetEntry> DbSets = new ConcurrentDictionary<int, DbSetEntry> ();
+        private DbSetEntry _dbSet;
+        private DbSetEntry DbSet {
+            get {
+                lock (this) {
+                    if (!DbSetIsActual (_dbSet)) {
+                        _dbSet = CreateDbSet (ModuleId);
+                    }
+                    return _dbSet;
+                }
+            }
+        }
 
-        protected abstract IEnumerable<FileInfo> GetSourceFiles (int portalId);
+        protected int ModuleId;
+
+        protected abstract IEnumerable<FileInfo> GetModuleSourceFiles (int moduleId);
 
         protected abstract void LogException (Exception ex);
 
         bool DbSetIsActual (DbSetEntry dbSet)
         {
-            var srcFiles = GetSourceFiles (dbSet.PortalId).ToList ();
+            if (dbSet == null) {
+                return false;
+            }
+
+            var srcFiles = GetModuleSourceFiles (ModuleId).ToList ();
             if (dbSet.SourceFiles.Count != srcFiles.Count) {
                 return false;
             }
@@ -35,15 +50,10 @@ namespace R7.Enrollment.Data
             return true;
         }
 
-        DbSetEntry CreateOrUpdateDbSet (int portalId, DbSetEntry dbSet = null)
+        DbSetEntry CreateDbSet (int moduleId)
         {
-            if (dbSet == null) {
-                dbSet = new DbSetEntry {
-                    PortalId = portalId
-                };
-            }
-
-            var srcFiles = GetSourceFiles (portalId).ToList ();
+            var dbSet = new DbSetEntry ();
+            var srcFiles = GetModuleSourceFiles (moduleId).ToList ();
             dbSet.SourceFiles = srcFiles.Select (sf =>
                 new DbSourceFile {
                     Name = sf.Name,
@@ -67,40 +77,15 @@ namespace R7.Enrollment.Data
             return dbSet;
         }
 
-        DbSetEntry SafeGetActualDbSet (int portalId)
+        public TandemRatingsDb GetDb (string campaignToken)
         {
-            lock (this) {
-                var dbSet = DbSets.GetOrAdd (portalId, portalId2 => CreateOrUpdateDbSet (portalId2));
-                if (!DbSetIsActual (dbSet)) {
-                    DbSets.AddOrUpdate (portalId, CreateOrUpdateDbSet (portalId), (portalId2, dbSet2) => CreateOrUpdateDbSet (portalId2, dbSet2));
-                }
-                return dbSet;
-            }
+            return DbSet.Databases.FirstOrDefault (dbs =>
+                dbs.EntrantRatingEnvironment.CampaignToken == campaignToken);
         }
 
-        public IEnumerable<EntrantRatingEnvironment> GetCampaigns (int portalId)
+        public IEnumerable<TandemRatingsDb> GetDbs ()
         {
-            var dbSet = SafeGetActualDbSet (portalId);
-            lock (dbSet) {
-                return dbSet.Databases.Select (dbs => dbs.EntrantRatingEnvironment);
-            }
-        }
-
-        public TandemRatingsDb GetDb (string campaignToken, int portalId)
-        {
-            var dbSet = SafeGetActualDbSet (portalId);
-            lock (dbSet) {
-                return dbSet.Databases.FirstOrDefault (dbs =>
-                    dbs.EntrantRatingEnvironment.CampaignToken == campaignToken);
-            }
-        }
-
-        public IEnumerable<TandemRatingsDb> GetDbs (int portalId)
-        {
-            var dbSet = SafeGetActualDbSet (portalId);
-            lock (dbSet) {
-                return dbSet.Databases;
-            }
+            return DbSet.Databases;
         }
     }
 }

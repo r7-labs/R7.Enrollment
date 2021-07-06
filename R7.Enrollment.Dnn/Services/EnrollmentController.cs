@@ -38,7 +38,7 @@ namespace R7.Enrollment.Dnn.Services
             try {
                 var competitionQuery = new CompetitionQuery ();
                 var competitions = new List<Competition> ();
-                foreach (var db in TandemRatingsDbManager.Instance.GetDbs (PortalSettings.PortalId)) {
+                foreach (var db in TandemRatingsDbManager.GetInstance (ActiveModule.ModuleID).GetDbs ()) {
                     competitions.AddRange (competitionQuery.BySnilsOrPersonalNumber (db, args.Snils, args.PersonalNumber));
                 }
 
@@ -70,10 +70,10 @@ namespace R7.Enrollment.Dnn.Services
 
         [HttpGet]
         [AllowAnonymous]
-        public HttpResponseMessage GetRatingListsByCampaign (string campaignToken)
+        public HttpResponseMessage GetRatingListsByCampaign (int moduleId, string campaignToken)
         {
             try {
-                var db = TandemRatingsDbManager.Instance.GetDb (campaignToken, PortalSettings.PortalId);
+                var db = TandemRatingsDbManager.GetInstance (moduleId).GetDb (campaignToken);
                 if (db == null) {
                     return Request.CreateResponse (HttpStatusCode.NotFound);
                 }
