@@ -6,9 +6,9 @@ using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
 {
-    public static class TandemXmlModelFactory
+    public class TandemXmlModelFactory
     {
-        public static Competition CreateCompetition (XElement xelem)
+        public Competition CreateCompetition (XElement xelem)
         {
             var competition = new Competition {
                 EduLevel = xelem.Attribute ("eduLevel")?.Value,
@@ -28,7 +28,7 @@ namespace R7.Enrollment.Data
             return competition;
         }
 
-        public static Entrant CreateCompetitionEntrant (XElement xelem)
+        public Entrant CreateCompetitionEntrant (XElement xelem)
         {
             return new Entrant {
                 PersonalNumber = xelem.Descendants ("entrantPersonalNumber").FirstOrDefault ()?.Value,
@@ -46,7 +46,7 @@ namespace R7.Enrollment.Data
             };
         }
 
-        static IList<string> ParseMarks (string marks)
+        private IList<string> ParseMarks (string marks)
         {
             if (string.IsNullOrEmpty (marks)) {
                 return new List<string> ();
@@ -54,7 +54,7 @@ namespace R7.Enrollment.Data
             return new List<string> (marks.Split (new [] {' '}, StringSplitOptions.RemoveEmptyEntries));
         }
 
-        public static EntranceDiscipline CreateEntranceDiscipline (XElement xelem)
+        public EntranceDiscipline CreateEntranceDiscipline (XElement xelem)
         {
             return new EntranceDiscipline {
                 Title = xelem.Attribute ("title")?.Value,
@@ -62,7 +62,7 @@ namespace R7.Enrollment.Data
             };
         }
 
-        public static EntrantMark CreateEntrantMark (XElement xelem, Competition competition, Entrant entrant)
+        public EntrantMark CreateEntrantMark (XElement xelem, Competition competition, Entrant entrant)
         {
             var markTitle = xelem.Attribute ("markTitle")?.Value;
             return new EntrantMark {
@@ -72,7 +72,7 @@ namespace R7.Enrollment.Data
             };
         }
 
-        public static void FillEduProgram (XElement xelem, EduProgram eduProgram)
+        public void FillEduProgram (XElement xelem, EduProgram eduProgram)
         {
             eduProgram.Form = xelem.Attribute ("eduProgramForm")?.Value;
             eduProgram.Duration = xelem.Attribute ("duration")?.Value;
@@ -82,12 +82,12 @@ namespace R7.Enrollment.Data
             eduProgram.TitleAndConditionsShortWithForm = xelem.Attribute ("titleAndConditionsShortWithForm")?.Value;
         }
 
-        static int? TryParseInt (string value)
+        private int? TryParseInt (string value)
          {
              return int.TryParse (value, out int result) ? (int?) result : null;
          }
 
-        static bool? TryParseBool (string value)
+        private bool? TryParseBool (string value)
         {
             return bool.TryParse (value, out bool result) ? (bool?) result : null;
         }

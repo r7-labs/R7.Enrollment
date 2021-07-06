@@ -8,6 +8,8 @@ namespace R7.Enrollment.Data
     {
         public EntrantRatingEnvironment EntrantRatingEnvironment { get; set; }
 
+        private readonly TandemXmlModelFactory _modelFactory = new TandemXmlModelFactory ();
+
         public void Load (string path)
         {
             var xml = XDocument.Load (path);
@@ -26,27 +28,27 @@ namespace R7.Enrollment.Data
 
             var competitionElem = root.Element ("competition");
             foreach (var competitionRow in competitionElem.Elements ("row")) {
-                var competition = TandemXmlModelFactory.CreateCompetition (competitionRow);
+                var competition = _modelFactory.CreateCompetition (competitionRow);
                 competition.CurrentDateTime = env.CurrentDateTime;
                 env.Competitions.Add (competition);
 
                 foreach (var entranceDisciplineRow in competitionRow.Element ("entranceDiscipline").Elements ("row")) {
-                    var entranceDiscipline = TandemXmlModelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
+                    var entranceDiscipline = _modelFactory.CreateEntranceDiscipline (entranceDisciplineRow);
                     competition.EntranceDisciplines.Add (entranceDiscipline);
                 }
 
                 foreach (var entrantRow in competitionRow.Element ("entrant").Elements ("row")) {
-                    var entrant = TandemXmlModelFactory.CreateCompetitionEntrant (entrantRow);
+                    var entrant = _modelFactory.CreateCompetitionEntrant (entrantRow);
                     competition.Entrants.Add (entrant);
 
                     foreach (var markRow in entrantRow.Descendants ("markRows")) {
-                        var entrantMark = TandemXmlModelFactory.CreateEntrantMark (markRow, competition, entrant);
+                        var entrantMark = _modelFactory.CreateEntrantMark (markRow, competition, entrant);
                         entrant.Marks.Add (entrantMark);
                     }
                 }
 
                 foreach (var eduProgramRow in competitionRow.Element ("eduProgram").Elements ("row")) {
-                    TandemXmlModelFactory.FillEduProgram (eduProgramRow, competition.EduProgram);
+                    _modelFactory.FillEduProgram (eduProgramRow, competition.EduProgram);
                 }
             }
 
