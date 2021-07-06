@@ -104,7 +104,7 @@ namespace R7.Enrollment.Renderers
             }
 
             foreach (var entrant in competition.Entrants) {
-                RenderEntrant (entrant, html);
+                RenderEntrantTableRow (entrant, html);
             }
 
             // end table
@@ -250,7 +250,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrant (Entrant entrant, XmlWriter html)
+        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html)
         {
             html.WriteStartElement ("tr");
 
