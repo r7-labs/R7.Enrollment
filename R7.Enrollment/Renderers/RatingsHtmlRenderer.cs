@@ -82,7 +82,7 @@ namespace R7.Enrollment.Renderers
 
             if (competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}, {competition.CompetitionType.ToLower ()}");
+                    $"{competition.EduProgram.Form} форма, {competition.CompensationType} - {FirstCharToLower (competition.CompetitionType)}");
             }
             else {
                 html.WriteElementString ("h3",
@@ -323,6 +323,15 @@ namespace R7.Enrollment.Renderers
             }
 
             return competition.EduLevel;
+        }
+
+        string FirstCharToLower (string text)
+        {
+            if (string.IsNullOrWhiteSpace (text)) {
+                return text;
+            }
+
+            return text[0].ToString ().ToLower () + text.Substring (1);
         }
     }
 }
