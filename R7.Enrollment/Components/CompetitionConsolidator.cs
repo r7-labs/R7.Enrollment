@@ -13,11 +13,6 @@ namespace R7.Enrollment.Components
         {
             var ccs = new List<ConsolidatedCompetition> ();
             foreach (var c in competitions) {
-                if (ccs.Count == 0) {
-                    // first element, just add it
-                    ccs.Add (new ConsolidatedCompetition (c));
-                    continue;
-                }
                 var cc = FindRoot (c, ccs);
                 if (cc == null) {
                     ccs.Add (new ConsolidatedCompetition (c));
