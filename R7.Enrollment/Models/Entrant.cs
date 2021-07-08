@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace R7.Enrollment.Models
 {
-    public class Entrant
+    public class Entrant : IEntrant
     {
         public string Name { get; set; }
 

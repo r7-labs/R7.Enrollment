@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using R7.Enrollment.Components;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
@@ -10,11 +11,18 @@ namespace R7.Enrollment.Data
 
         private readonly TandemXmlModelFactory _modelFactory = new TandemXmlModelFactory ();
 
-        public void Load (string path)
+        public void Load (string path, bool consolidate = false)
         {
             var xml = XDocument.Load (path);
             if (xml.Root.Name == "enrEntrantRatingEnvironmentNode") {
                 EntrantRatingEnvironment = ParseEntrantRatingEnvironmentNode (xml.Root);
+
+                if (consolidate) {
+                    var consolidator = new CompetitionConsolidator ();
+                    EntrantRatingEnvironment.ConsolidatedCompetitions =
+                        consolidator.Consolidate (EntrantRatingEnvironment.Competitions);
+                }
+
                 return;
             }
             throw new ArgumentException ($"Unsupported node type: {xml.Root.Name}");

@@ -1,6 +1,8 @@
+using System;
 using System.IO;
 using System.Text;
 using System.Xml;
+using R7.Enrollment.Components;
 using R7.Enrollment.Data;
 using R7.Enrollment.Renderers;
 
@@ -18,12 +20,16 @@ namespace R7.Enrollment.Tests
 
             Directory.CreateDirectory ("output");
 
+            var consolidator = new CompetitionConsolidator ();
             var dataFiles = Directory.GetFiles ("./data", "enr_rating_*.xml");
             foreach (var dataFile in dataFiles) {
                 var db = new TandemRatingsDb ();
-                db.Load (dataFile);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-print.html", printTestSettings);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-web.html", webSettings);
+                db.Load (dataFile, consolidate: true);
+                var env = db.EntrantRatingEnvironment;
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (env.CampaignTitle)}-print.html", printTestSettings);
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (env.CampaignTitle)}-web.html", webSettings);
+
+                Console.WriteLine ($"raw: {env.Competitions.Count}, consolidated: {env.ConsolidatedCompetitions?.Count ?? -1}");
             }
         }
 

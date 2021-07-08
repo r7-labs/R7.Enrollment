@@ -15,6 +15,7 @@ namespace R7.Enrollment.Data
                 OrgTitle = xelem.Attribute ("enrOrgUnit")?.Value,
                 OrgUnitTitle = xelem.Attribute ("formativeOrgUnitTitle")?.Value,
                 CompetitionType = xelem.Attribute ("competitionType")?.Value,
+                CompetitionTypeCode = TryParseInt (xelem.Attribute ("competitionTypeCode")?.Value) ?? -1,
                 CompensationType = xelem.Attribute ("compensationTypeShortTitle")?.Value,
                 CompensationTypeBudget = TryParseBool (xelem.Attribute ("compensationTypeBudget")?.Value) ?? false,
                 Plan = TryParseInt (xelem.Attribute ("plan")?.Value) ?? 0,
