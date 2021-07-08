@@ -12,7 +12,6 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var consolidator = new CompetitionConsolidator ();
             var webSettings = new RatingsRendererSettings ();
             var renderer = new RatingsHtmlRenderer (webSettings);
             var consolidatedRenderer = new ConsolidatedRatingsHtmlRenderer (webSettings);
