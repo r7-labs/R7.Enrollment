@@ -1,5 +1,8 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using R7.Enrollment.Components;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Renderers
@@ -9,6 +12,10 @@ namespace R7.Enrollment.Renderers
         private RatingsRendererSettings Settings { get; set; }
 
         private readonly SnilsComparer _snilsComparer = new SnilsComparer ();
+
+        private readonly ConsolidatedEntrantBudgetComparer _entrantBudgetComparer = new ConsolidatedEntrantBudgetComparer ();
+
+        private readonly ConsolidatedEntrantContractComparer _entrantContractComparer = new ConsolidatedEntrantContractComparer ();
 
         public ConsolidatedRatingsHtmlRenderer ()
         {
@@ -51,7 +58,12 @@ namespace R7.Enrollment.Renderers
                 RenderEntrantsTableHeader (competition, html);
             }
 
-            foreach (var entrant in competition.Entrants) {
+            var entrantComparer =
+                competition.CompensationTypeBudget
+                    ? (IComparer<ConsolidatedEntrant>) _entrantBudgetComparer
+                    : (IComparer<ConsolidatedEntrant>) _entrantContractComparer;
+
+            foreach (var entrant in competition.Entrants.OrderBy (entr => entr, entrantComparer)) {
                 RenderEntrantTableRow (entrant, html);
             }
 
