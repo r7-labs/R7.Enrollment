@@ -24,15 +24,15 @@ namespace R7.Enrollment.Components
         int CompetitionTypeWeight (CompetitionType competitionType)
         {
             switch (competitionType) {
-                case CompetitionType.SpecialRights: return 0;
-                case CompetitionType.Target: return 1;
+                case CompetitionType.ByContract: return 1;
+                case CompetitionType.NoExamByContract: return 1;
+                case CompetitionType.Common: return 1;
                 case CompetitionType.NoExamCommon: return 2;
-                case CompetitionType.Common: return 3;
-                case CompetitionType.ByContract: return 4;
-                case CompetitionType.NoExamByContract: return 4;
+                case CompetitionType.Target: return 3;
+                case CompetitionType.SpecialRights: return 4;
             }
 
-            return int.MaxValue;
+            return 0;
         }
     }
 }
