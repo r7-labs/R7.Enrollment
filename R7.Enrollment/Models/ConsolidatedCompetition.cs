@@ -34,6 +34,10 @@ namespace R7.Enrollment.Models
 
         public int Plan => CalcPlanValue ();
 
+        public int PlanTarget => CalcPlanTargetValue ();
+
+        public int PlanSpecialRights => CalcPlanSpecialRightsValue ();
+
         public IList<ConsolidatedEntrant> Entrants = new List<ConsolidatedEntrant> ();
 
         public IList<Competition> Competitions { get; set; } = new List<Competition> ();
@@ -59,7 +63,27 @@ namespace R7.Enrollment.Models
             if (CompensationTypeBudget) {
                 return Competitions.Where (c => c.CompetitionTypeCode != (int) CompetitionType.NoExamCommon).Sum (c => c.Plan);
             }
-            return Competitions.FirstOrDefault (c => c.CompetitionTypeCode == (int) CompetitionType.ByContract)?.Plan ?? -1;
+            return Competitions.FirstOrDefault ()?.Plan ?? -1;
         }
+
+        int CalcPlanTargetValue ()
+        {
+            if (CompensationTypeBudget) {
+                return Competitions.FirstOrDefault (c => c.CompetitionTypeCode == (int) CompetitionType.Target)?.Plan ?? 0;
+            }
+
+            return -1;
+        }
+
+        int CalcPlanSpecialRightsValue ()
+        {
+            if (CompensationTypeBudget) {
+                return Competitions.FirstOrDefault (c => c.CompetitionTypeCode == (int) CompetitionType.SpecialRights)?.Plan ?? 0;
+            }
+
+            return -1;
+        }
+
+
     }
 }
