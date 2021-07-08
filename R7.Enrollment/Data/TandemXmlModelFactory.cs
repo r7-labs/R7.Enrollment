@@ -37,6 +37,8 @@ namespace R7.Enrollment.Data
                 Snils = xelem.Attribute ("snils")?.Value,
                 Position = TryParseInt (xelem.Attribute ("position")?.Value) ?? 0,
                 AbsolutePosition = TryParseInt (xelem.Attribute ("absolutePosition")?.Value) ?? 0,
+                CommonRating = TryParseInt (xelem.Attribute ("commonRating")?.Value) ?? 0,
+                AgreedRating = TryParseInt (xelem.Attribute ("agreedRating")?.Value) ?? 0,
                 FinalMark = TryParseInt (xelem.Attribute ("finalMark")?.Value) ?? 0,
                 AchievementMark = TryParseInt (xelem.Attribute ("achievementMark")?.Value) ?? 0,
                 OriginalIn = TryParseBool (xelem.Attribute ("originalIn")?.Value) ?? false,

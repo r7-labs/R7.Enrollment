@@ -14,6 +14,10 @@ namespace R7.Enrollment.Models
 
         int AbsolutePosition { get; }
 
+        int CommonRating { get; }
+
+        int AgreedRating { get; }
+
         int FinalMark { get; }
 
         int AchievementMark { get; }

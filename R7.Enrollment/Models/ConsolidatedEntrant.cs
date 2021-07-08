@@ -19,6 +19,10 @@ namespace R7.Enrollment.Models
 
         public int AbsolutePosition => _entrant.AbsolutePosition;
 
+        public int CommonRating => _entrant.CommonRating;
+
+        public int AgreedRating => _entrant.AgreedRating;
+
         public int FinalMark => _entrant.FinalMark;
 
         public int AchievementMark => _entrant.AchievementMark;
