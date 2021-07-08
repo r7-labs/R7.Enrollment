@@ -39,7 +39,7 @@ namespace R7.Enrollment.Renderers
             }
 
             html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
-            html.WriteElementString ("h3", $"{competition.EduProgram.Form} форма");
+            html.WriteElementString ("h3", $"{competition.EduProgram.Form} форма обучения");
 
             // start table
             html.WriteStartElement ("div");

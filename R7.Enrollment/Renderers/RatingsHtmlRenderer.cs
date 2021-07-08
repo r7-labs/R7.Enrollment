@@ -82,11 +82,11 @@ namespace R7.Enrollment.Renderers
 
             if (competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType} - {FirstCharToLower (competition.CompetitionType)}");
+                    $"{competition.EduProgram.Form} форма обучения, {competition.CompensationType} - {FirstCharToLower (competition.CompetitionType)}");
             }
             else {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}");
+                    $"{competition.EduProgram.Form} форма обучения, {competition.CompensationType}");
             }
 
             if (!Settings.UseBasicCompetitionHeader) {
