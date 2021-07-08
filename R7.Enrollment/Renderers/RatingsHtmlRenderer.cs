@@ -60,7 +60,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndDocument ();
         }
 
-        public void Render (EntrantRatingEnvironment env, XmlWriter html)
+        public virtual void Render (EntrantRatingEnvironment env, XmlWriter html)
         {
             foreach (var competition in env.Competitions) {
                 if (Settings.IncludeEmptyCompetitions || competition.Entrants.Count > 0) {
@@ -288,7 +288,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        string EnrollmentStateString (Entrant entrant)
+        protected string EnrollmentStateString (IEntrant entrant)
         {
             var values = new List<string> ();
             if (entrant.Recommended) {
@@ -300,7 +300,7 @@ namespace R7.Enrollment.Renderers
             return string.Join ("; ", values);
         }
 
-        string EduProgramTitle (EduProgram eduProgram)
+        protected string EduProgramTitle (EduProgram eduProgram)
         {
             if (!string.IsNullOrEmpty (eduProgram.Specialization)) {
                 return $"{eduProgram.Subject} ({eduProgram.Specialization})";
@@ -309,10 +309,10 @@ namespace R7.Enrollment.Renderers
             return eduProgram.Subject;
         }
 
-        string YesNoString (bool value) => value ? "да" : "нет";
+        protected string YesNoString (bool value) => value ? "да" : "нет";
 
         [Obsolete ("Temporary patch, need to correct edu. level strings in the datasource", false)]
-        string PatchedEduLevelString (Competition competition)
+        protected string PatchedEduLevelString (ICompetition competition)
         {
             var eduProgram = competition.EduProgram;
             if (eduProgram.Subject.Contains (".04.")) {
