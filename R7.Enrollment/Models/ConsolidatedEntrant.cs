@@ -17,6 +17,8 @@ namespace R7.Enrollment.Models
 
         public int Position => _entrant.Position;
 
+        public int AbsolutePosition => _entrant.AbsolutePosition;
+
         public int FinalMark => _entrant.FinalMark;
 
         public int AchievementMark => _entrant.AchievementMark;
