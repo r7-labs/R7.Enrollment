@@ -96,6 +96,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
 
             #if DEBUG
+            html.WriteElementWithAttributeString ("td", "name", "rowspan", "2");
             html.WriteElementWithAttributeString ("td", "position", "rowspan", "2");
             html.WriteElementWithAttributeString ("td", "absolutePosition", "rowspan", "2");
             html.WriteElementWithAttributeString ("td", "commonRating", "rowspan", "2");
@@ -145,6 +146,7 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("td", order.ToString ());
 
             #if DEBUG
+            html.WriteElementString ("td", entrant.Name);
             html.WriteElementString ("td", entrant.Position.ToString ());
             html.WriteElementString ("td", entrant.AbsolutePosition.ToString ());
             html.WriteElementString ("td", entrant.CommonRating.ToString ());
