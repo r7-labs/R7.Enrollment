@@ -65,25 +65,29 @@ namespace R7.Enrollment.Renderers
 
             var order = 1;
             foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                RenderEntrantTableRow (entrant, html, order);
-                order++;
+                RenderEntrantTableRow (entrant, html, entrant.StatusCode != 2 ? order : 0);
+                if (entrant.StatusCode != 2) {
+                    order++;
+                }
             }
 
             // end table
             html.WriteEndElement ();
             html.WriteEndElement ();
 
+            var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
+
             if (Settings.UseBasicCompetitionHeader) {
                 if (competition.CompensationTypeBudget) {
                     html.WriteElementString ("p",
-                        $"Заявлений — {competition.Entrants.Count}, "
+                        $"Заявлений — {activeEntrantsCount}, "
                         + $"число мест — {competition.Plan}, из них: "
                         + $"целевая квота — {competition.PlanTarget}, "
                         + $"особая квота — {competition.PlanSpecialRights}");
                 }
                 else {
                     html.WriteElementString ("p",
-                        $"Заявлений — {competition.Entrants.Count}, число мест — {competition.Plan}");
+                        $"Заявлений — {activeEntrantsCount}, число мест — {competition.Plan}");
                 }
             }
         }
@@ -143,7 +147,12 @@ namespace R7.Enrollment.Renderers
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 
-            html.WriteElementString ("td", order.ToString ());
+            if (order > 0) {
+                html.WriteElementString ("td", order.ToString ());
+            }
+            else {
+                html.WriteElementString ("td", "");
+            }
 
             #if DEBUG
             html.WriteElementString ("td", entrant.Name);
