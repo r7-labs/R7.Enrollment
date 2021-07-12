@@ -32,6 +32,8 @@ namespace R7.Enrollment.Models
 
         string Status { get; }
 
+        int StatusCode { get; }
+
         IList<string> MarkStrings { get; }
 
         IList<EntrantMark> Marks { get; }

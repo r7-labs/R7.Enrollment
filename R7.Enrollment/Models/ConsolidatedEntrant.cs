@@ -37,6 +37,8 @@ namespace R7.Enrollment.Models
 
         public string Status => _entrant.Status;
 
+        public int StatusCode => _entrant.StatusCode;
+
         public IList<string> MarkStrings => _entrant.MarkStrings;
 
         public IList<EntrantMark> Marks => _entrant.Marks;
