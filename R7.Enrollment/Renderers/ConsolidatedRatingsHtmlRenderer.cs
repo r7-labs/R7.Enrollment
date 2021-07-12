@@ -55,22 +55,20 @@ namespace R7.Enrollment.Renderers
                 html.WriteStartElement ("table");
                 html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
                 RenderEntrantsTableHeader (competition, html);
-            }
 
-            var entrantComparer =
-                competition.CompensationTypeBudget
-                    ? (IComparer<ConsolidatedEntrant>) _entrantBudgetComparer
-                    : (IComparer<ConsolidatedEntrant>) _entrantContractComparer;
+                var entrantComparer =
+                    competition.CompensationTypeBudget
+                        ? (IComparer<ConsolidatedEntrant>) _entrantBudgetComparer
+                        : (IComparer<ConsolidatedEntrant>) _entrantContractComparer;
 
-            var order = 1;
-            foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                RenderEntrantTableRow (entrant, html, entrant.IsActive () ? order : 0, competition.Plan);
-                if (entrant.IsActive ()) {
-                    order++;
+                var order = 1;
+                foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
+                    RenderEntrantTableRow (entrant, html, entrant.IsActive () ? order : 0, competition.Plan);
+                    if (entrant.IsActive ()) {
+                        order++;
+                    }
                 }
-            }
 
-            if (competition.Entrants.Count > 0) {
                 // end table
                 html.WriteEndElement ();
                 html.WriteEndElement ();
