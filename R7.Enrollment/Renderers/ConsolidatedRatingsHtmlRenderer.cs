@@ -65,8 +65,8 @@ namespace R7.Enrollment.Renderers
 
             var order = 1;
             foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                RenderEntrantTableRow (entrant, html, entrant.StatusCode != 2 ? order : 0);
-                if (entrant.StatusCode != 2) {
+                RenderEntrantTableRow (entrant, html, entrant.IsActive () ? order : 0);
+                if (entrant.IsActive ()) {
                     order++;
                 }
             }
@@ -75,7 +75,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
             html.WriteEndElement ();
 
-            var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
+            var activeEntrantsCount = competition.Entrants.Count (entr => entr.IsActive ());
 
             if (Settings.UseBasicCompetitionHeader) {
                 if (competition.CompensationTypeBudget) {

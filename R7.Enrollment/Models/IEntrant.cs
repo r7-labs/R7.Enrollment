@@ -38,4 +38,9 @@ namespace R7.Enrollment.Models
 
         IList<EntrantMark> Marks { get; }
     }
+
+    public static class EntrantExtensions
+    {
+        public static bool IsActive (this IEntrant entrant) => entrant.StatusCode != 2;
+    }
 }
