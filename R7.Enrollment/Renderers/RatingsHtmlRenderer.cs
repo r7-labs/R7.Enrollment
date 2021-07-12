@@ -75,7 +75,8 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("h5", $"{competition.OrgUnitTitle}");
 
             if (Settings.UseBasicCompetitionHeader) {
-                html.WriteElementString ("h4", $"{PatchedEduLevelString (competition)}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
+                html.WriteElementString ("h4",
+                    $"{PatchedEduLevelString (competition)}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
             }
 
             html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
@@ -93,23 +94,22 @@ namespace R7.Enrollment.Renderers
                 RenderCompetitionHeader (competition, html);
             }
 
-            // start table
-            html.WriteStartElement ("div");
-            html.WriteAttributeString ("class", "table-responsive");
-            html.WriteStartElement ("table");
-            html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
-
             if (competition.Entrants.Count > 0) {
+                // start table
+                html.WriteStartElement ("div");
+                html.WriteAttributeString ("class", "table-responsive");
+                html.WriteStartElement ("table");
+                html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
                 RenderEntrantsTableHeader (competition, html);
-            }
 
-            foreach (var entrant in competition.Entrants) {
-                RenderEntrantTableRow (entrant, html);
-            }
+                foreach (var entrant in competition.Entrants) {
+                    RenderEntrantTableRow (entrant, html);
+                }
 
-            // end table
-            html.WriteEndElement ();
-            html.WriteEndElement ();
+                // end table
+                html.WriteEndElement ();
+                html.WriteEndElement ();
+            }
 
             if (Settings.UseBasicCompetitionHeader) {
                 html.WriteElementString ("p",
