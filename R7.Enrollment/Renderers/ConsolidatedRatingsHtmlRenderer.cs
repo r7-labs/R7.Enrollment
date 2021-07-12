@@ -65,7 +65,7 @@ namespace R7.Enrollment.Renderers
 
             var order = 1;
             foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                RenderEntrantTableRow (entrant, html, entrant.IsActive () ? order : 0);
+                RenderEntrantTableRow (entrant, html, entrant.IsActive () ? order : 0, competition.Plan);
                 if (entrant.IsActive ()) {
                     order++;
                 }
@@ -138,12 +138,17 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrantTableRow (ConsolidatedEntrant entrant, XmlWriter html, int order)
+        public void RenderEntrantTableRow (ConsolidatedEntrant entrant, XmlWriter html, int order, int plan)
         {
-            html.WriteStartElement ("tr");
+            if (order > 0 && order == plan) {
+                html.WriteStartElementWithAttributeString ("tr", "style", "border-bottom:6px solid #555");
+            }
+            else {
+                html.WriteStartElement ("tr");
+            }
 
             if (_snilsComparer.SnilsNotNullAndEquals (entrant.Snils, Settings.Snils)
-                    || entrant.PersonalNumber == Settings.PersonalNumber) {
+                || entrant.PersonalNumber == Settings.PersonalNumber) {
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 
