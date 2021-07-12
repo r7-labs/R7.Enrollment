@@ -48,13 +48,12 @@ namespace R7.Enrollment.Renderers
             html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
             html.WriteElementString ("h3", $"{competition.EduProgram.Form} форма обучения");
 
-            // start table
-            html.WriteStartElement ("div");
-            html.WriteAttributeString ("class", "table-responsive");
-            html.WriteStartElement ("table");
-            html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
-
             if (competition.Entrants.Count > 0) {
+                // start table
+                html.WriteStartElement ("div");
+                html.WriteAttributeString ("class", "table-responsive");
+                html.WriteStartElement ("table");
+                html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
                 RenderEntrantsTableHeader (competition, html);
             }
 
@@ -71,9 +70,11 @@ namespace R7.Enrollment.Renderers
                 }
             }
 
-            // end table
-            html.WriteEndElement ();
-            html.WriteEndElement ();
+            if (competition.Entrants.Count > 0) {
+                // end table
+                html.WriteEndElement ();
+                html.WriteEndElement ();
+            }
 
             var activeEntrantsCount = competition.Entrants.Count (entr => entr.IsActive ());
 
