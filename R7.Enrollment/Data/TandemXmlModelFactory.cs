@@ -42,7 +42,9 @@ namespace R7.Enrollment.Data
                 RefusedToBeEnrolled = TryParseBool (xelem.Attribute ("refusedToBeEnrolled")?.Value) ?? false,
                 Recommended = TryParseBool (xelem.Attribute ("recommended")?.Value) ?? false,
                 Status = xelem.Attribute ("status")?.Value,
-                MarkStrings = ParseMarks (xelem.Attribute ("marks")?.Value)
+                StatusCode = TryParseInt (xelem.Attribute ("statusCode")?.Value) ?? 0,
+                MarkStrings = ParseMarks (xelem.Attribute ("marks")?.Value),
+                PreferenceCategory = xelem.Attribute ("preferenceCategory")?.Value
             };
         }
 

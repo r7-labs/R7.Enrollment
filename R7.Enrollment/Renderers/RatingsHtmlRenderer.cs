@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml;
+using R7.Enrollment.Components;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Renderers
@@ -102,8 +104,13 @@ namespace R7.Enrollment.Renderers
                 html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
                 RenderEntrantsTableHeader (competition, html);
 
-                foreach (var entrant in competition.Entrants) {
-                    RenderEntrantTableRow (entrant, html);
+                var entrantComparer = new EntrantComparer (competition.EntranceDisciplines);
+                var order = 1;
+                foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
+                    RenderEntrantTableRow (entrant, html, entrant.StatusCode != 2 ? order : 0);
+                    if (entrant.StatusCode != 2) {
+                        order++;
+                    }
                 }
 
                 // end table
@@ -112,8 +119,9 @@ namespace R7.Enrollment.Renderers
             }
 
             if (Settings.UseBasicCompetitionHeader) {
+                var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
                 html.WriteElementString ("p",
-                    $"Заявлений — {competition.Entrants.Count}, число мест — {competition.Plan}");
+                    $"Заявлений — {activeEntrantsCount}, число мест — {competition.Plan}");
             }
         }
 
@@ -221,8 +229,12 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
 
+            #if DEBUG
+            html.WriteElementWithAttributeString ("td", "preferenceCategory", "rowspan", "2");
+            #endif
+
             if (Settings.Depersonalize) {
-                html.WriteElementWithAttributeString ("th", "Личный номер", "rowspan", "2");
+                html.WriteElementWithAttributeString ("th", "СНИЛС или Личный номер", "rowspan", "2");
             }
             else {
                 html.WriteElementWithAttributeString ("th", "Фамилия, имя, отчество", "rowspan", "2");
@@ -250,7 +262,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html)
+        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int order)
         {
             html.WriteStartElement ("tr");
 
@@ -259,10 +271,14 @@ namespace R7.Enrollment.Renderers
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 
-            html.WriteElementString ("td", entrant.Position.ToString ());
+            html.WriteElementString ("td", (order > 0)? order.ToString () : string.Empty);
+
+            #if DEBUG
+            html.WriteElementString ("td", entrant.PreferenceCategory);
+            #endif
 
             if (Settings.Depersonalize) {
-                html.WriteElementString ("td", entrant.PersonalNumber);
+                html.WriteElementString ("td", !string.IsNullOrEmpty (entrant.Snils) ? entrant.Snils : entrant.PersonalNumber);
             }
             else {
                 html.WriteElementString ("td", entrant.Name);

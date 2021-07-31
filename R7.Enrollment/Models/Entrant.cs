@@ -27,6 +27,12 @@ namespace R7.Enrollment.Models
 
         public string Status { get; set; }
 
+        public int StatusCode { get; set; }
+
+        public string PreferenceCategory { get; set; }
+
+        public bool HasPreference => PreferenceCategory != null;
+
         public IList<string> MarkStrings { get; set; }
 
         [Obsolete ("Could be used later on over/with MarkStrings", false)]

@@ -5,7 +5,7 @@
         <BaseProjectName>R7.Enrollment</BaseProjectName>
         <MainProjectName>R7.Enrollment.Dnn</MainProjectName>
         <PackageName>R7.Enrollment</PackageName>
-        <DnnLocalDeployPath Condition=" '$(OS)' == 'Unix' ">$(HOME)/mnt/dnn990</DnnLocalDeployPath>
+        <DnnLocalDeployPath Condition=" '$(OS)' == 'Unix' ">/mnt/hdd/$(HOME)/mnt/dnn980</DnnLocalDeployPath>
         <DnnLocalDeployPath Condition=" '$(OS)' != 'Unix' ">C:\Dotnetnuke990</DnnLocalDeployPath>
         <!-- Set to /MVC for MVC modules -->
         <DnnModulesPathPrefix>/MVC/R7.Enrollment</DnnModulesPathPrefix>
