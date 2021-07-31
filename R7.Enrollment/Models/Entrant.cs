@@ -29,6 +29,8 @@ namespace R7.Enrollment.Models
 
         public int StatusCode { get; set; }
 
+        public int? Rank { get; set; }
+
         public bool IsRanked () =>
             StatusCode != (int) EntrantStatus.TookAwayTheDocs &&
             StatusCode != (int) EntrantStatus.RefusedToEnroll &&

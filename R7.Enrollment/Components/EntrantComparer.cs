@@ -6,7 +6,7 @@ namespace R7.Enrollment.Components
 {
     public class EntrantComparer: IComparer<Entrant>
     {
-        private IList<EntranceDiscipline> _entranceDisciplines;
+        private readonly IList<EntranceDiscipline> _entranceDisciplines;
 
         public EntrantComparer (IList<EntranceDiscipline> entranceDisciplines)
         {

@@ -1,5 +1,6 @@
 using System;
 using System.Xml.Linq;
+using R7.Enrollment.Components;
 using R7.Enrollment.Models;
 
 namespace R7.Enrollment.Data
@@ -15,9 +16,18 @@ namespace R7.Enrollment.Data
             var xml = XDocument.Load (path);
             if (xml.Root.Name == "enrEntrantRatingEnvironmentNode") {
                 EntrantRatingEnvironment = ParseEntrantRatingEnvironmentNode (xml.Root);
+                RankEntrants (EntrantRatingEnvironment);
                 return;
             }
             throw new ArgumentException ($"Unsupported node type: {xml.Root.Name}");
+        }
+
+        private void RankEntrants (EntrantRatingEnvironment env)
+        {
+            var entrantRanker = new EntrantRanker ();
+            foreach (var competition in env.Competitions) {
+                entrantRanker.RankEntrants (competition);
+            }
         }
 
         EntrantRatingEnvironment ParseEntrantRatingEnvironmentNode (XElement root)

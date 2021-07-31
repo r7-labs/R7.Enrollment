@@ -104,13 +104,8 @@ namespace R7.Enrollment.Renderers
                 html.WriteAttributeString ("class", "table table-bordered table-striped table-hover");
                 RenderEntrantsTableHeader (competition, html);
 
-                var entrantComparer = new EntrantComparer (competition.EntranceDisciplines);
-                var rank = 1;
-                foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                    RenderEntrantTableRow (entrant, html, rank, competition.Plan);
-                    if (entrant.IsRanked ()) {
-                        rank++;
-                    }
+                foreach (var entrant in competition.Entrants) {
+                    RenderEntrantTableRow (entrant, html, competition.Plan);
                 }
 
                 // end table
@@ -158,7 +153,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int rank, int plan)
+        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int plan)
         {
             html.WriteStartElement ("tr");
 
@@ -166,14 +161,14 @@ namespace R7.Enrollment.Renderers
             if (_snilsComparer.SnilsNotNullAndEquals (entrant.Snils, Settings.Snils) || entrant.PersonalNumber == Settings.PersonalNumber) {
                 cssClass += " enr-target-entrant-row";
             }
-            if (entrant.IsRanked () && rank == plan) {
+            if (entrant.IsRanked () && entrant.Rank != null && entrant.Rank.Value == plan) {
                 cssClass += " enr-entrant-row-cutoff";
             }
             if (!string.IsNullOrEmpty (cssClass)) {
                 html.WriteAttributeString ("class", cssClass);
             }
 
-            html.WriteElementString ("td", entrant.IsRanked () ? rank.ToString () : string.Empty);
+            html.WriteElementString ("td", entrant.Rank?.ToString () ?? string.Empty);
 
             if (!Settings.Depersonalize) {
                 html.WriteElementString ("td", entrant.Name);
