@@ -15,12 +15,12 @@ namespace R7.Enrollment.Components
 
         public int Compare (Entrant x, Entrant y)
         {
-            if (x.HasPreference () != y.HasPreference ()) {
-                return x.HasPreference ().CompareTo (y.HasPreference ());
-            }
-
             if (x.FinalMark != y.FinalMark) {
                 return x.FinalMark.CompareTo (y.FinalMark);
+            }
+
+            if (x.HasPreference () != y.HasPreference ()) {
+                return x.HasPreference ().CompareTo (y.HasPreference ());
             }
 
             var xMarks = GetMarkIntegers (x.MarkStrings);
