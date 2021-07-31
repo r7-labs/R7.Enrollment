@@ -36,7 +36,7 @@ namespace R7.Enrollment.Models
 
         public string PreferenceCategory { get; set; }
 
-        public bool HasPreference => PreferenceCategory != null;
+        public bool HasPreference () => PreferenceCategory != null;
 
         public IList<string> MarkStrings { get; set; }
 

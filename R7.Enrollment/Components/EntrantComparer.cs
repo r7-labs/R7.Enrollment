@@ -15,18 +15,18 @@ namespace R7.Enrollment.Components
 
         public int Compare (Entrant x, Entrant y)
         {
-            if (x.HasPreference != y.HasPreference) {
-                return x.HasPreference.CompareTo (y.HasPreference);
+            if (x.HasPreference () != y.HasPreference ()) {
+                return x.HasPreference ().CompareTo (y.HasPreference ());
             }
 
             if (x.FinalMark != y.FinalMark) {
-                return x.FinalMark.CompareTo(y.FinalMark);
+                return x.FinalMark.CompareTo (y.FinalMark);
             }
 
             var xMarks = GetMarkIntegers (x.MarkStrings);
             var yMarks = GetMarkIntegers (y.MarkStrings);
 
-            for (int i = 0; i < Math.Min(xMarks.Count, yMarks.Count); i++) {
+            for (int i = 0; i < Math.Min (xMarks.Count, yMarks.Count); i++) {
                 if (xMarks[i] != yMarks[i]) {
                     return xMarks[i].CompareTo (yMarks[i]);
                 }
@@ -39,7 +39,7 @@ namespace R7.Enrollment.Components
         {
             var markIntegers = new List<int> ();
             foreach (var markString in markStrings) {
-                if (int.TryParse(markString, out int mark)) {
+                if (int.TryParse (markString, out int mark)) {
                     markIntegers.Add (mark);
                 }
                 else {
