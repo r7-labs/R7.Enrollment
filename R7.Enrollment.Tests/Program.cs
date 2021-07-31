@@ -10,20 +10,18 @@ namespace R7.Enrollment.Tests
     {
         static void Main (string[] args)
         {
-            var printTestSettings = new RatingsRendererSettings () {
-                UseBasicCompetitionHeader = false,
-                Depersonalize = false
-            };
-            var webSettings = new RatingsRendererSettings ();
-
             Directory.CreateDirectory ("output");
 
             var dataFiles = Directory.GetFiles ("./data", "enr_rating_*.xml");
             foreach (var dataFile in dataFiles) {
                 var db = new TandemRatingsDb ();
                 db.Load (dataFile);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-print.html", printTestSettings);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-web.html", webSettings);
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-depersonalized.html",
+                    new RatingsRendererSettings {
+                    Depersonalize = false
+                });
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}.html",
+                    new RatingsRendererSettings ());
             }
         }
 

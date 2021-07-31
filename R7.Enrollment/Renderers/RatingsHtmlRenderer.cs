@@ -76,10 +76,8 @@ namespace R7.Enrollment.Renderers
         {
             html.WriteElementString ("h5", $"{competition.OrgUnitTitle}");
 
-            if (Settings.UseBasicCompetitionHeader) {
-                html.WriteElementString ("h4",
-                    $"{PatchedEduLevelString (competition)}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
-            }
+            html.WriteElementString ("h4",
+                $"{PatchedEduLevelString (competition)}, на базе {competition.EduLevelRequirementGenetiveTitle.ToLower ()}");
 
             html.WriteElementString ("h2", EduProgramTitle (competition.EduProgram));
 
@@ -90,10 +88,6 @@ namespace R7.Enrollment.Renderers
             else {
                 html.WriteElementString ("h3",
                     $"{competition.EduProgram.Form} форма, {competition.CompensationType}");
-            }
-
-            if (!Settings.UseBasicCompetitionHeader) {
-                RenderCompetitionHeader (competition, html);
             }
 
             if (competition.Entrants.Count > 0) {
@@ -118,108 +112,9 @@ namespace R7.Enrollment.Renderers
                 html.WriteEndElement ();
             }
 
-            if (Settings.UseBasicCompetitionHeader) {
-                var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
-                html.WriteElementString ("p",
-                    $"Заявлений — {activeEntrantsCount}, число мест — {competition.Plan}");
-            }
-        }
-
-        void RenderCompetitionHeader (Competition competition, XmlWriter html)
-        {
-            // start table
-            html.WriteStartElement ("div");
-            html.WriteAttributeString ("class", "table-responsive");
-            html.WriteStartElement ("table");
-            html.WriteAttributeString ("class", "table");
-
-            // 1st row
-            html.WriteStartElement ("tr");
-            html.WriteElementWithAttributeString ("td", "Рейтинговый (конкурсный) список, список поступающих на", "colspan", "2");
-            html.WriteElementWithAttributeString ("td", $"{competition.CurrentDateTime.ToShortDateString ()} {competition.CurrentDateTime.ToShortTimeString ()}", "colspan", "2");
-            html.WriteElementString ("td", "");
-            html.WriteEndElement ();
-
-            // 2nd row
-            html.WriteStartElement ("tr");
-            html.WriteElementWithAttributeString ("td", competition.OrgTitle, "colspan", "3");
-            html.WriteElementString ("td", "");
-            html.WriteElementString ("td", competition.OrgUnitTitle);
-            html.WriteEndElement ();
-
-            // 3rd row
-            html.WriteStartElement ("tr");
-            html.WriteElementString ("td", "Направление подготовки:");
-            html.WriteElementWithAttributeString ("td", competition.EduProgram.Subject, "colspan", "2");
-            html.WriteElementString ("td", "");
-            html.WriteElementString ("td", $"{competition.EduProgram.ConditionsWithForm}");
-            html.WriteEndElement ();
-
-            // 4th row
-            html.WriteStartElement ("tr");
-
-            html.WriteElementString ("td", "Набор ОП:");
-            html.WriteStartElement ("td");
-            html.WriteAttributeString ("colspan", "4");
-            html.WriteString (competition.EduProgram.Title);
-            html.WriteEndElement ();
-
-            html.WriteEndElement();
-
-            // 5th row
-            html.WriteStartElement ("tr");
-
-            html.WriteStartElement ("td");
-            html.WriteAttributeString ("colspan", "3");
-            if (competition.CompensationTypeBudget) {
-                html.WriteString ($"Число мест на бюджет (КЦП) — {competition.Plan}");
-            }
-            else {
-                html.WriteString ($"Число мест с оплатой стоимости обучения — {competition.Plan}");
-            }
-            html.WriteRaw ("<br />");
-            html.WriteString ("Принятые сокращения:");
-            html.WriteRaw ("<br />");
-            html.WriteString ("КЦП – контрольные цифры приёма");
-            html.WriteRaw ("<br />");
-            html.WriteString ("ИД – индивидуальные достижения");
-            html.WriteRaw ("<br />");
-            html.WriteString ("ВИ – вступительные испытания:");
-            html.WriteRaw ("<br />");
-            foreach (var discipline in competition.EntranceDisciplines) {
-                html.WriteString($"{discipline.ShortTitle} - {discipline.Title}; ");
-            }
-            html.WriteEndElement();
-
-            html.WriteElementString ("td", "");
-
-            html.WriteStartElement ("td");
-            html.WriteString ("Число заявлений:");
-            html.WriteRaw ("<br />");
-            if (competition.CompensationTypeBudget) {
-                html.WriteString ($"на бюджет (КЦП) — {competition.Entrants.Count}");
-            }
-            else {
-                html.WriteString ($"на места с оплатой стоимости обучения — {competition.Entrants.Count}");
-            }
-            html.WriteEndElement ();
-
-            html.WriteEndElement ();
-
-            // 6th row
-            html.WriteStartElement ("tr");
-            html.WriteElementString ("td", "Образовательные программы:");
-
-            html.WriteElementWithAttributeString ("td",
-                $"{competition.EduProgram.TitleAndConditionsShortWithForm}", "colspan", "4");
-
-            html.WriteEndElement ();
-
-            // end table
-            html.WriteEndElement ();
-            html.WriteEndElement ();
-
-            html.WriteElementString ("h4", $"{competition.CompetitionType} (заявлений — {competition.Entrants.Count}, число мест — {competition.Plan})");
+            var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
+            html.WriteElementString ("p",
+                $"Заявлений — {activeEntrantsCount}, число мест — {competition.Plan}");
         }
 
         public void RenderEntrantsTableHeader (Competition competition, XmlWriter html)
