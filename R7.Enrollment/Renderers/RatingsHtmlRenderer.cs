@@ -136,10 +136,7 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementWithAttributeString ("th", "СНИЛС или Личный номер", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Сумма баллов", "rowspan", "2");
-
-            #if DEBUG
-            html.WriteElementWithAttributeString ("td", "preferenceCategory", "rowspan", "2");
-            #endif
+            html.WriteElementWithAttributeString ("th", "Преимущественное право", "rowspan", "2");
 
             var disciplinesCount = Math.Max (competition.EntranceDisciplines.Count, 1);
             html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", disciplinesCount.ToString ());
@@ -184,10 +181,7 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("td", !string.IsNullOrEmpty (entrant.Snils) ? entrant.Snils : entrant.PersonalNumber);
             html.WriteElementString ("td", entrant.FinalMark.ToString ());
-
-            #if DEBUG
-            html.WriteElementString ("td", entrant.PreferenceCategory);
-            #endif
+            html.WriteElementString ("td", YesNoString (entrant.HasPreference ()));
 
             if (entrant.MarkStrings.Count > 0) {
                 foreach (var mark in entrant.MarkStrings) {
