@@ -107,8 +107,8 @@ namespace R7.Enrollment.Renderers
                 var entrantComparer = new EntrantComparer (competition.EntranceDisciplines);
                 var order = 1;
                 foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                    RenderEntrantTableRow (entrant, html, entrant.StatusCode != 2 ? order : 0);
-                    if (entrant.StatusCode != 2) {
+                    RenderEntrantTableRow (entrant, html, entrant.IsActive ? order : 0);
+                    if (entrant.IsActive) {
                         order++;
                     }
                 }

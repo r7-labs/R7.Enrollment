@@ -29,6 +29,8 @@ namespace R7.Enrollment.Models
 
         public int StatusCode { get; set; }
 
+        public bool IsActive => StatusCode != 2;
+
         public string PreferenceCategory { get; set; }
 
         public bool HasPreference => PreferenceCategory != null;
