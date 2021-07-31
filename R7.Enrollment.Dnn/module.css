@@ -5,3 +5,7 @@
 .enr-target-entrant-row td:first-child {
     border-left: 6px solid #28a745; /* border-success color */
 }
+
+.enr-entrant-row-cutoff td {
+    border-bottom: 6px solid #555;
+}

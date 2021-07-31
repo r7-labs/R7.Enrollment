@@ -26,20 +26,26 @@ namespace R7.Enrollment.Renderers
         public void RenderStandalone (EntrantRatingEnvironment env, XmlWriter html)
         {
             html.WriteStartDocument ();
-            html.WriteDocType ("html", null,  null, null);
+            html.WriteDocType ("html", null, null, null);
             html.WriteStartElement ("html");
             html.WriteStartElement ("head");
 
             html.WriteStartElement ("link");
-            html.WriteAttributeString ("href", "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css");
+            html.WriteAttributeString ("href",
+                "https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css");
             html.WriteAttributeString ("rel", "stylesheet");
-            html.WriteAttributeString ("integrity", "sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x");
+            html.WriteAttributeString ("integrity",
+                "sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x");
             html.WriteAttributeString ("crossorigin", "anonymous");
 
             html.WriteEndElement ();
             html.WriteEndElement ();
 
             html.WriteStartElement ("body");
+
+            html.WriteStartElementWithAttributeString ("style", "type", "text/css");
+            html.WriteString (".enr-entrant-row-cutoff td { border-bottom: 6px solid #555; }");
+            html.WriteEndElement ();
 
             html.WriteStartElementWithAttributeString ("div", "class", "container-fluid");
             html.WriteStartElementWithAttributeString ("div", "class", "row");
@@ -101,7 +107,7 @@ namespace R7.Enrollment.Renderers
                 var entrantComparer = new EntrantComparer (competition.EntranceDisciplines);
                 var rank = 1;
                 foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                    RenderEntrantTableRow (entrant, html, rank);
+                    RenderEntrantTableRow (entrant, html, rank, competition.Plan);
                     if (entrant.IsRanked ()) {
                         rank++;
                     }
@@ -112,7 +118,7 @@ namespace R7.Enrollment.Renderers
                 html.WriteEndElement ();
             }
 
-            var activeEntrantsCount = competition.Entrants.Count (entr => entr.StatusCode != 2);
+            var activeEntrantsCount = competition.Entrants.Count (entr => entr.IsRanked ());
             html.WriteElementString ("p",
                 $"Заявлений — {activeEntrantsCount}, число мест — {competition.Plan}");
         }
@@ -155,13 +161,19 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int rank)
+        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int rank, int plan)
         {
             html.WriteStartElement ("tr");
 
-            if (_snilsComparer.SnilsNotNullAndEquals (entrant.Snils, Settings.Snils)
-                    || entrant.PersonalNumber == Settings.PersonalNumber) {
-                html.WriteAttributeString ("class", "enr-target-entrant-row");
+            var cssClass = string.Empty;
+            if (_snilsComparer.SnilsNotNullAndEquals (entrant.Snils, Settings.Snils) || entrant.PersonalNumber == Settings.PersonalNumber) {
+                cssClass += " enr-target-entrant-row";
+            }
+            if (entrant.IsRanked () && rank == plan) {
+                cssClass += " enr-entrant-row-cutoff";
+            }
+            if (!string.IsNullOrEmpty (cssClass)) {
+                html.WriteAttributeString ("class", cssClass);
             }
 
             html.WriteElementString ("td", entrant.IsRanked () ? rank.ToString () : string.Empty);
