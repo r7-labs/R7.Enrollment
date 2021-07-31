@@ -83,11 +83,11 @@ namespace R7.Enrollment.Renderers
 
             if (competition.CompensationTypeBudget) {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType} - {FirstCharToLower (competition.CompetitionType)}");
+                    $"{competition.EduProgram.Form} форма обучения, {competition.CompensationType} - {FirstCharToLower (competition.CompetitionType)}");
             }
             else {
                 html.WriteElementString ("h3",
-                    $"{competition.EduProgram.Form} форма, {competition.CompensationType}");
+                    $"{competition.EduProgram.Form} форма обучения, {competition.CompensationType}");
             }
 
             if (competition.Entrants.Count > 0) {
@@ -99,11 +99,11 @@ namespace R7.Enrollment.Renderers
                 RenderEntrantsTableHeader (competition, html);
 
                 var entrantComparer = new EntrantComparer (competition.EntranceDisciplines);
-                var order = 1;
+                var rank = 1;
                 foreach (var entrant in competition.Entrants.OrderByDescending (entr => entr, entrantComparer)) {
-                    RenderEntrantTableRow (entrant, html, entrant.IsActive ? order : 0);
-                    if (entrant.IsActive) {
-                        order++;
+                    RenderEntrantTableRow (entrant, html, rank);
+                    if (entrant.IsRanked ()) {
+                        rank++;
                     }
                 }
 
@@ -157,7 +157,7 @@ namespace R7.Enrollment.Renderers
             html.WriteEndElement ();
         }
 
-        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int order)
+        public void RenderEntrantTableRow (Entrant entrant, XmlWriter html, int rank)
         {
             html.WriteStartElement ("tr");
 
@@ -166,7 +166,7 @@ namespace R7.Enrollment.Renderers
                 html.WriteAttributeString ("class", "enr-target-entrant-row");
             }
 
-            html.WriteElementString ("td", (order > 0)? order.ToString () : string.Empty);
+            html.WriteElementString ("td", entrant.IsRanked () ? rank.ToString () : string.Empty);
 
             #if DEBUG
             html.WriteElementString ("td", entrant.PreferenceCategory);
