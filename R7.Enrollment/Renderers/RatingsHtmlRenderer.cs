@@ -124,18 +124,16 @@ namespace R7.Enrollment.Renderers
             html.WriteStartElement ("tr");
             html.WriteElementWithAttributeString ("th", "№", "rowspan", "2");
 
-            #if DEBUG
-            html.WriteElementWithAttributeString ("td", "preferenceCategory", "rowspan", "2");
-            #endif
-
-            if (Settings.Depersonalize) {
-                html.WriteElementWithAttributeString ("th", "СНИЛС или Личный номер", "rowspan", "2");
-            }
-            else {
+            if (!Settings.Depersonalize) {
                 html.WriteElementWithAttributeString ("th", "Фамилия, имя, отчество", "rowspan", "2");
             }
 
+            html.WriteElementWithAttributeString ("th", "СНИЛС или Личный номер", "rowspan", "2");
             html.WriteElementWithAttributeString ("th", "Сумма баллов", "rowspan", "2");
+
+            #if DEBUG
+            html.WriteElementWithAttributeString ("td", "preferenceCategory", "rowspan", "2");
+            #endif
 
             var disciplinesCount = Math.Max (competition.EntranceDisciplines.Count, 1);
             html.WriteElementWithAttributeString ("th", "Результаты ВИ", "colspan", disciplinesCount.ToString ());
@@ -168,18 +166,16 @@ namespace R7.Enrollment.Renderers
 
             html.WriteElementString ("td", entrant.IsRanked () ? rank.ToString () : string.Empty);
 
-            #if DEBUG
-            html.WriteElementString ("td", entrant.PreferenceCategory);
-            #endif
-
-            if (Settings.Depersonalize) {
-                html.WriteElementString ("td", !string.IsNullOrEmpty (entrant.Snils) ? entrant.Snils : entrant.PersonalNumber);
-            }
-            else {
+            if (!Settings.Depersonalize) {
                 html.WriteElementString ("td", entrant.Name);
             }
 
+            html.WriteElementString ("td", !string.IsNullOrEmpty (entrant.Snils) ? entrant.Snils : entrant.PersonalNumber);
             html.WriteElementString ("td", entrant.FinalMark.ToString ());
+
+            #if DEBUG
+            html.WriteElementString ("td", entrant.PreferenceCategory);
+            #endif
 
             if (entrant.MarkStrings.Count > 0) {
                 foreach (var mark in entrant.MarkStrings) {
