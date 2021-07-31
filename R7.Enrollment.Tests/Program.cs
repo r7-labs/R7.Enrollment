@@ -1,3 +1,4 @@
+using System;
 using System.IO;
 using System.Text;
 using System.Xml;
@@ -13,16 +14,25 @@ namespace R7.Enrollment.Tests
             Directory.CreateDirectory ("output");
 
             var dataFiles = Directory.GetFiles ("./data", "enr_rating_*.xml");
+            if (dataFiles.Length == 0) {
+                Console.WriteLine ("No data files found in the \"data\" folder!");
+                return;
+            }
+
             foreach (var dataFile in dataFiles) {
+                Console.Write ($"Processing \"{Path.GetFileName (dataFile)}\" file... ");
                 var db = new TandemRatingsDb ();
                 db.Load (dataFile);
-                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-depersonalized.html",
+                RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}-with-names.html",
                     new RatingsRendererSettings {
-                    Depersonalize = false
+                        Depersonalize = false
                 });
                 RenderToFile (db, $"./output/{FilenameFromCampaignTitle (db.EntrantRatingEnvironment.CampaignTitle)}.html",
                     new RatingsRendererSettings ());
+                Console.WriteLine ("Done!");
             }
+
+            Console.WriteLine ("See results in the \"output\" folder.");
         }
 
         static string FilenameFromCampaignTitle (string campaignTitle)
